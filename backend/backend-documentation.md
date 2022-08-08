@@ -521,18 +521,11 @@ RESPONSE:
 
 	```
 	{
-    "first_name": "Rexford",
-    "middle_name":"Patient",
-    "last_name": "Machu",
-    "person_image":"https://img.com/G.O.A.T",
-    "user_email":"baddest69@st.knust.edu.gh",
-    "user_password": "baddestGO@8",
+    "first_name": "Peter",
+    "last_name": "Gregory",
+    "user_email":"greg@st.knust.edu.gh",
+    "user_password": "gregy",
     "date_of_birth":"2009-12-01",
-    "house_address": "House-4",
-    "gender":"Male",
-    "phone_number" : "+233206436575",
-    "id_number": "GHA-08008238HJJ",
-    "nationality":"Ghanaian",
     "doctor_id": 20,
     "guardian_id": 20
     }
@@ -544,17 +537,17 @@ RESPONSE:
     "msg": {
         "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
         "doctor_id": 20,
-        "email": "baddest69@st.knust.edu.gh",
-        "first_name": "Rexford",
-        "gender": "Male",
+        "first_name": "Peter",
+        "gender": null,
         "guardian_id": 20,
-        "id_number": "GHA-08008238HJJ",
-        "last_name": "Machu",
-        "middle_name": "Patient",
-        "phone_number": "+233206436575"
+        "id_number": null,
+        "last_name": "Gregory",
+        "middle_name": null,
+        "phone_number": null,
+        "user_email": "greg@st.knust.edu.gh"
     },
     "status": true
-    }
+}
 	```          
 - **Get All Patients**
 

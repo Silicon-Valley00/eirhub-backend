@@ -1,4 +1,3 @@
-from numpy import unique
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.dialects.mysql import ENUM
