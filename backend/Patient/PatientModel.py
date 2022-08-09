@@ -36,7 +36,7 @@ class Patient(Base):
    
    
     
-    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,guardian_id = None,doctor_id = None):
+    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,gender,guardian_id = None,doctor_id = None):
         self.first_name = first_name
         # self.middle_name = middle_name
         self.last_name = last_name
@@ -47,9 +47,9 @@ class Patient(Base):
         # self.house_address = house_address  #Extra parameters not needed in the creation of a new patient
         # self.phone_number = phone_number
         # self.id_number = id_number
-        # self.gender = gender
+        self.gender = gender
         # self.nationality = nationality
-        self.idDoctor = doctor_id
-        self.idGuardian = guardian_id
+        self.idDoctor = doctor_id if doctor_id is not None else None
+        self.idGuardian = guardian_id if guardian_id is not None else None
 
  
