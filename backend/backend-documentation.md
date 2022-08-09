@@ -634,17 +634,17 @@ RESPONSE:
     BODY PARAMS:
 
     ```
-    {
-        "first_name": "Janine",
+   {
+        "first_name": "Pete",
         "middle_name":"Leta",
-        "last_name": "Mucha",
-        "person_image":"https://img.com/F.G.O.A.T",
-        "email":"Leta@st.knust.edu.gh",
-        "date_of_birth":"2007-12-03",
-        "house_address": "8 health street",
-        "gender":"female",
-        "phone_number" : "+233208936575",
-        "id_number": "GHA-08006328HJJ",
+        "last_name": "Greg",
+        "person_image":"https://img.com/profilePicture",
+        "email":"Gregy@st.knust.edu.gh",
+        "date_of_birth":"2001-07-03",
+        "house_address": "12 sesame street",
+        "gender":"male",
+        "phone_number" : "+233265936575",
+        "id_number": "GHA-08006335HJJ",
         "nationality":"Ghanaian",
         "doctor_id": 20,
         "guardian_id": 20
@@ -653,22 +653,22 @@ RESPONSE:
 
     RESPONSE:
     ```
-    {
-        "msg": {
-            "email": "Leta@st.knust.edu.gh",
-            "first_name": "Janine",
-            "house_address": "8 health street",
-            "id": 27,
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "id_number": "GHA-08006328HJJ",
-            "last_name": "Mucha",
-            "middle_name": "Leta",
-            "nationality": "Ghanaian",
-            "person_image": "https://img.com/F.G.O.A.T"
-        },
-        "status": true
-    }
+   {
+    "msg": {
+        "email": "Gregy@st.knust.edu.gh",
+        "first_name": "Pete",
+        "house_address": "12 sesame street",
+        "id": 34,
+        "idDoctor": 20,
+        "idGuardian": 20,
+        "id_number": "GHA-08006335HJJ",
+        "last_name": "Greg",
+        "middle_name": "Leta",
+        "nationality": "Ghanaian",
+        "person_image": "https://img.com/profilePicture"
+    },
+    "status": true
+} 
     ```
 
 # HealthDetails
