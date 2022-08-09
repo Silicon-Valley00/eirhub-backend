@@ -33,27 +33,6 @@ def getPrescriptionById(id):
         }),200
     except Exception as e:
         return("Connection Error: %s",e),400
-@prescription_route.route('/prescription/<id>',methods = ['GET'])
-
-#get the prescription based on id
-def getPrescriptionById(id):
-    from app import session
-    try:#query for the data and display it if it exists
-        prescription =  session.query(Prescription).get(id)
-        return ({
-            'msg': {
-                'id': prescription.idPrescription,
-                'drug_name':prescription.drug_name,
-                'dosage':prescription.dosage,
-                'time_of_administration':str(prescription.time_of_administration),#made str because object type of date isn't json serializable
-                'start_date':str(prescription.start_date),
-                'end_date':str(prescription.end_date),
-                'last_taken_date':str(prescription.last_taken_date)
-            },
-            "status": True
-            }),200
-    except Exception as e:#display error code if data doesn't exist
-        return(f"Error : Prescription does not exist :{e}"),400
     
 #get all prescriptions and api 
 @prescription_route.route("/prescription",methods = ['GET'])
