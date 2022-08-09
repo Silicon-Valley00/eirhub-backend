@@ -698,6 +698,42 @@ RESPONSE:
     }
     ```
 
+- **Update Health details**
+
+    PUT: /uphealthdetails/`patientId`
+
+    BODY PARAMS:
+    {
+        "last_visit": "2002-09-08",
+        "blood_group": "B",
+        "bmi": "34.3",
+        "blood_pressure": "34.6",
+        "respiratory_rate": "Good",
+        "pulse": "98.9",
+        "blood_sugar": "Plenty",
+        "weight": "87.9",
+        "height": "99.3"
+    }
+
+    RESPONSE:
+    ```
+    {
+        "msg": {
+            "blood_group": "B",
+            "blood_pressure": 34.6,
+            "blood_sugar": "Plenty",
+            "bmi": 34.3,
+            "height": 99.3,
+            "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+            "patient_id": 31,
+            "pulse": 98.9,
+            "respiratory_rate": "Good",
+            "weight": 87.9
+        },
+        "status": true
+    }
+    ```
+
 - **Get All Health Details**    
     GET: /healthdetails
 
