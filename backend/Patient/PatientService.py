@@ -87,13 +87,13 @@ def createPatient():
             user_email = req["user_email"]
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
-            doctor_id = req["doctor_id"]
-            guardian_id = req["guardian_id"]
+            gender = req["gender"]
+            # doctor_id = req["doctor_id"]
+            # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
             newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-           date_of_birth=date_of_birth,
-           guardian_id=guardian_id,doctor_id=doctor_id)
+           date_of_birth=date_of_birth,gender=gender)
             try: 
                 session.add(newPatient) 
                 session.commit()
@@ -105,6 +105,7 @@ def createPatient():
             if(check_password_hash(patientInfo.user_password,user_password)):
                 return ({
                     'msg':{
+                        'idPatient':patientInfo.idPatient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -112,9 +113,7 @@ def createPatient():
                         'date_of_birth':patientInfo.date_of_birth,
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
-                        'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.idGuardian,
-                        'doctor_id': patientInfo.idDoctor
+                        'gender':patientInfo.gender
 
                     },
                     'status':True
@@ -145,6 +144,7 @@ def patientLogin():
                     if(check_password_hash(userDbPassword,user_password)):
                         return ({
                     'msg':{
+                        'idPatient':patientInfo.idPatient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,

@@ -2,7 +2,6 @@ from hashlib import new
 from flask import Blueprint,request,jsonify
 from flask_cors import CORS
 from Prescription.PrescriptionModel import Prescription 
-from flask_sqlalchemy import SQLAlchemy
 import json
 
 

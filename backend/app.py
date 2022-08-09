@@ -4,7 +4,6 @@ from flask_cors import CORS
 
 
 from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
