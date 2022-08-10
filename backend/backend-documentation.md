@@ -734,6 +734,7 @@ RESPONSE:
     PUT: /uphealthdetails/`patientId`
 
     BODY PARAMS:
+    ```
     {
         "last_visit": "2002-09-08",
         "blood_group": "B",
@@ -745,7 +746,7 @@ RESPONSE:
         "weight": "87.9",
         "height": "99.3"
     }
-
+    ```
     RESPONSE:
     ```
     {
