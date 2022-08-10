@@ -20,18 +20,13 @@ check_password_hash(a,'1234') #confirms if the hash and the word are equal and r
          
 		- 
 
-[HealthDetails](#HealthDetails )    
-[Doctor](#Doctor )           
-[Guardian](#Guardian-Person )             
-[Patient](#Patient )
-[Prescription](#Prescription) 
-[HealthDetails](#HealthDetails)
-[Hospital](#Hospital)
+[HealthDetails](#HealthDetails )      
+[Doctor](#Doctor )             
 [Guardian](#Guardian-Person )               
-[Patient](#Patient )           
-[Prescription](#Prescription )      
-[Report](#Report)      
-  
+[Patient](#Patient )  
+[Prescription](#Prescription)            
+[Report](#Report)        
+
 
 
 
@@ -685,7 +680,7 @@ RESPONSE:
 
     RESPONSE:
     ```
-   {
+    {
     "msg": {
         "email": "Gregy@st.knust.edu.gh",
         "first_name": "Pete",
@@ -702,6 +697,9 @@ RESPONSE:
     "status": true
     } 
     ```
+
+
+
 
 # HealthDetails
 
@@ -748,6 +746,7 @@ RESPONSE:
         "height": "99.3"
     }
     ```
+
     RESPONSE:
     ```
     {
@@ -813,8 +812,11 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-}
-```
+    }
+    ```
+
+
+
 # Hospital
 
 **Create hospital**
