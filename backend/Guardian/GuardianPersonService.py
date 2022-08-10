@@ -23,7 +23,6 @@ def createGuardian():
         first_name = req["first_name"]
         middle_name = req["middle_name"]
         last_name = req["last_name"]
-        person_image = req["person_image"]
         user_email = req["user_email"]
         date_of_birth = req["date_of_birth"]
         house_address = req["house_address"]
@@ -41,7 +40,6 @@ def createGuardian():
                     'first_name':guardianDetail.first_name,
                     'middle_name':guardianDetail.middle_name,
                     'last_name':guardianDetail.last_name,
-                    'person_image':guardianDetail.person_image,
                     'email':guardianDetail.user_email,
                     'date_of_birth':guardianDetail.date_of_birth,
                     'phone_number':guardianDetail.phone_number,
@@ -52,6 +50,7 @@ def createGuardian():
         except Exception as e:
             return ("Connection Error: User not recorded : %s",e),400
 
+#Get Guardian by id 
 
 
 
@@ -90,7 +89,6 @@ def updateGuardianById(guardianId):
                  GuardianPerson.first_name:req["first_name"],
                  GuardianPerson.middle_name:req["middle_name"],
                  GuardianPerson.last_name:req["last_name"],
-                 GuardianPerson.person_image:req["person_image"],
                  GuardianPerson.user_email:req["user_email"],
                  GuardianPerson.date_of_birth:req["date_of_birth"],
                  GuardianPerson.phone_number:req["phone_number"],
