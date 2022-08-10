@@ -17,7 +17,7 @@ def getPatients():
             
             "msg": {
 
-                "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -46,7 +46,7 @@ def getPatientById(id):
         return ({
             
             "msg": {
-                "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -195,7 +195,7 @@ def deletePatientById(id):
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -241,7 +241,7 @@ def updatePatientDetailsById(id):
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,

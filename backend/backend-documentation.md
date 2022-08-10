@@ -579,7 +579,8 @@ RESPONSE:
     },
     "status": true
 }
-	```          
+	```   
+
 - **Get All Patients**
 
     GET : /patient
@@ -593,7 +594,7 @@ RESPONSE:
             "email": "Lackman@gmail.com",
             "first_name": "Terry",
             "house_address": "12 molly street",
-            "id": 27,
+            "idPatient": 27,
             "idDoctor": null,
             "idGuardian": null,
             "id_number": "57849003",
@@ -613,22 +614,22 @@ RESPONSE:
 
     RESPONSE:
     ```
-    {
-        "msg": {
-            "email": "baddest69@st.knust.edu.gh",
-            "first_name": "Rexford",
-            "house_address": "House-4",
-            "id": 28,
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "id_number": "GHA-08008238HJJ",
-            "last_name": "Machu",
-            "middle_name": "Patient",
-            "nationality": "Ghanaian",
-            "person_image": "https://img.com/G.O.A.T"
-        },
-        "status": true
-    }
+  {
+    "msg": {
+        "email": "maxwell@gmail.com",
+        "first_name": "maxwell",
+        "house_address": "House-4",
+        "idDoctor": 20,
+        "idGuardian": 20,
+        "idPatient": 31,
+        "id_number": "GHA-08008238JJH",
+        "last_name": "Mawube",
+        "middle_name": "Ahiamadzor",
+        "nationality": "Ghanaian",
+        "person_image": "https://img.com/G.O.A.T"
+    },
+    "status": true
+}
 
     ```
 - **Delete patient**
@@ -645,7 +646,7 @@ RESPONSE:
             "email": "Jackman@gmail.com",
             "first_name": "Jerry",
             "house_address": "12 molly street",
-            "id": 24,
+            "idPatient": 24,
             "idDoctor": null,
             "idGuardian": null,
             "id_number": "57849003",
@@ -699,7 +700,7 @@ RESPONSE:
         "person_image": "https://img.com/profilePicture"
     },
     "status": true
-} 
+    } 
     ```
 
 # HealthDetails

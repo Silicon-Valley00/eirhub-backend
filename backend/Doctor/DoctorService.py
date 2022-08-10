@@ -56,6 +56,7 @@ def createDoctor():
             session.commit()
             return ({
                 'msg':{
+                    'idDoctor': returnDoctor.idDoctor,
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
                     'last_name':returnDoctor.last_name,
@@ -89,6 +90,7 @@ def doctorLogin():
                         if(check_password_hash(doctorHashPassword,user_password)):
                             return ({
                             'msg':{
+                                'idDoctor': doctorInfo.idDoctor,
                                 'first_name':doctorInfo.first_name,
                                 'middle_name':doctorInfo.middle_name,
                                 'last_name':doctorInfo.last_name,
@@ -194,6 +196,7 @@ def getDoctorById(doctorId):
     try:
         doctor = session.query(Doctor).get(int(doctorId))
         returnInfo =  {
+                'idDoctor': doctor.idDoctor,
                 'first_name': doctor.first_name,
                 'middle_name': doctor.middle_name,
                 'last_name': doctor.last_name,
