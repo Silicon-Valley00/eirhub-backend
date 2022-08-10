@@ -2,34 +2,37 @@ from hashlib import new
 from flask import Blueprint,request,jsonify
 from flask_cors import CORS
 from Prescription.PrescriptionModel import Prescription 
-from flask_sqlalchemy import SQLAlchemy
 import json
 
 
 prescription_route = Blueprint("prescription_route",__name__)
 CORS(prescription_route)
 
-
 @prescription_route.route('/prescription/<id>',methods = ['GET'])
-#get the prescription based on id
+#get the prescription based on patient id
 def getPrescriptionById(id):
     from app import session
     try:#query for the data and display it if it exists
-        prescription =  session.query(Prescription).get(id)
+        prescriptions =  session.query(Prescription).filter(Prescription.idPatient==id).all()
+        prescription_info = []
+        for prescription in prescriptions:
+            prescription_info.append((# put all the prescriptions into the list prescriptionInfor
+                {
+                    'id': prescription.idPrescription,
+                    'drug_name':prescription.drug_name,
+                    'dosage':prescription.dosage,
+                    'time_of_administration':str(prescription.time_of_administration),
+                    'start_date':str(prescription.start_date),
+                    'end_date':str(prescription.end_date),
+                    'last_taken_date':str(prescription.last_taken_date)
+            }
+            ))
         return ({
-            'msg': {
-                'id': prescription.idPrescription,
-                'drug_name':prescription.drug_name,
-                'dosage':prescription.dosage,
-                'time_of_administration':str(prescription.time_of_administration),#made str because object type of date isn't json serializable
-                'start_date':str(prescription.start_date),
-                'end_date':str(prescription.end_date),
-                'last_taken_date':str(prescription.last_taken_date)
-            },
-            "status": True
-            }),200
-    except Exception as e:#display error code if data doesn't exist
-        return(f"Error : Prescription does not exist :{e}"),400
+            'status': True,
+            'msg': prescription_info
+        }),200
+    except Exception as e:
+        return("Connection Error: %s",e),400
     
 #get all prescriptions and api 
 @prescription_route.route("/prescription",methods = ['GET'])

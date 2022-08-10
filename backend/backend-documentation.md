@@ -20,18 +20,13 @@ check_password_hash(a,'1234') #confirms if the hash and the word are equal and r
          
 		- 
 
-[HealthDetails](#HealthDetails )    
-[Doctor](#Doctor )           
-[Guardian](#Guardian-Person )             
-[Patient](#Patient )
-[Prescription](#Prescription) 
-[HealthDetails](#HealthDetails)
-[Hospital](#Hospital)
+[HealthDetails](#HealthDetails )      
+[Doctor](#Doctor )             
 [Guardian](#Guardian-Person )               
-[Patient](#Patient )           
-[Prescription](#Prescription )      
-[Report](#Report)      
-  
+[Patient](#Patient )  
+[Prescription](#Prescription)            
+[Report](#Report)        
+
 
 
 
@@ -47,16 +42,47 @@ API EndPoint Routes:
 
     RESPONSE:
     ```
-    "msg": {
-        "dosage": "1/day",
-        "drug_name": "lepromax",
-        "end_date": "2023-01-31",
-        "id": 2,
-        "last_taken_date": "2023-01-12",
+    {
+    "msg": [
+        {
+        "dosage": "1/x3",
+        "drug_name": "Ibuprofen",
+        "end_date": "2023-12-31",
+        "id": 12,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-19",
+        "time_of_administration": "12:23:45"
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "trimetazol",
+        "end_date": "2022-12-31",
+        "id": 27,
+        "last_taken_date": "2022-12-31",
         "start_date": "2022-12-31",
         "time_of_administration": "23:59:40"
-    },
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "paracetamol",
+        "end_date": "2022-12-31",
+        "id": 28,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-31",
+        "time_of_administration": "23:59:40"
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "contanitpol",
+        "end_date": "2022-12-31",
+        "id": 29,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-31",
+        "time_of_administration": "23:59:40"
+        }
+    ],
     "status": true
+    }
     ```
 - **Get All Prescriptions**
      GET: /prescription 
@@ -437,7 +463,31 @@ RESPONSE:
 ],
 "status": true
 }
-```     
+```
+
+- **Get Guardian Person By Id**
+
+GET: /guardian/`guardianId`
+
+BODY PARAMS:None
+
+RESPONSE: 
+```
+{
+    "msg": {
+        "date_of_birth": "Thu, 21 Dec 2000 00:00:00 GMT",
+        "email": "guardianofgalaxy@gmail.com",
+        "first_name": "Redford ",
+        "gender": "Male",
+        "id_number": "GHA-009494-233",
+        "last_name": "Tahu",
+        "middle_name": "Guardian",
+        "phone_number": "0206436575"
+    },
+    "status": true
+}
+```
+
 
 
 **Update Guardian Person By Id**		
@@ -482,6 +532,7 @@ RESPONSE:
 
 
 # Patient 
+
 - **Patient Login**:			
 
 	POST : /patient/login		
@@ -548,7 +599,8 @@ RESPONSE:
     },
     "status": true
 }
-	```          
+	```   
+
 - **Get All Patients**
 
     GET : /patient
@@ -556,20 +608,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "Lackman@gmail.com",
-            "first_name": "Terry",
-            "house_address": "12 molly street",
-            "id": 27,
-            "idDoctor": null,
-            "idGuardian": null,
-            "id_number": "57849003",
-            "last_name": "Lackman",
-            "middle_name": "Meo",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
+            "house_address": "House-4",
+            "idDoctor": 20,
+            "idGuardian": 20,
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
+            "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https:/myImage.com"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -581,20 +637,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "baddest69@st.knust.edu.gh",
-            "first_name": "Rexford",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
             "house_address": "House-4",
-            "id": 28,
             "idDoctor": 20,
             "idGuardian": 20,
-            "id_number": "GHA-08008238HJJ",
-            "last_name": "Machu",
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
             "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https://img.com/G.O.A.T"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -614,7 +674,7 @@ RESPONSE:
             "email": "Jackman@gmail.com",
             "first_name": "Jerry",
             "house_address": "12 molly street",
-            "id": 24,
+            "idPatient": 24,
             "idDoctor": null,
             "idGuardian": null,
             "id_number": "57849003",
@@ -634,17 +694,17 @@ RESPONSE:
     BODY PARAMS:
 
     ```
-    {
-        "first_name": "Janine",
+   {
+        "first_name": "Pete",
         "middle_name":"Leta",
-        "last_name": "Mucha",
-        "person_image":"https://img.com/F.G.O.A.T",
-        "email":"Leta@st.knust.edu.gh",
-        "date_of_birth":"2007-12-03",
-        "house_address": "8 health street",
-        "gender":"female",
-        "phone_number" : "+233208936575",
-        "id_number": "GHA-08006328HJJ",
+        "last_name": "Greg",
+        "person_image":"https://img.com/profilePicture",
+        "email":"Gregy@st.knust.edu.gh",
+        "date_of_birth":"2001-07-03",
+        "house_address": "12 sesame street",
+        "gender":"male",
+        "phone_number" : "+233265936575",
+        "id_number": "GHA-08006335HJJ",
         "nationality":"Ghanaian",
         "doctor_id": 20,
         "guardian_id": 20
@@ -654,22 +714,25 @@ RESPONSE:
     RESPONSE:
     ```
     {
-        "msg": {
-            "email": "Leta@st.knust.edu.gh",
-            "first_name": "Janine",
-            "house_address": "8 health street",
-            "id": 27,
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "id_number": "GHA-08006328HJJ",
-            "last_name": "Mucha",
-            "middle_name": "Leta",
-            "nationality": "Ghanaian",
-            "person_image": "https://img.com/F.G.O.A.T"
-        },
-        "status": true
-    }
+    "msg": {
+        "email": "Gregy@st.knust.edu.gh",
+        "first_name": "Pete",
+        "house_address": "12 sesame street",
+        "id": 34,
+        "idDoctor": 20,
+        "idGuardian": 20,
+        "id_number": "GHA-08006335HJJ",
+        "last_name": "Greg",
+        "middle_name": "Leta",
+        "nationality": "Ghanaian",
+        "person_image": "https://img.com/profilePicture"
+    },
+    "status": true
+    } 
     ```
+
+
+
 
 # HealthDetails
 
@@ -693,6 +756,44 @@ RESPONSE:
             "pulse": 79.0,
             "respiratory_rate": "75",
             "weight": 25.0
+        },
+        "status": true
+    }
+    ```
+
+- **Update Health details**
+
+    PUT: /uphealthdetails/`patientId`
+
+    BODY PARAMS:
+    ```
+    {
+        "last_visit": "2002-09-08",
+        "blood_group": "B",
+        "bmi": "34.3",
+        "blood_pressure": "34.6",
+        "respiratory_rate": "Good",
+        "pulse": "98.9",
+        "blood_sugar": "Plenty",
+        "weight": "87.9",
+        "height": "99.3"
+    }
+    ```
+
+    RESPONSE:
+    ```
+    {
+        "msg": {
+            "blood_group": "B",
+            "blood_pressure": 34.6,
+            "blood_sugar": "Plenty",
+            "bmi": 34.3,
+            "height": 99.3,
+            "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+            "patient_id": 31,
+            "pulse": 98.9,
+            "respiratory_rate": "Good",
+            "weight": 87.9
         },
         "status": true
     }
@@ -744,8 +845,11 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-}
-```
+    }
+    ```
+
+
+
 # Hospital
 
 **Create hospital**
