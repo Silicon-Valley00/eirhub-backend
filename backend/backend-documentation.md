@@ -714,19 +714,20 @@ RESPONSE:
     ```
     {
         "msg": {
-            "blood_group": "A",
-            "blood_pressure": 56.0,
-            "blood_sugar": "23",
-            "bmi": 45.0,
-            "height": 1.79,
-            "last_visit": "Sat, 09 Jul 2022 00:00:00 GMT",
-            "patient_id": 28,
-            "pulse": 79.0,
-            "respiratory_rate": "75",
-            "weight": 25.0
+            "blood_group": "B",
+            "blood_pressure": 34.6,
+            "blood_sugar": "170",
+            "bmi": 34.3,
+            "height": 99.3,
+            "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+            "patient_id": 31,
+            "pulse": 116.0,
+            "respiratory_rate": "25",
+            "temperature": 32.5,
+            "weight": 87.9
         },
         "status": true
-    }
+    }   
     ```
 
 - **Update Health details**
@@ -741,6 +742,7 @@ RESPONSE:
         "bmi": "34.3",
         "blood_pressure": "34.6",
         "respiratory_rate": "Good",
+        "temperature": "40.0",
         "pulse": "98.9",
         "blood_sugar": "Plenty",
         "weight": "87.9",
@@ -749,24 +751,65 @@ RESPONSE:
     ```
     RESPONSE:
     ```
+        {
+            "msg": {
+                "blood_group": "B",
+                "blood_pressure": 34.6,
+                "blood_sugar": "Plenty",
+                "bmi": 34.3,
+                "height": 99.3,
+                "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+                "patient_id": 31,
+                "pulse": 98.9,
+                "respiratory_rate": "Good",
+                "temperature": 40.0,
+                "weight": 87.9
+            },
+            "status": true
+    }
+    ```
+
+- **Get All Health Details**   
+
+    POST: /createhealthdetails
+
+    BODY PARAMS:
+    ```
+    {
+        "patient_id": "38",
+        "last_visit": "2009-09-08",
+        "blood_group": "O",
+        "bmi": "40.3",
+        "blood_pressure": "39.6",
+        "respiratory_rate": "Good",
+        "temperature": "43.0",
+        "pulse": "89.9",
+        "blood_sugar": "Plenty",
+        "weight": "78.9",
+        "height": "99.9"
+}
+    ```
+
+    RESPONSE:
+    ```
     {
         "msg": {
-            "blood_group": "B",
-            "blood_pressure": 34.6,
+            "blood_group": "O",
+            "blood_pressure": 39.6,
             "blood_sugar": "Plenty",
-            "bmi": 34.3,
-            "height": 99.3,
-            "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
-            "patient_id": 31,
-            "pulse": 98.9,
+            "bmi": 40.3,
+            "height": 99.9,
+            "last_visit": "Tue, 08 Sep 2009 00:00:00 GMT",
+            "patient_id": 38,
+            "pulse": 89.9,
             "respiratory_rate": "Good",
-            "weight": 87.9
+            "temperature": 43.0,
+            "weight": 78.9
         },
         "status": true
     }
     ```
 
-- **Get All Health Details**    
     GET: /healthdetails
 
     BODY PARAMS: None
