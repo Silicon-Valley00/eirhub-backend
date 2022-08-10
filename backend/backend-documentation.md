@@ -20,18 +20,13 @@ check_password_hash(a,'1234') #confirms if the hash and the word are equal and r
          
 		- 
 
-[HealthDetails](#HealthDetails )    
-[Doctor](#Doctor )           
-[Guardian](#Guardian-Person )             
-[Patient](#Patient )
-[Prescription](#Prescription) 
-[HealthDetails](#HealthDetails)
-[Hospital](#Hospital)
+[HealthDetails](#HealthDetails )      
+[Doctor](#Doctor )             
 [Guardian](#Guardian-Person )               
-[Patient](#Patient )           
-[Prescription](#Prescription )      
-[Report](#Report)      
-  
+[Patient](#Patient )  
+[Prescription](#Prescription)            
+[Report](#Report)        
+
 
 
 
@@ -699,13 +694,11 @@ RESPONSE:
         "person_image": "https://img.com/profilePicture"
     },
     "status": true
-<<<<<<< HEAD
     } 
     ```
-=======
-} 
-```
->>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
+
+
+
 
 # HealthDetails
 
@@ -752,10 +745,7 @@ RESPONSE:
         "height": "99.3"
     }
     ```
-<<<<<<< HEAD
 
-=======
->>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
     RESPONSE:
     ```
     {
@@ -821,14 +811,11 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-<<<<<<< HEAD
     }
     ```
-=======
-}```
 
 
->>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
+
 # Hospital
 
 **Create hospital**
