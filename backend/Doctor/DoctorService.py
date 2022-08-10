@@ -34,24 +34,24 @@ def createDoctor():
             last_name = req["last_name"]
             user_email = req["user_email"]
             user_password = req["user_password"]
-            person_image = req["person_image"]
+            # person_image = req["person_image"]
             date_of_birth =req["date_of_birth"]
-            house_address = req["house_address"]
-            doctor_ratings = req["doctor_ratings"]
-            doctor_specialties = req["doctor_specialties"]
-            license_number = req["license_number"]
-            gender = req["gender"]
+            # house_address = req["house_address"]
+            # doctor_ratings = req["doctor_ratings"]
+            # doctor_specialties = req["doctor_specialties"]
+            # # license_number = req["license_number"]
+            # gender = req["gender"]
             hospital_code = req["hospital_code"]
 
             #hash password
             hashed_password = generate_password_hash(user_password)
-            newDoctor = Doctor(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,user_password=hashed_password,person_image=person_image,date_of_birth=date_of_birth,house_address=house_address,doctor_ratings=doctor_ratings,doctor_specialties=doctor_specialties,license_number=license_number,gender=gender,hospital_code=hospital_code)
+            newDoctor = Doctor(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code)
             try: 
                 session.add(newDoctor)
                 session.commit()
             except Exception as e:
                 return ("Connection Error: User not recorded : %s",e),400
-            idDoctor = session.query(Doctor.idDoctor).filter(Doctor.license_number == req['license_number'], Doctor.hospital_code == req['hospital_code']).first()
+            idDoctor = session.query(Doctor.idDoctor).filter( Doctor.hospital_code == req['hospital_code']).first()
             returnDoctor = session.query(Doctor).get(idDoctor)
             session.commit()
             return ({
@@ -59,7 +59,7 @@ def createDoctor():
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
                     'last_name':returnDoctor.last_name,
-                    'license_number':returnDoctor.license_number,
+                    # 'license_number':returnDoctor.license_number,
                     'user_email': returnDoctor.user_email
                 },
                 'status':True

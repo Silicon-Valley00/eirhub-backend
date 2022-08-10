@@ -87,13 +87,12 @@ def createPatient():
             user_email = req["user_email"]
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
-            doctor_id = req["doctor_id"]
-            guardian_id = req["guardian_id"]
+            # doctor_id = req["doctor_id"]
+            # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
             newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-           date_of_birth=date_of_birth,
-           guardian_id=guardian_id,doctor_id=doctor_id)
+           date_of_birth=date_of_birth)
             try: 
                 session.add(newPatient) 
                 session.commit()
@@ -113,8 +112,8 @@ def createPatient():
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.idGuardian,
-                        'doctor_id': patientInfo.idDoctor
+                        # 'guardian_id': patientInfo.idGuardian,
+                        # 'doctor_id': patientInfo.idDoctor
 
                     },
                     'status':True
