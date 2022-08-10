@@ -51,5 +51,3 @@ class Patient(Base):
         # self.nationality = nationality
         self.idDoctor = doctor_id if doctor_id is not None else None
         self.idGuardian = guardian_id if guardian_id is not None else None
-
- 

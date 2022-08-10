@@ -17,12 +17,15 @@ def getPatients():
             
             "msg": {
 
-                "id": patient.idPatient,
+               "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
@@ -46,12 +49,15 @@ def getPatientById(id):
         return ({
             
             "msg": {
-                "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
@@ -195,7 +201,7 @@ def deletePatientById(id):
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -241,7 +247,7 @@ def updatePatientDetailsById(id):
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -258,6 +264,3 @@ def updatePatientDetailsById(id):
             }),200
     except Exception as e:
         return(f"Error: Could not update patient details: {e}"),400 
-
-   
-

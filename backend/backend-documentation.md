@@ -20,18 +20,13 @@ check_password_hash(a,'1234') #confirms if the hash and the word are equal and r
          
 		- 
 
-[HealthDetails](#HealthDetails )    
-[Doctor](#Doctor )           
-[Guardian](#Guardian-Person )             
-[Patient](#Patient )
-[Prescription](#Prescription) 
-[HealthDetails](#HealthDetails)
-[Hospital](#Hospital)
+[HealthDetails](#HealthDetails )      
+[Doctor](#Doctor )             
 [Guardian](#Guardian-Person )               
-[Patient](#Patient )           
-[Prescription](#Prescription )      
-[Report](#Report)      
-  
+[Patient](#Patient )  
+[Prescription](#Prescription)            
+[Report](#Report)        
+
 
 
 
@@ -468,7 +463,31 @@ RESPONSE:
 ],
 "status": true
 }
-```     
+```
+
+- **Get Guardian Person By Id**
+
+GET: /guardian/`guardianId`
+
+BODY PARAMS:None
+
+RESPONSE: 
+```
+{
+    "msg": {
+        "date_of_birth": "Thu, 21 Dec 2000 00:00:00 GMT",
+        "email": "guardianofgalaxy@gmail.com",
+        "first_name": "Redford ",
+        "gender": "Male",
+        "id_number": "GHA-009494-233",
+        "last_name": "Tahu",
+        "middle_name": "Guardian",
+        "phone_number": "0206436575"
+    },
+    "status": true
+}
+```
+
 
 
 **Update Guardian Person By Id**		
@@ -513,6 +532,7 @@ RESPONSE:
 
 
 # Patient 
+
 - **Patient Login**:			
 
 	POST : /patient/login		
@@ -579,7 +599,8 @@ RESPONSE:
     },
     "status": true
 }
-	```          
+	```   
+
 - **Get All Patients**
 
     GET : /patient
@@ -587,20 +608,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "Lackman@gmail.com",
-            "first_name": "Terry",
-            "house_address": "12 molly street",
-            "id": 27,
-            "idDoctor": null,
-            "idGuardian": null,
-            "id_number": "57849003",
-            "last_name": "Lackman",
-            "middle_name": "Meo",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
+            "house_address": "House-4",
+            "idDoctor": 20,
+            "idGuardian": 20,
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
+            "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https:/myImage.com"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -612,20 +637,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "baddest69@st.knust.edu.gh",
-            "first_name": "Rexford",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
             "house_address": "House-4",
-            "id": 28,
             "idDoctor": 20,
             "idGuardian": 20,
-            "id_number": "GHA-08008238HJJ",
-            "last_name": "Machu",
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
             "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https://img.com/G.O.A.T"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -645,7 +674,7 @@ RESPONSE:
             "email": "Jackman@gmail.com",
             "first_name": "Jerry",
             "house_address": "12 molly street",
-            "id": 24,
+            "idPatient": 24,
             "idDoctor": null,
             "idGuardian": null,
             "id_number": "57849003",
@@ -684,7 +713,7 @@ RESPONSE:
 
     RESPONSE:
     ```
-   {
+    {
     "msg": {
         "email": "Gregy@st.knust.edu.gh",
         "first_name": "Pete",
@@ -699,8 +728,11 @@ RESPONSE:
         "person_image": "https://img.com/profilePicture"
     },
     "status": true
-} 
-```
+    } 
+    ```
+
+
+
 
 # HealthDetails
 
@@ -749,6 +781,7 @@ RESPONSE:
         "height": "99.3"
     }
     ```
+
     RESPONSE:
     ```
         {
@@ -855,7 +888,9 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-}```
+    }
+    ```
+
 
 
 # Hospital

@@ -87,7 +87,7 @@ def getHealthDetailsByPatientId(id):
                 "patient_id": healthdetails.patient_id,
                 "last_visit": healthdetails.last_visit,
                 "blood_group": healthdetails.blood_group,
-                'temperature': healthdetails.temperature,
+                "temperature": healthdetails.temperature,
                 "bmi": healthdetails.bmi,
                 "blood_pressure": healthdetails.blood_pressure,
                 "respiratory_rate": healthdetails.respiratory_rate,
