@@ -64,7 +64,7 @@ def createHospital():
 
 #delete hospital by id
 @hospital_route.route("/deletehospital/<id>",methods = ["DELETE"])
-def deletePrescription(id):
+def deleteHospital(id):
     from app import session
     try:
         hospital = session.query(Hospital).get(id)
