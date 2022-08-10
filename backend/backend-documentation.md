@@ -608,20 +608,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "Lackman@gmail.com",
-            "first_name": "Terry",
-            "house_address": "12 molly street",
-            "idPatient": 27,
-            "idDoctor": null,
-            "idGuardian": null,
-            "id_number": "57849003",
-            "last_name": "Lackman",
-            "middle_name": "Meo",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
+            "house_address": "House-4",
+            "idDoctor": 20,
+            "idGuardian": 20,
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
+            "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https:/myImage.com"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -633,23 +637,27 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
-  {
-    "msg": {
-        "email": "maxwell@gmail.com",
-        "first_name": "maxwell",
-        "house_address": "House-4",
-        "idDoctor": 20,
-        "idGuardian": 20,
-        "idPatient": 31,
-        "id_number": "GHA-08008238JJH",
-        "last_name": "Mawube",
-        "middle_name": "Ahiamadzor",
-        "nationality": "Ghanaian",
-        "person_image": "https://img.com/G.O.A.T"
-    },
-    "status": true
-}
+    {
+        "msg": {
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
+            "house_address": "House-4",
+            "idDoctor": 20,
+            "idGuardian": 20,
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
+            "middle_name": "Patient",
+            "nationality": "Ghanaian",
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
+        },
+        "status": true
+    }
 
     ```
 - **Delete patient**
