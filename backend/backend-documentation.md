@@ -700,7 +700,7 @@ RESPONSE:
     },
     "status": true
 } 
-    ```
+```
 
 # HealthDetails
 
@@ -811,8 +811,9 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-}
-```
+}```
+
+
 # Hospital
 
 **Create hospital**
