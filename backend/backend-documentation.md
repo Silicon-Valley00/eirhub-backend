@@ -684,7 +684,7 @@ RESPONSE:
 
     RESPONSE:
     ```
-   {
+    {
     "msg": {
         "email": "Gregy@st.knust.edu.gh",
         "first_name": "Pete",
@@ -699,7 +699,7 @@ RESPONSE:
         "person_image": "https://img.com/profilePicture"
     },
     "status": true
-} 
+    } 
     ```
 
 # HealthDetails
@@ -734,6 +734,7 @@ RESPONSE:
     PUT: /uphealthdetails/`patientId`
 
     BODY PARAMS:
+    ```
     {
         "last_visit": "2002-09-08",
         "blood_group": "B",
@@ -745,6 +746,7 @@ RESPONSE:
         "weight": "87.9",
         "height": "99.3"
     }
+    ```
 
     RESPONSE:
     ```
@@ -811,8 +813,8 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
-}
-```
+    }
+    ```
 # Hospital
 
 **Create hospital**
