@@ -699,8 +699,13 @@ RESPONSE:
         "person_image": "https://img.com/profilePicture"
     },
     "status": true
+<<<<<<< HEAD
     } 
     ```
+=======
+} 
+```
+>>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
 
 # HealthDetails
 
@@ -747,7 +752,10 @@ RESPONSE:
         "height": "99.3"
     }
     ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
     RESPONSE:
     ```
     {
@@ -813,8 +821,14 @@ RESPONSE:
         "weight": 25.0
     },
     "status": true
+<<<<<<< HEAD
     }
     ```
+=======
+}```
+
+
+>>>>>>> effa4d1438bbd4afd39082f988e9579d2c255e02
 # Hospital
 
 **Create hospital**
