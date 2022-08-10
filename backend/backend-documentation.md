@@ -463,7 +463,31 @@ RESPONSE:
 ],
 "status": true
 }
-```     
+```
+
+- **Get Guardian Person By Id**
+
+GET: /guardian/`guardianId`
+
+BODY PARAMS:None
+
+RESPONSE: 
+```
+{
+    "msg": {
+        "date_of_birth": "Thu, 21 Dec 2000 00:00:00 GMT",
+        "email": "guardianofgalaxy@gmail.com",
+        "first_name": "Redford ",
+        "gender": "Male",
+        "id_number": "GHA-009494-233",
+        "last_name": "Tahu",
+        "middle_name": "Guardian",
+        "phone_number": "0206436575"
+    },
+    "status": true
+}
+```
+
 
 
 **Update Guardian Person By Id**		
@@ -508,6 +532,7 @@ RESPONSE:
 
 
 # Patient 
+
 - **Patient Login**:			
 
 	POST : /patient/login		

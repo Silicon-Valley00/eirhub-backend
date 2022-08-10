@@ -51,6 +51,29 @@ def createGuardian():
             return ("Connection Error: User not recorded : %s",e),400
 
 #Get Guardian by id 
+@guardian_route.route("/guardian/<id>",methods = ['GET'])
+def getGuardianById(id):
+    from app import session
+    try:
+        guardian = session.query(GuardianPerson).get(id)
+      
+        return ({
+            
+            "msg": {
+                    'first_name':guardian.first_name,
+                    'middle_name':guardian.middle_name,
+                    'last_name':guardian.last_name,
+                    'email':guardian.user_email,
+                    'date_of_birth':guardian.date_of_birth,
+                    'phone_number':guardian.phone_number,
+                    'id_number':guardian.id_number,
+                    'gender':guardian.gender
+            },
+            "status": True
+            
+            }),200
+    except Exception as e:
+        return(f"Error : ID does not exist: {e}"),400   
 
 
 
