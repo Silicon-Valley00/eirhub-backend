@@ -6,7 +6,73 @@ from flask_cors import CORS
 
 health_details_route = Blueprint("health_details_route",__name__)
 CORS(health_details_route)
+# create health details
+@health_details_route.route("/createhealthdetails/", methods = ["POST"])
+def createHealthDetails():
+    from app import session
+    if request.method == 'POST':
+        content_type = request.headers.get('Content-Type')
+        if(content_type =="application/json"):
+            req = request.json
+            patientId = req["patient_id"]
+            try:
+                healthDetail_Exists = session.query(HealthDetails).filter_by(patient_id = int(patientId)).first()
+                if(healthDetail_Exists):
+                    return({
+                        'status': False,
+                        'msg': "Health Details already exists"
+                    }),200
+            except Exception as e:
+                print("Network Connection Error: {}",(e))
+                return ({
+                        'status': False,
+                        'msg':"Network Connection Error"
+                }),400
+            last_visit=req["last_visit"]
+            blood_group=req["blood_group"]
+            temperature=req["temperature"]
+            bmi= req["bmi"]
+            temperature= req["temperature"]
+            blood_pressure= req["blood_pressure"]
+            respiratory_rate= req["respiratory_rate"]
+            pulse= req["pulse"]
+            blood_sugar=req["blood_sugar"]
+            weight= req["weight"]
+            height= req["height"]
+            
 
+            
+            # Creating an instance
+            newHealthDetails = HealthDetails(last_visit,blood_group,temperature,bmi,blood_pressure,respiratory_rate,pulse,blood_sugar,weight,height,patientId)
+            try:
+                session.add(newHealthDetails)
+                session.commit()
+            except Exception as e:
+                return("Connection Error: Health details not recorded: %s",e),400
+            # Confirming that it has been recorded
+            try:
+                healthdetails = session.query(HealthDetails).filter(HealthDetails.patient_id == int(patientId)).first()
+                return ({
+                    
+                    "msg": {
+                        "patient_id": healthdetails.patient_id,
+                        "last_visit": healthdetails.last_visit,
+                        "blood_group": healthdetails.blood_group,
+                        'temperature': healthdetails.temperature,
+                        "bmi": healthdetails.bmi,
+                        "blood_pressure": healthdetails.blood_pressure,
+                        "respiratory_rate": healthdetails.respiratory_rate,
+                        "pulse": healthdetails.pulse,
+                        "blood_sugar":healthdetails.blood_sugar,
+                        "weight": healthdetails.weight,
+                        "height": healthdetails.height,
+                    },
+                    "status": True
+                    }),200
+            except Exception as e:
+                return(f"Error : ID does not exist: {e}"),400
+        else:
+            return "Error: Content-Type Error",400
 
 # Get HealthDetials By Id
 @health_details_route.route("/healthdetails/<id>",methods = ["GET"])
@@ -61,7 +127,7 @@ def updateHealthDetailsById(patientId):
              , synchronize_session = False
              )
         session.commit()
-        print('pass')
+        # print('pass')
         healthDetailsIn = session.query(HealthDetails).filter_by(patient_id = int(patientId)).first()
         healthDetailsInfo = {
                     "patient_id": healthDetailsIn.patient_id,
@@ -116,6 +182,7 @@ def getHealthDetails():
         }),200
     except Exception as e:
         return("Error: %s",e),400
+
 
 #delete  health detail by heatlh detials id 
 @health_details_route.route("/healthdetails/<int:id>",methods = ["DELETE"])
