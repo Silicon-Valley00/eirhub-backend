@@ -19,7 +19,7 @@ def getReports():
                "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
                 
             },
@@ -43,7 +43,7 @@ def getReportById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
             },
             "status": True
@@ -60,9 +60,7 @@ def createReport():
     if content_type == 'application/json':#check if content is in json format
         req = request.json
         report_type = req['report_type']
-        description = req['description']
-        upload_date = req['created_date']
-        
+        description = req['description']        
         new_report = Report(report_type=report_type,description=description,idPatient=idPatient)
 
         try:
@@ -79,7 +77,7 @@ def createReport():
                     "idReport": new_report.idReport,
                     "report_type": new_report.report_type,
                     "description": new_report.description,
-                    "idPatient": new_report.idPatient,
+                    'upload_date': report.created_at
                     
                 
                     },
@@ -108,7 +106,7 @@ def deleteReportById(id):
                  "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
             },
             "status": True
@@ -131,7 +129,6 @@ def updateReportDetailsById(id):
         report.idReport = req["idReport"]
         report.first_name = req["report_type"]
         report.middle_name = req["description"]
-        report.last_name = req["idPatient"]
         
         session.commit()
         return ({
@@ -140,7 +137,7 @@ def updateReportDetailsById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                
             },
             "status": True
