@@ -103,28 +103,26 @@ def getHealthDetailsByPatientId(id):
         return(f"Error : ID does not exist: {e}"),400
 
 
-#Update healthdetails by ID
+#Update healthdetails by ID / 
 @health_details_route.route("/uphealthdetails/<patientId>",methods = ['PUT'])
 def updateHealthDetailsById(patientId):
     from app import session
     req = request.json
     try: 
-        session.query(HealthDetails).filter(HealthDetails.patient_id == int(patientId)).update(
-             {
-                    
-                    HealthDetails.last_visit:str(req["last_visit"]),
-                    HealthDetails.blood_group: req["blood_group"],
-                    HealthDetails.temperature:req["temperature"],
-                    HealthDetails.bmi: req["bmi"],
-                    HealthDetails.blood_pressure: req["blood_pressure"],
-                    HealthDetails.respiratory_rate: req["respiratory_rate"],
-                    HealthDetails.pulse: req["pulse"],
-                    HealthDetails.blood_sugar:req["blood_sugar"],
-                    HealthDetails.weight: req["weight"],
-                    HealthDetails.height: req["height"],
-            }
-             , synchronize_session = False
-             )
+        healthdetails = session.query(HealthDetails).filter(HealthDetails.patient_id == int(patientId)).first()
+            
+        healthdetails.last_visit=str(req["last_visit"])
+        healthdetails.blood_group= req["blood_group"]
+        healthdetails.temperature=req["temperature"]
+        healthdetails.bmi= req["bmi"]
+        healthdetails.temperature= req["temperature"]
+        healthdetails.blood_pressure= req["blood_pressure"]
+        healthdetails.respiratory_rate= req["respiratory_rate"]
+        healthdetails.pulse= req["pulse"]
+        healthdetails.blood_sugar=req["blood_sugar"]
+        healthdetails.weight= req["weight"]
+        healthdetails.height= req["height"]
+            
         session.commit()
         # print('pass')
         healthDetailsIn = session.query(HealthDetails).filter_by(patient_id = int(patientId)).first()
