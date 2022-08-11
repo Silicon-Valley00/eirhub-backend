@@ -17,12 +17,15 @@ def getPatients():
             
             "msg": {
 
-                "id": patient.idPatient,
+               "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
@@ -46,12 +49,15 @@ def getPatientById(id):
         return ({
             
             "msg": {
-                "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
@@ -83,26 +89,19 @@ def createPatient():
                     'msg':"Patient Email already registered. Do you want to login?"
                 }),200
             first_name = req["first_name"]
-            middle_name = req["middle_name"]
             last_name = req["last_name"]
             user_email = req["user_email"]
-            person_image = req["person_image"]
             date_of_birth =req["date_of_birth"]
-            house_address = req["house_address"]
             user_password = req["user_password"]
-            phone_number = req["phone_number"]
-            id_number = req["id_number"]
-            nationality = req["nationality"]
             gender = req["gender"]
-            doctor_id = req["doctor_id"]
-            guardian_id = req["guardian_id"]
+            # doctor_id = req["doctor_id"]
+            # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
-            newPatient = Patient(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-            person_image=person_image,date_of_birth=date_of_birth,house_address=house_address,phone_number=phone_number,id_number=id_number,
-            gender=gender,nationality=nationality,guardian_id=guardian_id,doctor_id=doctor_id)
+            newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
+           date_of_birth=date_of_birth,gender=gender)
             try: 
-                session.add(newPatient)
+                session.add(newPatient) 
                 session.commit()
             except Exception as e:
                 return ("Connection Error: User not recorded : %s",e),400
@@ -112,6 +111,7 @@ def createPatient():
             if(check_password_hash(patientInfo.user_password,user_password)):
                 return ({
                     'msg':{
+                        'idPatient':patientInfo.idPatient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -119,9 +119,7 @@ def createPatient():
                         'date_of_birth':patientInfo.date_of_birth,
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
-                        'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.idGuardian,
-                        'doctor_id': patientInfo.idDoctor
+                        'gender':patientInfo.gender
 
                     },
                     'status':True
@@ -152,6 +150,7 @@ def patientLogin():
                     if(check_password_hash(userDbPassword,user_password)):
                         return ({
                     'msg':{
+                        'idPatient':patientInfo.idPatient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -161,7 +160,7 @@ def patientLogin():
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
                         'guardian_id': patientInfo.idGuardian,
-                        'doctor_id': patientInfo.idDoctor
+                        'idDoctor': patientInfo.idDoctor
 
                     },
                     'status':True
@@ -202,7 +201,7 @@ def deletePatientById(id):
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -241,14 +240,14 @@ def updatePatientDetailsById(id):
         patient.id_number = req["id_number"]
         patient.nationality = req["nationality"]
         patient.gender = req["gender"]
-        patient.idDoctor = req["doctor_id"]
-        patient.idGuardian = req["guardian_id"]
+        patient.idDoctor = req["idDoctor"]
+        patient.idGuardian = req["idGuardian"]
 
         session.commit()
         return ({
           
             "msg": {
-                 "id": patient.idPatient,
+                "idPatient": patient.idPatient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -258,13 +257,14 @@ def updatePatientDetailsById(id):
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
+                "date_of_birth":patient.date_of_birth
+
             },
             "status": True
             
             }),200
     except Exception as e:
         return(f"Error: Could not update patient details: {e}"),400 
-
-   
-

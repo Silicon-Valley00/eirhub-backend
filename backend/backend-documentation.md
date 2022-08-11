@@ -20,13 +20,13 @@ check_password_hash(a,'1234') #confirms if the hash and the word are equal and r
          
 		- 
 
-[HealthDetails](#HealthDetails )  
-[Doctor](#Doctor )           
+[HealthDetails](#HealthDetails )      
+[Doctor](#Doctor )             
 [Guardian](#Guardian-Person )               
-[Patient](#Patient )           
-[Prescription](#Prescription )      
-[Report](#Report)      
-  
+[Patient](#Patient )  
+[Prescription](#Prescription)            
+[Report](#Report)        
+
 
 
 
@@ -42,16 +42,47 @@ API EndPoint Routes:
 
     RESPONSE:
     ```
-    "msg": {
-        "dosage": "1/day",
-        "drug_name": "lepromax",
-        "end_date": "2023-01-31",
-        "id": 2,
-        "last_taken_date": "2023-01-12",
+    {
+    "msg": [
+        {
+        "dosage": "1/x3",
+        "drug_name": "Ibuprofen",
+        "end_date": "2023-12-31",
+        "id": 12,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-19",
+        "time_of_administration": "12:23:45"
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "trimetazol",
+        "end_date": "2022-12-31",
+        "id": 27,
+        "last_taken_date": "2022-12-31",
         "start_date": "2022-12-31",
         "time_of_administration": "23:59:40"
-    },
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "paracetamol",
+        "end_date": "2022-12-31",
+        "id": 28,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-31",
+        "time_of_administration": "23:59:40"
+        },
+        {
+        "dosage": "1/x2",
+        "drug_name": "contanitpol",
+        "end_date": "2022-12-31",
+        "id": 29,
+        "last_taken_date": "2022-12-31",
+        "start_date": "2022-12-31",
+        "time_of_administration": "23:59:40"
+        }
+    ],
     "status": true
+    }
     ```
 - **Get All Prescriptions**
      GET: /prescription 
@@ -432,7 +463,31 @@ RESPONSE:
 ],
 "status": true
 }
-```     
+```
+
+- **Get Guardian Person By Id**
+
+GET: /guardian/`guardianId`
+
+BODY PARAMS:None
+
+RESPONSE: 
+```
+{
+    "msg": {
+        "date_of_birth": "Thu, 21 Dec 2000 00:00:00 GMT",
+        "email": "guardianofgalaxy@gmail.com",
+        "first_name": "Redford ",
+        "gender": "Male",
+        "id_number": "GHA-009494-233",
+        "last_name": "Tahu",
+        "middle_name": "Guardian",
+        "phone_number": "0206436575"
+    },
+    "status": true
+}
+```
+
 
 
 **Update Guardian Person By Id**		
@@ -477,6 +532,7 @@ RESPONSE:
 
 
 # Patient 
+
 - **Patient Login**:			
 
 	POST : /patient/login		
@@ -516,18 +572,11 @@ RESPONSE:
 
 	```
 	{
-    "first_name": "Rexford",
-    "middle_name":"Patient",
-    "last_name": "Machu",
-    "person_image":"https://img.com/G.O.A.T",
-    "user_email":"baddest69@st.knust.edu.gh",
-    "user_password": "baddestGO@8",
+    "first_name": "Peter",
+    "last_name": "Gregory",
+    "user_email":"greg@st.knust.edu.gh",
+    "user_password": "gregy",
     "date_of_birth":"2009-12-01",
-    "house_address": "House-4",
-    "gender":"Male",
-    "phone_number" : "+233206436575",
-    "id_number": "GHA-08008238HJJ",
-    "nationality":"Ghanaian",
     "doctor_id": 20,
     "guardian_id": 20
     }
@@ -539,18 +588,19 @@ RESPONSE:
     "msg": {
         "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
         "doctor_id": 20,
-        "email": "baddest69@st.knust.edu.gh",
-        "first_name": "Rexford",
-        "gender": "Male",
+        "first_name": "Peter",
+        "gender": null,
         "guardian_id": 20,
-        "id_number": "GHA-08008238HJJ",
-        "last_name": "Machu",
-        "middle_name": "Patient",
-        "phone_number": "+233206436575"
+        "id_number": null,
+        "last_name": "Gregory",
+        "middle_name": null,
+        "phone_number": null,
+        "user_email": "greg@st.knust.edu.gh"
     },
     "status": true
-    }
-	```          
+}
+	```   
+
 - **Get All Patients**
 
     GET : /patient
@@ -558,20 +608,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "Lackman@gmail.com",
-            "first_name": "Terry",
-            "house_address": "12 molly street",
-            "id": 27,
-            "idDoctor": null,
-            "idGuardian": null,
-            "id_number": "57849003",
-            "last_name": "Lackman",
-            "middle_name": "Meo",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
+            "house_address": "House-4",
+            "idDoctor": 20,
+            "idGuardian": 20,
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
+            "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https:/myImage.com"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -583,20 +637,24 @@ RESPONSE:
     BODY PARAMS: None
 
     RESPONSE:
+
     ```
     {
         "msg": {
-            "email": "baddest69@st.knust.edu.gh",
-            "first_name": "Rexford",
+            "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
+            "email": "molly@st.knust.edu.gh",
+            "first_name": "Molly",
+            "gender": "Male",
             "house_address": "House-4",
-            "id": 28,
             "idDoctor": 20,
             "idGuardian": 20,
-            "id_number": "GHA-08008238HJJ",
-            "last_name": "Machu",
+            "idPatient": 30,
+            "id_number": "GHA-00809238HJJ",
+            "last_name": "Malloy",
             "middle_name": "Patient",
             "nationality": "Ghanaian",
-            "person_image": "https://img.com/G.O.A.T"
+            "person_image": "https://img.com/G.O.A.T",
+            "phone_number": "+233206436575"
         },
         "status": true
     }
@@ -616,7 +674,7 @@ RESPONSE:
             "email": "Jackman@gmail.com",
             "first_name": "Jerry",
             "house_address": "12 molly street",
-            "id": 24,
+            "idPatient": 24,
             "idDoctor": null,
             "idGuardian": null,
             "id_number": "57849003",
@@ -636,17 +694,17 @@ RESPONSE:
     BODY PARAMS:
 
     ```
-    {
-        "first_name": "Janine",
+   {
+        "first_name": "Pete",
         "middle_name":"Leta",
-        "last_name": "Mucha",
-        "person_image":"https://img.com/F.G.O.A.T",
-        "email":"Leta@st.knust.edu.gh",
-        "date_of_birth":"2007-12-03",
-        "house_address": "8 health street",
-        "gender":"female",
-        "phone_number" : "+233208936575",
-        "id_number": "GHA-08006328HJJ",
+        "last_name": "Greg",
+        "person_image":"https://img.com/profilePicture",
+        "email":"Gregy@st.knust.edu.gh",
+        "date_of_birth":"2001-07-03",
+        "house_address": "12 sesame street",
+        "gender":"male",
+        "phone_number" : "+233265936575",
+        "id_number": "GHA-08006335HJJ",
         "nationality":"Ghanaian",
         "doctor_id": 20,
         "guardian_id": 20
@@ -656,22 +714,25 @@ RESPONSE:
     RESPONSE:
     ```
     {
-        "msg": {
-            "email": "Leta@st.knust.edu.gh",
-            "first_name": "Janine",
-            "house_address": "8 health street",
-            "id": 27,
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "id_number": "GHA-08006328HJJ",
-            "last_name": "Mucha",
-            "middle_name": "Leta",
-            "nationality": "Ghanaian",
-            "person_image": "https://img.com/F.G.O.A.T"
-        },
-        "status": true
-    }
+    "msg": {
+        "email": "Gregy@st.knust.edu.gh",
+        "first_name": "Pete",
+        "house_address": "12 sesame street",
+        "id": 34,
+        "idDoctor": 20,
+        "idGuardian": 20,
+        "id_number": "GHA-08006335HJJ",
+        "last_name": "Greg",
+        "middle_name": "Leta",
+        "nationality": "Ghanaian",
+        "person_image": "https://img.com/profilePicture"
+    },
+    "status": true
+    } 
     ```
+
+
+
 
 # HealthDetails
 
@@ -685,20 +746,353 @@ RESPONSE:
     ```
     {
         "msg": {
-            "blood_group": "A",
-            "blood_pressure": 56.0,
-            "blood_sugar": "23",
-            "bmi": 45.0,
-            "height": 1.79,
-            "last_visit": "Sat, 09 Jul 2022 00:00:00 GMT",
-            "patient_id": 28,
-            "pulse": 79.0,
-            "respiratory_rate": "75",
-            "weight": 25.0
+            "blood_group": "B",
+            "blood_pressure": 34.6,
+            "blood_sugar": "170",
+            "bmi": 34.3,
+            "height": 99.3,
+            "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+            "patient_id": 31,
+            "pulse": 116.0,
+            "respiratory_rate": "25",
+            "temperature": 32.5,
+            "weight": 87.9
+        },
+        "status": true
+    }   
+    ```
+
+- **Update Health details**
+
+    PUT: /uphealthdetails/`patientId`
+
+    BODY PARAMS:
+    ```
+   {
+        "last_visit": "2002-09-08",
+        "blood_group": "B",
+        "bmi": "34.3",
+        "blood_pressure": "34.6",
+        "respiratory_rate": "116",
+        "temperature":"37",
+        "pulse": "98.9",
+        "blood_sugar": "116",
+        "weight": "87.9",
+        "height": "99.3"
+    } 	 
+    ```
+
+    RESPONSE:
+    ```
+        {
+            "msg": {
+                "blood_group": "B",
+                "blood_pressure": 34.6,
+                "blood_sugar": "Plenty",
+                "bmi": 34.3,
+                "height": 99.3,
+                "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+                "patient_id": 31,
+                "pulse": 98.9,
+                "respiratory_rate": "Good",
+                "temperature": 40.0,
+                "weight": 87.9
+            },
+            "status": true
+    }
+    ```
+
+- **Get All Health Details**   
+
+    POST: /createhealthdetails
+
+    BODY PARAMS:
+    ```
+    {
+        "patient_id": "38",
+        "last_visit": "2009-09-08",
+        "blood_group": "O",
+        "bmi": "40.3",
+        "blood_pressure": "39.6",
+        "respiratory_rate": "Good",
+        "temperature": "43.0",
+        "pulse": "89.9",
+        "blood_sugar": "Plenty",
+        "weight": "78.9",
+        "height": "99.9"
+}
+    ```
+
+    RESPONSE:
+    ```
+    {
+        "msg": {
+            "blood_group": "O",
+            "blood_pressure": 39.6,
+            "blood_sugar": "Plenty",
+            "bmi": 40.3,
+            "height": 99.9,
+            "last_visit": "Tue, 08 Sep 2009 00:00:00 GMT",
+            "patient_id": 38,
+            "pulse": 89.9,
+            "respiratory_rate": "Good",
+            "temperature": 43.0,
+            "weight": 78.9
         },
         "status": true
     }
     ```
+
+    GET: /healthdetails
+
+    BODY PARAMS: None
+
+    RESPONSE:
+    ```
+    {
+    "msg": [
+        {
+            "blood_group": "A",
+            "blood_pressure": 56.0,
+            "blood_sugar": "23",
+            "bmi": 43.0,
+            "height": 1.79,
+            "last_visit": "Thu, 12 Jan 2023 00:00:00 GMT",
+            "patient_id": 31,
+            "pulse": 79.0,
+            "respiratory_rate": "75",
+            "weight": 25.0
+        }
+    ],
+    "status": true
+        }
+    ```
+- **Delete Healh Details On ID**   
+    DELETE: /healthdetails/`idHealthDetails`  
+
+    BODY PARAMS: None   
+
+    RESPONSE:
+    ```
+    {
+    "msg": {
+        "blood_group": "A",
+        "blood_pressure": 56.0,
+        "blood_sugar": "23",
+        "bmi": 43.0,
+        "height": 1.8,
+        "last_visit": "Thu, 12 Jan 2023 00:00:00 GMT",
+        "patient_id": 30,
+        "pulse": 79.0,
+        "respiratory_rate": "75",
+        "weight": 25.0
+    },
+    "status": true
+    }
+    ```
+
+
+
+# Hospital
+
+**Create hospital**
+
+POST: /hospital
+
+BODY PARAMS: 
+```
+{
+    "hospital_name": "Tech Hospital",
+    "location": "knust",
+    "hospital_specialities": "General Consultation",
+    "number_of_doctors": 260,
+    "hospital_code": "pa1s",
+    "phone_number": "+233987848"
+}
+```
+
+RESPONSE:
+```
+{
+    "msg": {
+        "hospital_code": "pa1s",
+        "hospital_name": "Tech Hospital",
+        "hospital_specialities": "General Consultation",
+        "location": "knust",
+        "number_of_doctors": 260,
+        "phone_number": "+233987848"
+    },
+    "status": true
+}
+```
+
+
+**Delete hospital by id**
+
+DELETE: /deletehospital/`idHospital`
+
+BODY PARAMS: None
+
+RESPONSE:
+```
+{
+    "msg": {
+        "hospital_code": "ed1",
+        "hospital_name": "Kah",
+        "hospital_specialities": "Pediatrics",
+        "id": 24,
+        "location": "Bantama",
+        "number_of_doctors": 134,
+        "phone_number": "+2334739"
+    },
+    "status": true
+}
+```
+
+**Update hospital by id**
+
+
+PUT: /updatehospital/`idHospital`
+
+BODY PARAMS:None
+
+RESPONSE:
+```
+{
+    "msg": {
+        "hospital_code": "pa1s",
+        "hospital_name": "north suntreso Hospital",
+        "hospital_specialities": "General Consultation",
+        "id": 15,
+        "location": "Santasi",
+        "number_of_doctors": 260,
+        "phone_number": "+233987848"
+    },
+    "status": true
+}
+```
+
+
+
+
+**Get all hospitals**
+GET: /getallhospital
+
+
+BODY PARAMS:None
+
+RESPONSE:
+```
+{
+     "msg": [
+        {
+            "hospital_code": "ede1",
+            "hospital_name": "Kath",
+            "hospital_specialities": "Pediatrics",
+            "id": 12,
+            "location": "Bantama",
+            "number_of_doctors": 1234,
+            "phone_number": "+2334739"
+        },
+        {
+            "hospital_code": "ede1",
+            "hospital_name": "Kath",
+            "hospital_specialities": "Pediatrics",
+            "id": 13,
+            "location": "Bantama",
+            "number_of_doctors": 1234,
+            "phone_number": "+2334739"
+        },
+        {
+            "hospital_code": "ede1",
+            "hospital_name": "Kath",
+            "hospital_specialities": "Pediatrics",
+            "id": 14,
+            "location": "Bantama",
+            "number_of_doctors": 1234,
+            "phone_number": "+2334739"
+        },
+        {
+            "hospital_code": "ede1",
+            "hospital_name": "Kath",
+            "hospital_specialities": "Pediatrics",
+            "id": 15,
+            "location": "Bantama",
+            "number_of_doctors": 1234,
+            "phone_number": "+2334739"
+        }
+        ]
+}
+```
+
+
+**Get hospital based on id**
+GET:/hospital/`idHospital`
+
+
+BODY PARAMS: None
+
+
+RESPONSE:
+```
+{
+    "msg": {
+        "hospital_code": "ede1",
+        "hospital_name": "Kath",
+        "hospital_specialities": "Pediatrics",
+        "id": 15,
+        "location": "Bantama",
+        "number_of_doctors": 1234,
+        "phone_number": "+2334739"
+    },
+    "status": true
+}
+```
+        "weight": 33.0
+    }
+    }
+    ```
+- **Update healthdetails by ID**
+
+    PUT: /uphealthdetails/`patientID`
+
+    BODY PARAMS:
+
+    ```
+    {
+        "last_visit":"2002-09-08",
+        "blood_group": "O",
+        "bmi": "34.3",
+        "blood_pressure": "34.6",
+        "respiratory_rate": "Good",
+        "pulse": "98.9",
+        "blood_sugar":"Plenty",
+        "weight": "87.9",
+        "height": "99.3"
+    }
+    ```
+
+    RESPONSE:
+    ```
+    {
+        "msg": {
+                "blood_group": "O",
+                "blood_pressure": 34.6,
+                "blood_sugar": "Plenty",
+                "bmi": 34.3,
+                "height": 99.3,
+                "last_visit": "Sun, 08 Sep 2002 00:00:00 GMT",
+                "patient_id": 31,
+                "pulse": 98.9,
+                "respiratory_rate": "Good",
+                "weight": 87.9
+        },
+        "status": true
+    }
+    ```
+
+
+
 
 # Report
 

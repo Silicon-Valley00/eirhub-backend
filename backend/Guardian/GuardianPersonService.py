@@ -23,7 +23,6 @@ def createGuardian():
         first_name = req["first_name"]
         middle_name = req["middle_name"]
         last_name = req["last_name"]
-        person_image = req["person_image"]
         user_email = req["user_email"]
         date_of_birth = req["date_of_birth"]
         house_address = req["house_address"]
@@ -41,9 +40,9 @@ def createGuardian():
                     'first_name':guardianDetail.first_name,
                     'middle_name':guardianDetail.middle_name,
                     'last_name':guardianDetail.last_name,
-                    'person_image':guardianDetail.person_image,
                     'email':guardianDetail.user_email,
                     'date_of_birth':guardianDetail.date_of_birth,
+                    'house_address':guardianDetail.house_address,
                     'phone_number':guardianDetail.phone_number,
                     'id_number':guardianDetail.id_number,
                     'gender':guardianDetail.gender
@@ -52,6 +51,31 @@ def createGuardian():
         except Exception as e:
             return ("Connection Error: User not recorded : %s",e),400
 
+#Get Guardian by id 
+@guardian_route.route("/guardian/<id>",methods = ['GET'])
+def getGuardianById(id):
+    from app import session
+    try:
+        guardian = session.query(GuardianPerson).get(id)
+      
+        return ({
+            
+            "msg": {
+                    'first_name':guardian.first_name,
+                    'middle_name':guardian.middle_name,
+                    'last_name':guardian.last_name,
+                    'email':guardian.user_email,
+                    'date_of_birth':guardian.date_of_birth,
+                    'phone_number':guardian.phone_number,
+                    'house_address':guardian.house_address,
+                    'id_number':guardian.id_number,
+                    'gender':guardian.gender
+            },
+            "status": True
+            
+            }),200
+    except Exception as e:
+        return(f"Error : ID does not exist: {e}"),400   
 
 
 
@@ -66,7 +90,7 @@ def getGuardians():
             returnInfo.append((
                 {
                 'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,'person_image':guardian.person_image,
-            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'id_number':guardian.id_number,'gender':guardian.gender
+            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
             }
             ))
         return ({
@@ -80,7 +104,7 @@ def getGuardians():
 
 
 #Update Guardian Person By Id Method.
-@guardian_route.route("/guardian/<guardianId>/",methods = ['PUT'])
+@guardian_route.route("/guardian/<guardianId>",methods = ['PUT'])
 def updateGuardianById(guardianId):
     from app import session
     req = request.json
@@ -90,7 +114,6 @@ def updateGuardianById(guardianId):
                  GuardianPerson.first_name:req["first_name"],
                  GuardianPerson.middle_name:req["middle_name"],
                  GuardianPerson.last_name:req["last_name"],
-                 GuardianPerson.person_image:req["person_image"],
                  GuardianPerson.user_email:req["user_email"],
                  GuardianPerson.date_of_birth:req["date_of_birth"],
                  GuardianPerson.phone_number:req["phone_number"],

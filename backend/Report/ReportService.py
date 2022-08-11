@@ -1,6 +1,7 @@
 import json
 from flask import request,jsonify,Blueprint
 from Report.ReportModel import Report
+from Patient.PatientModel import Patient
 from flask_cors import CORS
 reports_route = Blueprint("reports_route",__name__)
 CORS(reports_route)
@@ -15,10 +16,11 @@ def getReports():
             
             "msg": {
 
-                "idReport": report.idReport,
+               "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
+                
                 
             },
             "status": True
@@ -41,7 +43,7 @@ def getReportById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -59,35 +61,38 @@ def createReport():
         req = request.json
         report_type = req['report_type']
         description = req['description']
-        idPatient = int(req['idPatient'])
-
+        upload_date = req['created_date']
+        
         new_report = Report(report_type=report_type,description=description,idPatient=idPatient)
 
         try:
-            #add report to the database
-            session.add(new_report)
-            session.commit()
-            reports = session.query(Report).filter(Report.idPatient == idPatient).all()
-            json_reports = [{
+            #Checking if the patient Id actually exists
+            if session.query(Patient).filter(Patient.idPatient == idPatient).first():
+                #add report to the database
+                session.add(new_report)
+                session.commit()
                 
-                "msg": {
+                json_reports = {
+                    
+                    "msg": {
 
-                "idReport": report.idReport,
-                "report_type": report.report_type,
-                "description": report.description,
-                "idPatient": report.idPatient,
+                    "idReport": new_report.idReport,
+                    "report_type": new_report.report_type,
+                    "description": new_report.description,
+                    "idPatient": new_report.idPatient,
+                    
                 
-            
-                },
-                  "status": True
-                }for report in reports ]
-            return jsonify(json_reports),200
-                 
+                    },
+                    "status": True
+                    }
+                return jsonify(json_reports),200
+            else:
+                 return "Patient id does not exist"        
         except Exception as e:
-            print(f'Report could not be created: {e}')
+                print(f'Report could not be created: {e}')
     else:
         return ('Error: Content-Type Error'),400    
-       
+        
 
 # delete report by id
 @reports_route.route("/report/<id>",methods =["DELETE"] )
@@ -103,7 +108,7 @@ def deleteReportById(id):
                  "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -135,7 +140,7 @@ def updateReportDetailsById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                
             },
             "status": True

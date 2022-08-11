@@ -1,4 +1,5 @@
-from sqlalchemy import Column, ForeignKey,Integer,String, Text
+from pymysql import TIMESTAMP, Time, Timestamp
+from sqlalchemy import Column, DateTime, ForeignKey,Integer,String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declarative_base
 
@@ -12,10 +13,12 @@ class Report(Base):
     report_type = Column('report_type',String(45))
     description = Column('description',Text)
     idPatient = Column(Integer,ForeignKey(Patient.idPatient, ondelete='CASCADE'), nullable=True,)
+    created_at = Column('created_at',DateTime, nullable=True)
     #to be added when the merge is done
     
     def __init__(self,report_type,description,idPatient):
         self.report_type = report_type
         self.description = description
         self.idPatient = idPatient
+        
     
