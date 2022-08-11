@@ -42,6 +42,7 @@ def createGuardian():
                     'last_name':guardianDetail.last_name,
                     'email':guardianDetail.user_email,
                     'date_of_birth':guardianDetail.date_of_birth,
+                    'house_address':guardianDetail.house_address,
                     'phone_number':guardianDetail.phone_number,
                     'id_number':guardianDetail.id_number,
                     'gender':guardianDetail.gender
@@ -66,6 +67,7 @@ def getGuardianById(id):
                     'email':guardian.user_email,
                     'date_of_birth':guardian.date_of_birth,
                     'phone_number':guardian.phone_number,
+                    'house_address':guardian.house_address,
                     'id_number':guardian.id_number,
                     'gender':guardian.gender
             },
@@ -88,7 +90,7 @@ def getGuardians():
             returnInfo.append((
                 {
                 'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,'person_image':guardian.person_image,
-            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'id_number':guardian.id_number,'gender':guardian.gender
+            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
             }
             ))
         return ({

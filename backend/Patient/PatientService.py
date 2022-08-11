@@ -160,7 +160,7 @@ def patientLogin():
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
                         'guardian_id': patientInfo.idGuardian,
-                        'doctor_id': patientInfo.idDoctor
+                        'idDoctor': patientInfo.idDoctor
 
                     },
                     'status':True
