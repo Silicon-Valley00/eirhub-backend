@@ -21,6 +21,7 @@ def getReports():
                 "description": report.description,
                 "idPatient": report.idPatient,
                 
+                
             },
             "status": True
             
