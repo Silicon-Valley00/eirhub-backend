@@ -240,8 +240,8 @@ def updatePatientDetailsById(id):
         patient.id_number = req["id_number"]
         patient.nationality = req["nationality"]
         patient.gender = req["gender"]
-        patient.idDoctor = req["doctor_id"]
-        patient.idGuardian = req["guardian_id"]
+        patient.idDoctor = req["idDoctor"]
+        patient.idGuardian = req["idGuardian"]
 
         session.commit()
         return ({
@@ -257,7 +257,11 @@ def updatePatientDetailsById(id):
                 "idGuardian": patient.idGuardian,
                 "idDoctor": patient.idDoctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
+                "date_of_birth":patient.date_of_birth
+
             },
             "status": True
             

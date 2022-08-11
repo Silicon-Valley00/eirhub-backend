@@ -104,7 +104,7 @@ def getGuardians():
 
 
 #Update Guardian Person By Id Method.
-@guardian_route.route("/guardian/<guardianId>/",methods = ['PUT'])
+@guardian_route.route("/guardian/<guardianId>",methods = ['PUT'])
 def updateGuardianById(guardianId):
     from app import session
     req = request.json
