@@ -16,10 +16,10 @@ def getReports():
             
             "msg": {
 
-                "idReport": report.idReport,
+               "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
                 
             },
@@ -43,7 +43,7 @@ def getReportById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -108,7 +108,7 @@ def deleteReportById(id):
                  "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -140,7 +140,7 @@ def updateReportDetailsById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                
             },
             "status": True
