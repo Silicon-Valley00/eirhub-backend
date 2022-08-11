@@ -31,8 +31,10 @@ class Patient(Base):
     nationality = Column("nationality",String(50))
     gender = Column("gender",String(45))
 
-    health_details = relationship("HealthDetails",uselist=False,back_populates = "patient")
-    prescription = relationship("Prescription",cascade='save-update, merge, delete')
+    # relationships
+    health_details = relationship("HealthDetails", uselist=False,back_populates="patient")
+    prescription = relationship("Prescription", cascade='save-update, merge, delete')
+    appointments = relationship("Appointment", backref="patient")
    
    
     
