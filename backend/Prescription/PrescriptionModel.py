@@ -12,7 +12,7 @@ class Prescription(Base):
     idPrescription = Column("idPrescription",Integer,primary_key= True, unique=True, nullable= False, autoincrement=True)
     drug_name = Column('drug_name', String(45), nullable=False)
     dosage = Column('dosage', String(45), nullable = False)
-    time_of_administration = Column('time_of_administration',Time,nullable=False)
+    time_of_administration = Column('time_of_administration',String(45),nullable=False)
     start_date = Column('start_date', Date,nullable=False)
     end_date = Column('end_date', Date,nullable=False)
     last_taken_date = Column('last_taken_date', Date,nullable=False)

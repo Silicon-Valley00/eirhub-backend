@@ -768,18 +768,18 @@ RESPONSE:
 
     BODY PARAMS:
     ```
-    {
+   {
         "last_visit": "2002-09-08",
         "blood_group": "B",
         "bmi": "34.3",
         "blood_pressure": "34.6",
-        "respiratory_rate": "Good",
-        "temperature": "40.0",
+        "respiratory_rate": "116",
+        "temperature":"37",
         "pulse": "98.9",
-        "blood_sugar": "Plenty",
+        "blood_sugar": "116",
         "weight": "87.9",
         "height": "99.3"
-    }
+    } 	 
     ```
 
     RESPONSE:

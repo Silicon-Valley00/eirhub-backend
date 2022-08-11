@@ -42,7 +42,7 @@ def getPrescriptions():
         prescriptions = session.query(Prescription).all()
         prescriptionInfo = []
         for prescription in prescriptions:
-            prescriptionInfo.append((# put all the prescriptions into the list prescriptionInfor
+            prescriptionInfo.append((# put all the prescriptions into the list prescriptionInfo
                 {
                     'id': prescription.idPrescription,
                     'drug_name':prescription.drug_name,
@@ -60,7 +60,7 @@ def getPrescriptions():
     except Exception as e:
         return("Connection Error: %s",e),400
     
-#works but there is still a problem with the return type 
+
 @prescription_route.route("/prescription",methods = ["POST"])
 def createPrescription():
     from app import session
@@ -85,7 +85,7 @@ def createPrescription():
             }),200
         #create prescription because it doesn't exist
         newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,idPatient)
-        try:# addd it to the database
+        try:# add it to the database
             session.add(newPrescription)
             session.commit()
         except Exception as e:
