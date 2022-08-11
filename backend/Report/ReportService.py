@@ -16,10 +16,11 @@ def getReports():
             
             "msg": {
 
-                "idReport": report.idReport,
+               "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
+                
                 
             },
             "status": True
@@ -42,7 +43,7 @@ def getReportById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -60,8 +61,8 @@ def createReport():
         req = request.json
         report_type = req['report_type']
         description = req['description']
-        idPatient = int(req['idPatient'])
-
+        upload_date = req['created_date']
+        
         new_report = Report(report_type=report_type,description=description,idPatient=idPatient)
 
         try:
@@ -107,7 +108,7 @@ def deleteReportById(id):
                  "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                 
             },
             "status": True
@@ -139,7 +140,7 @@ def updateReportDetailsById(id):
                 "idReport": report.idReport,
                 "report_type": report.report_type,
                 "description": report.description,
-                "idPatient": report.idPatient,
+                'upload_date': report.created_date
                
             },
             "status": True
