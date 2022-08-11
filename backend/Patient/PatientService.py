@@ -219,7 +219,7 @@ def deletePatientById(id):
      except Exception as e:
         return(f"Error: Could not delete patient: {e}"),400 
 
-#Update patient info 
+#Update patient info
 @patients_route.route("/patient/<id>",methods = ["PUT"])
 def updatePatientDetailsById(id):
     from app import session

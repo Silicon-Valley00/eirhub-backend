@@ -802,7 +802,7 @@ RESPONSE:
     }
     ```
 
-- **Get All Health Details**   
+- **Create Health Details**   
 
     POST: /createhealthdetails
 
@@ -842,7 +842,7 @@ RESPONSE:
         "status": true
     }
     ```
-
+-**Get all health details
     GET: /healthdetails
 
     BODY PARAMS: None
