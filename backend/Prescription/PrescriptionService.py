@@ -121,7 +121,6 @@ def updatePrescriptionById(id):
                 Prescription.drug_name : req["drug_name"],
                 Prescription.start_date : req["start_date"],
                 Prescription.end_date : req['end_date'],
-                Prescription.idPatient : req['idPatient'],
                 Prescription.last_taken_date : req["last_taken_date"],
                 Prescription.dosage : req["dosage"],
                 Prescription.time_of_administration :req["time_of_administration"]
