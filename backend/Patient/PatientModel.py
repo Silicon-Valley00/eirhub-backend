@@ -1,15 +1,14 @@
 from enum import unique
 from tkinter import CASCADE
 from sqlalchemy import Column,Integer,String,Date,ForeignKey,Float
-from sqlalchemy.orm import declarative_base,relationship
+from sqlalchemy.orm import relationship
 # from app import Base,session
 # from HealthDetails.HealthDetailsModel import HealthDetails
 from Guardian.GuardianPersonModel import GuardianPerson
 from Doctor.DoctorModel import Doctor
 
 
-
-Base = declarative_base()
+from base import Base
 
 # class_associations = Table('patients_doctors',Base.metadata,Column("patient_id",ForeignKey = ))
 
@@ -31,8 +30,10 @@ class Patient(Base):
     nationality = Column("nationality",String(50))
     gender = Column("gender",String(45))
 
-    health_details = relationship("HealthDetails",uselist=False,back_populates = "patient")
-    prescription = relationship("Prescription",cascade='save-update, merge, delete')
+    # relationships
+    health_details = relationship("HealthDetails", uselist=False,back_populates="patient")
+    prescription = relationship("Prescription", cascade='save-update, merge, delete')
+    appointments = relationship("Appointment", backref="patient")
    
    
     

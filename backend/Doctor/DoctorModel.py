@@ -1,7 +1,7 @@
 from sqlalchemy import DATE, Column,Integer,String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import declarative_base
-Base = declarative_base()
+from sqlalchemy.orm import declarative_base, relationship
+from base import Base
 
 
 class Doctor(Base):
@@ -20,6 +20,9 @@ class Doctor(Base):
     doctor_specialties = Column('doctor_specialties',String(200),nullable  = False)
     gender = Column('gender',String(45),nullable  = False)
     hospital_code = Column('hospital_code',String(45),unique = True,nullable  = False)
+
+    # relationships
+    appointments = relationship("Appointment", backref="doctor")
     
     def __init__ (self,first_name,middle_name,last_name,user_email,user_password,person_image,date_of_birth,house_address,doctor_ratings,doctor_specialties,license_number,gender,hospital_code):
         self.first_name = first_name

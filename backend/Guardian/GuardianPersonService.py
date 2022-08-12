@@ -29,7 +29,8 @@ def createGuardian():
         phone_number = req["phone_number"]
         id_number = req["id_number"]
         gender = req["gender"]
-        newGuardian = GuardianPerson(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,person_image=person_image,date_of_birth=date_of_birth,house_address=house_address,phone_number=phone_number,id_number=id_number,gender=gender)
+
+        newGuardian = GuardianPerson(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,date_of_birth=date_of_birth,house_address=house_address,phone_number=phone_number,id_number=id_number,gender=gender)
         try: 
             session.add(newGuardian)
             session.commit()
@@ -126,7 +127,7 @@ def updateGuardianById(guardianId):
         session.commit()
         guardianInfo = session.query(GuardianPerson).get(int(guardianId))
         returnInfo = {
-            'first_name':guardianInfo.first_name,'middle_name':guardianInfo.middle_name,'last_name':guardianInfo.last_name,'person_image':guardianInfo.person_image,
+            'first_name':guardianInfo.first_name,'middle_name':guardianInfo.middle_name,'last_name':guardianInfo.last_name,
             'user_email':guardianInfo.user_email,'date_of_birth':guardianInfo.date_of_birth,'phone_number':guardianInfo.phone_number,'id_number':guardianInfo.id_number,
             'gender':guardianInfo.gender, 'house_address': guardianInfo.house_address
             }
