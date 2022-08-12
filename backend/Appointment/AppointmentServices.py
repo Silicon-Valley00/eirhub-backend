@@ -1,5 +1,9 @@
+from crypt import methods
+from shutil import ExecError
+from tkinter import E
 from flask import request, Blueprint
 from flask_cors import CORS
+from werkzeug.wrappers import response
 
 from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message
@@ -18,7 +22,7 @@ def getAppointments():
         respones_message = generate_response_message(appointments)
         return (respones_message, 200)
     except Exception as e:
-        return (f"Connection Error: Could not get appointments\n{e}", 400)
+        return (f"Connection Error: Could not get appointments.\n{e}", 400)
 
 # adding appointments to the table
 @appointment_route.route("/appointment/add", methods=["POST"])
@@ -74,7 +78,7 @@ def getAppointmentByPatientId(patientId):
         respones_message = generate_response_message(appointments)
         return (respones_message, 200)
     except Exception as e:
-        return (f"Error : Patient ID does not exist: {e}"),400
+        return (f"Error : Patient ID does not exist: {e}"), 400
 
 #Get appointment by Doctor ID
 @appointment_route.route("/appointments/doctors/<doctorId>", methods = ['GET'])
@@ -86,4 +90,42 @@ def getAppointmentByDoctorId(doctorId):
         respones_message = generate_response_message(appointments)
         return (respones_message, 200)
     except Exception as e:
-        return (f"Error : Doctor ID does not exist: {e}"),400
+        return (f"Error : Doctor ID does not exist: {e}"), 400
+
+# Changing appointment status by appointment ID
+@appointment_route.route("/appointment/status/<int:id>/<int:number>", methods=["PUT"])
+def changeAppointmentStatusById(id, number):
+    from app import session
+    try:
+        # having a specification of the status options available
+        statuses = {
+            0: "Pending",
+            1: "Accepted",
+            2: "Declined"
+        }
+        # making sure the number provided refers to a status
+        if number in statuses:
+            # getting appointment and making the status change
+            appointment = session.query(Appointment).get(id)
+            appointment.appointment_status = statuses[number]
+            session.commit()
+            # reponse with updated status
+            response_message = generate_response_message([appointment])
+            return (response_message, 200)
+        else:
+            raise Exception("Invalid status key provided. Status keys are 0, 1 and 2 for 'Pending', 'Accepted' and 'Declined' respectfully.")
+    except Exception as e:
+        return (f"Error updating appointment status: {e}", 400)
+
+# Deleting appointment by its ID
+@appointment_route.route("/appointment/delete/<int:id>", methods=["DELETE"])
+def deleteAppointmentById(id):
+    from app import session
+    try:
+        appointment = session.query(Appointment).get(id)
+        session.delete(appointment)
+        session.commit()
+        response_message = generate_response_message([appointment])
+        return (response_message, 200)
+    except Exception as e:
+        return (f"Error deleting appointment: {e}", 400)
