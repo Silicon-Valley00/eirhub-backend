@@ -25,7 +25,7 @@ def getAppointments():
         return (f"Connection Error: Could not get appointments.\n{e}", 400)
 
 # adding appointments to the table
-@appointment_route.route("/appointment/add", methods=["POST"])
+@appointment_route.route("/appointment", methods=["POST"])
 def addAppointment():
     from app import session
     content_type = request.headers.get("Content-Type")
@@ -118,7 +118,7 @@ def changeAppointmentStatusById(id, number):
         return (f"Error updating appointment status: {e}", 400)
 
 # Deleting appointment by its ID
-@appointment_route.route("/appointment/delete/<int:id>", methods=["DELETE"])
+@appointment_route.route("/appointment/<int:id>", methods=["DELETE"])
 def deleteAppointmentById(id):
     from app import session
     try:
