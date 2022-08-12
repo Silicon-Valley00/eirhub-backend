@@ -1,5 +1,4 @@
 from enum import auto
-from tkinter import CASCADE
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import declarative_base, relationship
 # from app import Base
