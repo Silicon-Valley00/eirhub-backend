@@ -21,7 +21,7 @@ def getAppointments():
         return (f"Connection Error: Could not get appointments\n{e}", 400)
 
 # adding appointments to the table
-@appointment_route.route("/appointment/add", methods=["POST"])
+@appointment_route.route("/appointments", methods=["POST"])
 def addAppointment():
     from app import session
     content_type = request.headers.get("Content-Type")
@@ -87,3 +87,28 @@ def getAppointmentByDoctorId(doctorId):
         return (respones_message, 200)
     except Exception as e:
         return (f"Error : Doctor ID does not exist: {e}"),400
+
+#Update appointment by Id
+@appointment_route.route("/appointments/<int:id>", methods = ['PUT'])
+def updateAppointmentById(id):
+    from app import session
+    req = request.json
+   
+    try:
+        appointment = session.query(Appointment).get(id)
+        
+        #update details with new parameters
+        appointment.appointment_date= req["appointment_date"],
+        appointment.appointment_start_time= req["appointment_start_time"],
+        appointment.appointment_end_time= req["appointment_end_time"],
+        appointment.appointment_reason= req["appointment_reason"],
+        appointment.appointment_status= req["appointment_status"],
+        appointment.idPatient= req["idPatient"],
+        appointment.idDoctor= req["idDoctor"]
+            
+        session.commit()
+        respones_message = generate_response_message([appointment])
+        return (respones_message, 200)
+
+    except Exception as e:
+        return (f"Error : Appointment ID does not exist: {e}"),400

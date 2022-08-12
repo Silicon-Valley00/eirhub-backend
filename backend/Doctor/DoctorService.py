@@ -1,5 +1,6 @@
-from flask import Blueprint,request
+from flask import Blueprint,request,jsonify
 from Doctor.DoctorModel import Doctor
+from Patient.PatientModel import Patient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
@@ -216,3 +217,34 @@ def getDoctorById(doctorId):
         }),200
     except Exception as e:
         return ("Connection Error: User not recorded : %s",e),400
+
+#Get patients by DoctorID
+@doctor_route.route("/doctors/patients/<doctorId>",methods = ['GET'])
+def getpatientsByDoctorId(doctorId):
+    from app import session
+    try:
+        #filtering patients based on doctor IDs
+        patients = session.query(Patient).filter(Patient.idDoctor == doctorId).all()
+        returnInfo =  [{
+            'status': True,
+            'msg': {
+                "idPatient": patient.idPatient,
+                "first_name": patient.first_name,
+                "middle_name": patient.middle_name,
+                "last_name": patient.last_name,
+                "email": patient.user_email,
+                "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
+                "id_number": patient.id_number,
+                "idGuardian": patient.idGuardian,
+                "idDoctor": patient.idDoctor,
+                "house_address": patient.house_address,
+                "nationality": patient.nationality
+            },
+        } for patient in patients]
+        
+        return jsonify(returnInfo),200
+    except Exception as e:
+        return ("Connection Error: No Doctor found for patient : %s",e),400
