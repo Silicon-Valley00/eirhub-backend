@@ -62,4 +62,28 @@ def addAppointment():
     else:
         return ("Error: Content-Type Eror", 400)
 
+#Update appointment status by ID        
+
 #Get appointment by patient ID
+@appointment_route.route("/appointments/patients/<patientId>",methods = ['GET'])
+def getAppointmentByPatientId(patientId):
+    from app import session
+    try:
+        #filtering appointments based on patient IDs
+        appointments = session.query(Appointment).filter(Appointment.idPatient == patientId).all()
+        respones_message = generate_response_message(appointments)
+        return (respones_message, 200)
+    except Exception as e:
+        return (f"Error : Patient ID does not exist: {e}"),400
+
+#Get appointment by Doctor ID
+@appointment_route.route("/appointments/doctors/<doctorId>", methods = ['GET'])
+def getAppointmentByDoctorId(doctorId):
+    from app import session
+    try:
+        #filtering appointments based on Doctor IDs
+        appointments = session.query(Appointment).filter(Appointment.idDoctor == doctorId).all()
+        respones_message = generate_response_message(appointments)
+        return (respones_message, 200)
+    except Exception as e:
+        return (f"Error : Doctor ID does not exist: {e}"),400
