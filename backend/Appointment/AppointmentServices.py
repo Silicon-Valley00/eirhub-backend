@@ -10,7 +10,7 @@ appointment_route = Blueprint("appointment_route", __name__)
 CORS(appointment_route)
 
 # getting all the appointments in the table
-@appointment_route.route("/appointment", methods=["GET"])
+@appointment_route.route("/appointments", methods=["GET"])
 def getAppointments():
     from app import session
     try:
@@ -50,8 +50,10 @@ def addAppointment():
                 # adding the new appointment to table if doctor and patient do exist
                 session.add(new_appointment)
                 session.commit()
+
                 # returning a reponse of the newly created appointment
-                reponse_message = generate_response_message(new_appointment)
+                reponse_message = generate_response_message([new_appointment])
+                
                 return (reponse_message, 200)
             else:
                 return ("Patient or Doctor does not exist")
@@ -59,3 +61,5 @@ def addAppointment():
             return(f"Appointment could not be added: {e}")
     else:
         return ("Error: Content-Type Eror", 400)
+
+#Get appointment by patient ID

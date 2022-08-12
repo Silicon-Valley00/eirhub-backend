@@ -8,8 +8,8 @@ def generate_response_message(appointments: list):
         "msg": {
             "idAppointment": appointment.idAppointment,
             "appointment_date": appointment.appointment_date,
-            "appointment_start_time": appointment.appointment_start_time,
-            "appointment_end_time": appointment.appointment_end_time,
+            "appointment_start_time": str(appointment.appointment_start_time),
+            "appointment_end_time": str(appointment.appointment_end_time),
             "appointment_reason": appointment.appointment_reason,
             "appointment_status": appointment.appointment_status,
             "idPatient": appointment.idPatient,
