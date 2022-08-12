@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint
+from flask import request, Blueprint
 from flask_cors import CORS
 
 from Appointment.AppointmentModel import Appointment

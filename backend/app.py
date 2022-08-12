@@ -17,8 +17,6 @@ from Appointment.AppointmentServices import appointment_route
 # from Report.ReportService import reports_route
 
 from Report.ReportService import reports_route
-from HealthDetails.HealthDetailsModel import HealthDetails
-
 
 app = Flask(__name__)
 load_dotenv()
@@ -26,7 +24,7 @@ engine = create_engine( os.getenv('dbconnectionstring'))#establish a connection 
 Session = sessionmaker(bind=engine)
 session = Session()
 meta = MetaData()
-Base = declarative_base()
+from base import Base
 
 
 #App Blueprint

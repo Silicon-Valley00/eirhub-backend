@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import declarative_base, relationship
 # from app import Base
 # from Patient.PatientModel import Patient,Base
-Base = declarative_base()
+from base import Base
 
 
 class GuardianPerson(Base):

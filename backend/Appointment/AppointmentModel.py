@@ -6,7 +6,7 @@ from Patient.PatientModel import Patient
 from Doctor.DoctorModel import Doctor
 from Hospital.HospitalModel import Hospital
 
-Base = declarative_base()
+from base import Base
 
 class Appointment(Base):
     __tablename__ = "Appointment"

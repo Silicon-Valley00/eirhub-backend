@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.dialects.mysql import ENUM
-from Patient.PatientModel import Patient,Base
+from Patient.PatientModel import Patient
 # from app import Base
 
-# Base = declarative_base()
+from base import Base
 
 class HealthDetails(Base):
     __tablename__ = 'HealthDetails'
