@@ -1,6 +1,3 @@
-from crypt import methods
-from shutil import ExecError
-from tkinter import E
 from flask import request, Blueprint
 from flask_cors import CORS
 from werkzeug.wrappers import response
@@ -90,7 +87,33 @@ def getAppointmentByDoctorId(doctorId):
         respones_message = generate_response_message(appointments)
         return (respones_message, 200)
     except Exception as e:
-        return (f"Error : Doctor ID does not exist: {e}"), 400
+        return (f"Error : Doctor ID does not exist: {e}"),400
+
+#Update appointment by Id
+@appointment_route.route("/appointments/<int:id>", methods = ['PUT'])
+def updateAppointmentById(id):
+    from app import session
+    req = request.json
+   
+    try:
+        appointment = session.query(Appointment).get(id)
+        
+        #update details with new parameters
+        appointment.appointment_date= req["appointment_date"],
+        appointment.appointment_start_time= req["appointment_start_time"],
+        appointment.appointment_end_time= req["appointment_end_time"],
+        appointment.appointment_reason= req["appointment_reason"],
+        appointment.appointment_status= req["appointment_status"],
+        appointment.idPatient= req["idPatient"],
+        appointment.idDoctor= req["idDoctor"]
+            
+        session.commit()
+        respones_message = generate_response_message([appointment])
+        return (respones_message, 200)
+
+    except Exception as e:
+        return (f"Error : Appointment ID does not exist: {e}"),400
+        
 
 # Changing appointment status by appointment ID
 @appointment_route.route("/appointment/status/<int:id>/<int:number>", methods=["PUT"])
