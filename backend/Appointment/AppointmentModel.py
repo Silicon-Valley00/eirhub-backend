@@ -14,10 +14,10 @@ class Appointment(Base):
 
     # defining attributes for appointment details
     appointment_date = Column("appointment_date", Date)
-    appointment_start_time = Column("start_time", Time)
-    appointment_end_time = Column("end_time", Time)
-    appointment_reason = Column("reason", String(300))
-    appointment_status = Column("appointement_status", ENUM("Pending", "Accepted", "Declined"), nullable=False)
+    appointment_start_time = Column("appointment_start_time", Time)
+    appointment_end_time = Column("appointment_end_time", Time)
+    appointment_reason = Column("appointment_reason", String(300))
+    appointment_status = Column("appointment_status", ENUM("Pending", "Accepted", "Declined"), nullable=False)
 
     # defining relationships for appointment
     idPatient = Column(Integer, ForeignKey(Patient.idPatient))
