@@ -115,7 +115,6 @@ def updateHealthDetailsById(patientId):
         healthdetails.blood_group= req["blood_group"]
         healthdetails.temperature=req["temperature"]
         healthdetails.bmi= req["bmi"]
-        healthdetails.temperature= req["temperature"]
         healthdetails.blood_pressure= req["blood_pressure"]
         healthdetails.respiratory_rate= req["respiratory_rate"]
         healthdetails.pulse= req["pulse"]
