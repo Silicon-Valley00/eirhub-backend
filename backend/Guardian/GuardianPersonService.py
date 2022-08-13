@@ -91,7 +91,7 @@ def getGuardians():
             returnInfo.append((
                 {
                 'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,
-            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
+            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender, "idGuardian": guardian.idGuardian
             }
             ))
         return ({
@@ -110,20 +110,22 @@ def updateGuardianById(guardianId):
     from app import session
     req = request.json
     try: 
-        session.query(GuardianPerson).filter(GuardianPerson.idGuardian== int(guardianId)).update(
-             {
-                 GuardianPerson.first_name:req["first_name"],
-                 GuardianPerson.middle_name:req["middle_name"],
-                 GuardianPerson.last_name:req["last_name"],
-                 GuardianPerson.user_email:req["user_email"],
-                 GuardianPerson.date_of_birth:req["date_of_birth"],
-                 GuardianPerson.phone_number:req["phone_number"],
-                 GuardianPerson.id_number:req["id_number"],
-                 GuardianPerson.gender:req["gender"],
-                 GuardianPerson.house_address: req["house_address"]
-            }
-             , synchronize_session = False
-             )
+        guardian = session.query(GuardianPerson).get(guardianId)
+
+        print("before")
+
+        guardian.first_name = req["first_name"],
+        guardian.middle_name = req["middle_name"],
+        guardian.last_name = req["last_name"],
+        guardian.user_email = req["user_email"],
+        guardian.date_of_birth = req["date_of_birth"],
+        guardian.phone_number = req["phone_number"],
+        guardian.id_number = req["id_number"],
+        guardian.gender = req["gender"],
+        guardian.house_address = req["house_address"]
+
+        print("After changing")
+
         session.commit()
         guardianInfo = session.query(GuardianPerson).get(int(guardianId))
 
@@ -142,10 +144,7 @@ def updateGuardianById(guardianId):
             }
         }),200
     except Exception as e:
-        return ({
-            'status':False,
-            'msg': ("Connection Error: User not updated : %s",e)
-        }),400
+        return (f"Error updating guardian: {e}", 400)
 
 
 
