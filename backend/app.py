@@ -20,7 +20,9 @@ from Report.ReportService import reports_route
 
 app = Flask(__name__)
 load_dotenv()
+
 engine = create_engine( os.getenv('dbconnectionstring'),pool_pre_ping = True)#establish a connection with the database
+
 Session = sessionmaker(bind=engine)
 session = Session()
 meta = MetaData()

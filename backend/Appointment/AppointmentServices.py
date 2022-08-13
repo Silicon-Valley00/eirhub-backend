@@ -8,7 +8,7 @@ from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
 
 appointment_route = Blueprint("appointment_route", __name__)
-CORS(appointment_route)
+CORS(appointment_route) 
 
 # getting all the appointments in the table
 @appointment_route.route("/appointments", methods=["GET"])
