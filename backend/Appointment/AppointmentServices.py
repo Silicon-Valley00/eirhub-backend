@@ -35,11 +35,11 @@ def addAppointment():
             appointment_date=request_content["appointment_date"],
             appointment_start_time=request_content["appointment_start_time"],
             appointment_end_time=request_content["appointment_end_time"],
-            appointment_reason=request_content["appointment_reason"],
-            appointment_status=request_content["appointment_status"],
+            appointment_reason= request_content["appointment_reason"],
+            appointment_status= request_content["appointment_status"],
             appointment_location=request_content["appointment_location"],
-            idPatient=request_content["idPatient"],
-            idDoctor=request_content["idDoctor"]
+            idPatient= request_content["idPatient"],
+            idDoctor= request_content["idDoctor"]
         )
 
         try:

@@ -126,14 +126,20 @@ def updateGuardianById(guardianId):
              )
         session.commit()
         guardianInfo = session.query(GuardianPerson).get(int(guardianId))
-        returnInfo = {
-            'first_name':guardianInfo.first_name,'middle_name':guardianInfo.middle_name,'last_name':guardianInfo.last_name,
-            'user_email':guardianInfo.user_email,'date_of_birth':guardianInfo.date_of_birth,'phone_number':guardianInfo.phone_number,'id_number':guardianInfo.id_number,
-            'gender':guardianInfo.gender, 'house_address': guardianInfo.house_address
-            }
+
         return ({
             'status': True,
-            'msg': returnInfo
+            'msg':{  
+            'first_name':guardianInfo.first_name,
+            'middle_name':guardianInfo.middle_name,
+            'last_name':guardianInfo.last_name,
+            'user_email':guardianInfo.user_email,
+            'date_of_birth':guardianInfo.date_of_birth,
+            'phone_number':guardianInfo.phone_number,
+            'id_number':guardianInfo.id_number,
+            'gender':guardianInfo.gender, 
+            'house_address': guardianInfo.house_address
+            }
         }),200
     except Exception as e:
         return ({
