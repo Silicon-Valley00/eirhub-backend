@@ -30,8 +30,9 @@ def createDoctor():
                         'status': False,
                         'msg':"Network Connection Error"
                 }),400
+
             first_name = req["first_name"]
-            middle_name = req["middle_name"]
+            # middle_name = req["middle_name"]
             last_name = req["last_name"]
             user_email = req["user_email"]
             user_password = req["user_password"]
@@ -46,7 +47,7 @@ def createDoctor():
 
             #hash password
             hashed_password = generate_password_hash(user_password)
-            newDoctor = Doctor(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code)
+            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code)
             try: 
                 session.add(newDoctor)
                 session.commit()
@@ -149,7 +150,7 @@ def getDoctors():
 
 
 #Update Doctors By Id Method.
-@doctor_route.route("/doctor/<doctorId>/",methods = ['PUT'])
+@doctor_route.route("/doctor/<doctorId>",methods = ['PUT'])
 def updateDoctorById(doctorId):
     from app import session
     req = request.json
@@ -166,8 +167,8 @@ def updateDoctorById(doctorId):
                 Doctor.license_number :req["license_number"],
                 Doctor.doctor_ratings :req["doctor_ratings"],
                 Doctor.doctor_specialties :req["doctor_specialities"],
-                Doctor.gender :req["gender"],
-                Doctor.hospital_code :req["hospital_code"]
+                Doctor.gender : req["gender"],
+                Doctor.hospital_code : req["hospital_code"]
             }
              , synchronize_session = False
              )
@@ -191,7 +192,7 @@ def updateDoctorById(doctorId):
 
 
 # Get Doctor by doctorId
-@doctor_route.route('/doctor/<doctorId>/', methods = ['GET'])
+@doctor_route.route('/doctor/<doctorId>', methods = ['GET'])
 def getDoctorById(doctorId):
     from app import session
     try:

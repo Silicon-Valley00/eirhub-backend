@@ -1,8 +1,7 @@
-import json
-from urllib.request import Request
 from flask import request,jsonify,Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
 from Patient.PatientModel import Patient
+from Doctor.DoctorModel import Doctor
 from flask_cors import CORS
 
 patients_route = Blueprint("patients_route",__name__)
@@ -268,3 +267,32 @@ def updatePatientDetailsById(id):
             }),200
     except Exception as e:
         return(f"Error: Could not update patient details: {e}"),400 
+
+#Get Doctor by patientID
+@patients_route.route("/patients/doctors/<patientId>",methods = ['GET'])
+def getDoctorByPatientId(patientId):
+    from app import session
+    try:
+        #filtering doctors based on patient IDs
+        doctors = session.query(Doctor).filter(Patient.idDoctor == patientId).all()
+        returnInfo =  {
+                'idDoctor': doctors.idDoctor,
+                'first_name': doctors.first_name,
+                'middle_name': doctors.middle_name,
+                'last_name': doctors.last_name,
+                'user_email': doctors.user_email,
+                'person_image': doctors.person_image,
+                'date_of_birth': doctors.person_image,
+                'house_address': doctors.house_address,
+                'doctor_ratings':doctors.doctor_ratings,
+                'doctor_specialties': doctors.doctor_specialties,
+                'license_number': doctors.license_number,
+                'gender':doctors.gender,
+                'hospital_code':doctors.hospital_code
+        }
+        return ({
+            'status': True,
+            'msg': returnInfo
+        }),200
+    except Exception as e:
+        return ("Connection Error: No Doctor found for patient : %s",e),400
