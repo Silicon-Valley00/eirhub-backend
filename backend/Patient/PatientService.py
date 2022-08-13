@@ -8,7 +8,7 @@ from flask_cors import CORS
 patients_route = Blueprint("patients_route",__name__)
 CORS(patients_route)
 #Get all patients
-@patients_route.route("/patient",methods = ['GET'])
+@patients_route.route("/patients",methods = ['GET'])
 def getPatients():
     from app import session
     try:
@@ -40,7 +40,7 @@ def getPatients():
         return (f"connection error: could not get patients:{e}"),400    
 
 #get patients by ID
-@patients_route.route("/patient/<id>",methods = ['GET'])
+@patients_route.route("/patients/<id>",methods = ['GET'])
 def getPatientById(id):
     from app import session
     try:
@@ -73,7 +73,7 @@ def getPatientById(id):
 
 
 #Patient Sign Up 
-@patients_route.route("/patient/signup",methods = ['POST'])
+@patients_route.route("/patients/signup",methods = ['POST'])
 def createPatient():
     from app import session
     if request.method == 'POST':
@@ -130,7 +130,7 @@ def createPatient():
 
 
 #Patient LogIn 
-@patients_route.route("/patient/login",methods = ['POST'])
+@patients_route.route("/patients/login",methods = ['POST'])
 def patientLogin():
     from app import session
     content_type = request.headers.get('Content-Type')
@@ -191,7 +191,7 @@ def patientLogin():
 
 
 #delete patient
-@patients_route.route("/patient/<id>",methods =["DELETE"] )
+@patients_route.route("/patients/<id>",methods =["DELETE"] )
 def deletePatientById(id):
      from app import session
      try:
@@ -220,7 +220,7 @@ def deletePatientById(id):
         return(f"Error: Could not delete patient: {e}"),400 
 
 #Update patient info
-@patients_route.route("/patient/<id>",methods = ["PUT"])
+@patients_route.route("/patients/<id>",methods = ["PUT"])
 def updatePatientDetailsById(id):
     from app import session
     req = request.json
