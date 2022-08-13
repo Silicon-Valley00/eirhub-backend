@@ -1,6 +1,5 @@
 from sqlalchemy import DATE, Column,Integer,String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import relationship
 from base import Base
 
 

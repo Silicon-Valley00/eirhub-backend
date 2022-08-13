@@ -16,7 +16,7 @@ def getAppointments():
     from app import session
     try:
         appointments = session.query(Appointment).all()
-        respones_message = generate_response_message(appointments)
+        respones_message = generate_response_message(appointments, Doctor, session)
         return (respones_message, 200)
     except Exception as e:
         return (f"Connection Error: Could not get appointments.\n{e}", 400)
@@ -37,6 +37,7 @@ def addAppointment():
             appointment_end_time=request_content["appointment_end_time"],
             appointment_reason=request_content["appointment_reason"],
             appointment_status=request_content["appointment_status"],
+            appointment_location=request_content["appointment_location"],
             idPatient=request_content["idPatient"],
             idDoctor=request_content["idDoctor"]
         )
@@ -53,7 +54,7 @@ def addAppointment():
                 session.commit()
 
                 # returning a reponse of the newly created appointment
-                reponse_message = generate_response_message([new_appointment])
+                reponse_message = generate_response_message([new_appointment], Doctor, session)
                 
                 return (reponse_message, 200)
             else:
@@ -66,13 +67,13 @@ def addAppointment():
 #Update appointment status by ID        
 
 #Get appointment by patient ID
-@appointment_route.route("/appointments/patients/<patientId>",methods = ['GET'])
+@appointment_route.route("/appointments/patients/<patientId>", methods=['GET'])
 def getAppointmentByPatientId(patientId):
     from app import session
     try:
         #filtering appointments based on patient IDs
         appointments = session.query(Appointment).filter(Appointment.idPatient == patientId).all()
-        respones_message = generate_response_message(appointments)
+        respones_message = generate_response_message(appointments, Doctor, session)
         return (respones_message, 200)
     except Exception as e:
         return (f"Error : Patient ID does not exist: {e}"), 400
@@ -84,7 +85,7 @@ def getAppointmentByDoctorId(doctorId):
     try:
         #filtering appointments based on Doctor IDs
         appointments = session.query(Appointment).filter(Appointment.idDoctor == doctorId).all()
-        respones_message = generate_response_message(appointments)
+        respones_message = generate_response_message(appointments, Doctor, session)
         return (respones_message, 200)
     except Exception as e:
         return (f"Error : Doctor ID does not exist: {e}"),400
@@ -104,11 +105,12 @@ def updateAppointmentById(id):
         appointment.appointment_end_time= req["appointment_end_time"],
         appointment.appointment_reason= req["appointment_reason"],
         appointment.appointment_status= req["appointment_status"],
+        appointment.appointment_location = req["appointment_location"]
         appointment.idPatient= req["idPatient"],
         appointment.idDoctor= req["idDoctor"]
             
         session.commit()
-        respones_message = generate_response_message([appointment])
+        respones_message = generate_response_message([appointment], Doctor, session)
         return (respones_message, 200)
 
     except Exception as e:
@@ -116,7 +118,7 @@ def updateAppointmentById(id):
         
 
 # Changing appointment status by appointment ID
-@appointment_route.route("/appointment/status/<int:id>/<int:number>", methods=["PUT"])
+@appointment_route.route("/appointments/status/<int:id>/<int:number>", methods=["PUT"])
 def changeAppointmentStatusById(id, number):
     from app import session
     try:
@@ -133,7 +135,7 @@ def changeAppointmentStatusById(id, number):
             appointment.appointment_status = statuses[number]
             session.commit()
             # reponse with updated status
-            response_message = generate_response_message([appointment])
+            response_message = generate_response_message([appointment], Doctor, session)
             return (response_message, 200)
         else:
             raise Exception("Invalid status key provided. Status keys are 0, 1 and 2 for 'Pending', 'Accepted' and 'Declined' respectfully.")
@@ -141,14 +143,14 @@ def changeAppointmentStatusById(id, number):
         return (f"Error updating appointment status: {e}", 400)
 
 # Deleting appointment by its ID
-@appointment_route.route("/appointment/<int:id>", methods=["DELETE"])
+@appointment_route.route("/appointments/<int:id>", methods=["DELETE"])
 def deleteAppointmentById(id):
     from app import session
     try:
         appointment = session.query(Appointment).get(id)
         session.delete(appointment)
         session.commit()
-        response_message = generate_response_message([appointment])
+        response_message = generate_response_message([appointment], Doctor, session)
         return (response_message, 200)
     except Exception as e:
         return (f"Error deleting appointment: {e}", 400)
