@@ -110,7 +110,7 @@ def updateGuardianById(guardianId):
     from app import session
     req = request.json
     try: 
-        session.query(GuardianPerson).filter(GuardianPerson.idGuardian== guardianId).update(
+        session.query(GuardianPerson).filter(GuardianPerson.idGuardian== int(guardianId)).update(
              {
                  GuardianPerson.first_name:req["first_name"],
                  GuardianPerson.middle_name:req["middle_name"],
