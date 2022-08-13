@@ -9,15 +9,15 @@ from base import Base
 
 class GuardianPerson(Base):
     __tablename__ = 'GuardianPerson'
-    idGuardian = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
+    idGuardian = Column("idGuardian",Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
     first_name = Column("first_name",String(60))
     middle_name = Column("middle_name",String(60))
     last_name = Column("last_name",String(60))
-    user_email = Column("user_email",String(100), nullable=True,unique = True)
+    user_email = Column("user_email",String(100), nullable=False,unique = True)
     date_of_birth = Column("date_of_birth",Date)
     house_address = Column("house_address",String(45))
     phone_number = Column("phone_number",String(50))
-    id_number = Column("id_number",String(45))
+    id_number = Column("id_number",String(45),nullable=False)
     gender = Column("gender",String(45))    
     
 

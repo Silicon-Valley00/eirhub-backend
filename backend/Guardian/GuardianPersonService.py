@@ -90,7 +90,7 @@ def getGuardians():
         for guardian in guardians:
             returnInfo.append((
                 {
-                'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,'person_image':guardian.person_image,
+                'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,
             'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
             }
             ))
