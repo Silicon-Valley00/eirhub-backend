@@ -21,7 +21,7 @@ from HealthDetails.HealthDetailsModel import HealthDetails
 
 app = Flask(__name__)
 load_dotenv()
-engine = create_engine( os.getenv('dbconnectionstring'))#establish a connection with the database
+engine = create_engine( os.getenv('dbconnectionstring'), pool_pre_ping = True)#establish a connection with the database
 Session = sessionmaker(bind=engine)
 session = Session()
 meta = MetaData()
