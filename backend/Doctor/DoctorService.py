@@ -96,7 +96,7 @@ def doctorLogin():
                                 'first_name':doctorInfo.first_name,
                                 'middle_name':doctorInfo.middle_name,
                                 'last_name':doctorInfo.last_name,
-                                'email':doctorInfo.user_email,
+                                'user_email':doctorInfo.user_email,
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
                                 'gender':doctorInfo.gender
@@ -233,7 +233,7 @@ def getpatientsByDoctorId(doctorId):
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "date_of_birth":patient.date_of_birth,
                 "phone_number":patient.phone_number,
