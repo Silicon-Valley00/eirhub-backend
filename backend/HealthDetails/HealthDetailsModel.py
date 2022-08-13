@@ -14,7 +14,7 @@ class HealthDetails(Base):
     blood_group = Column(ENUM('A','AB','B','O','unknown'), nullable = True)
     temperature = Column('temperature',Integer)
     bmi = Column("bmi",Float)
-    blood_pressure = Column("blood_pressure",Float)
+    blood_pressure = Column("blood_pressure",String(10))
     respiratory_rate = Column("respiratory_rate",String(10))
     pulse = Column("pulse",Float)
     blood_sugar = Column("blood_sugar",String(10))
