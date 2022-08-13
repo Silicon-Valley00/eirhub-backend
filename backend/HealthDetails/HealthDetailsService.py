@@ -7,7 +7,7 @@ from flask_cors import CORS
 health_details_route = Blueprint("health_details_route",__name__)
 CORS(health_details_route)
 # create health details
-@health_details_route.route("/createhealthdetails/", methods = ["POST"])
+@health_details_route.route("/healthdetails/", methods = ["POST"])
 def createHealthDetails():
     from app import session
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def getHealthDetailsByPatientId(id):
 
 
 #Update healthdetails by ID / 
-@health_details_route.route("/uphealthdetails/<patientId>",methods = ['PUT'])
+@health_details_route.route("/healthdetails/<patientId>",methods = ['PUT'])
 def updateHealthDetailsById(patientId):
     from app import session
     req = request.json

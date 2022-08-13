@@ -1,6 +1,6 @@
 from flask import jsonify
 
-def generate_response_message(appointments: list):
+def generate_response_message(appointments: list, doctor_model, session):
     '''
     Utility for generating the right `JSON` reponse when the list of appointments are provided as argument
     '''
@@ -8,12 +8,18 @@ def generate_response_message(appointments: list):
         "msg": {
             "idAppointment": appointment.idAppointment,
             "appointment_date": appointment.appointment_date,
-            "appointment_start_time": appointment.appointment_start_time,
-            "appointment_end_time": appointment.appointment_end_time,
+            "appointment_start_time": str(appointment.appointment_start_time),
+            "appointment_end_time": str(appointment.appointment_end_time),
             "appointment_reason": appointment.appointment_reason,
             "appointment_status": appointment.appointment_status,
+            "appointment_location": appointment.appointment_location,
             "idPatient": appointment.idPatient,
-            "idDoctor": appointment.idDoctor
+            "idDoctor": appointment.idDoctor,
+            "doctor_names": [
+                session.query(doctor_model).get(appointment.idDoctor).first_name,
+                session.query(doctor_model).get(appointment.idDoctor).middle_name,
+                session.query(doctor_model).get(appointment.idDoctor).last_name
+            ]
         },
         "status": True
     } for appointment in appointments]

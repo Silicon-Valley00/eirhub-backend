@@ -18,6 +18,7 @@ class Appointment(Base):
     appointment_end_time = Column("appointment_end_time", Time)
     appointment_reason = Column("appointment_reason", String(300))
     appointment_status = Column("appointment_status", ENUM("Pending", "Accepted", "Declined"), nullable=False)
+    appointment_location = Column("appointment_location", String(100))
 
     # defining relationships for appointment
     idPatient = Column(Integer, ForeignKey(Patient.idPatient))
@@ -31,6 +32,7 @@ class Appointment(Base):
         appointment_end_time, 
         appointment_status, 
         appointment_reason,
+        appointment_location,
         idPatient,
         idDoctor
     ):
@@ -41,4 +43,5 @@ class Appointment(Base):
         self.appointment_status = appointment_status
         self.idPatient = idPatient
         self.idDoctor = idDoctor
+        self.appointment_location = appointment_location
 
