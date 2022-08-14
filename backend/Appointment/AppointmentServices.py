@@ -6,6 +6,7 @@ from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
+from .AppointmentModel import statuses
 
 appointment_route = Blueprint("appointment_route", __name__)
 CORS(appointment_route) 
@@ -116,7 +117,7 @@ def updateAppointmentById():
                 appointment.appointment_start_time= req["appointment_start_time"],
                 appointment.appointment_end_time= req["appointment_end_time"],
                 appointment.appointment_reason= req["appointment_reason"],
-                appointment.appointment_status= req["appointment_status"],
+                appointment.appointment_status= statuses.Accepted,
                 appointment.appointment_location = req["appointment_location"]
                 appointment.idPatient= req["idPatient"],
                 appointment.idDoctor= req["idDoctor"]
