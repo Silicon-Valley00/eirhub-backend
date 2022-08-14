@@ -7,7 +7,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
     '''
     response_message = {
         "status": True,
-        "detail": [{
+        "msg": [{
             "idAppointment": appointment.idAppointment,
             "appointment_date": appointment.appointment_date,
             "appointment_start_time": str(appointment.appointment_start_time),
@@ -31,16 +31,16 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
     }
 
     if patient_doctor == "doctor":
-        response_message["detail"] = list(map(pop_doctor_names, response_message["detail"]))
+        response_message["msg"] = list(map(pop_doctor_names, response_message["msg"]))
     elif patient_doctor == "patient":
-        response_message["detail"] = list(map(pop_patient_names, response_message["detail"]))
+        response_message["msg"] = list(map(pop_patient_names, response_message["msg"]))
     elif patient_doctor != "both":
         raise Exception("Invalid value provided for patient_doctor argument. ")
 
-    if len(response_message["detail"]) == 1:
-        response_message["detail"] = response_message["detail"][0]
+    if len(response_message["msg"]) == 1:
+        response_message["msg"] = response_message["msg"][0]
         return jsonify(response_message)
-    elif len(response_message["detail"]) > 1:
+    elif len(response_message["msg"]) > 1:
         return jsonify(response_message)
     elif len(response_message) == 0:
         return "No Appointments Found"
@@ -59,7 +59,7 @@ def pop_patient_names(x):
 def generate_error_response(message, dev_message, e):
     error_message = {
         "status": False,
-        "detail": {
+        "msg": {
             "message": message,
             "dev_message": dev_message,
             "description": str(e)
