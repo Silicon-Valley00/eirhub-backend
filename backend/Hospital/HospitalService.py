@@ -59,7 +59,14 @@ def createHospital():
                     'status':True
                 }),200  #StatusCodem
         else:
-            return 'Error: Content-Type Error',400
+            return ( {
+                'msg': {
+                    "message": "Unable to create hospital",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400
 
 
 #delete hospital by id
@@ -86,7 +93,14 @@ def deleteHospital(id):
         }),200
         
     except Exception as e:
-        return ("Error: Could not delete hospital: %s",e),400
+        return ( {
+                'msg': {
+                    "message": "Unable to delete hospital",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400
 
 
 # update hospital by id
@@ -125,10 +139,14 @@ def updateHospitalById(id):
             'msg': hospital_data
         }),200
     except Exception as e:
-        return ({
-            'status':False,
-            'msg': ("Connection Error: User not updated : %s",e)
-        }),400
+        return ( {
+                'msg': {
+                    "message": "Unable to update hospital by id",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400
 
 #get all hospitals
 @hospital_route.route("/hospitals",methods = ['GET'])
@@ -154,7 +172,14 @@ def getHospitals():
             'msg': hospitalInfo
         }),200
     except Exception as e:
-        return("Connection Error: %s",e),400
+        return( {
+                'msg': {
+                    "message": "Unable to get all hospitals",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400
 
 
 
@@ -177,4 +202,11 @@ def getHositalById(id):
             "status": True
             }),200
     except Exception as e:#display error code if data doesn't exist
-        return(f"Error : Hospital does not exist :{e}"),400
+        return( {
+                'msg': {
+                    "message": "Unable to get hospital by id",
+                    "dev_messgage": "Hospital doesn't exist",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400

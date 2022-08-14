@@ -28,7 +28,14 @@ def getReports():
             } for report in reports ]
         return jsonify(Json_reports),200
     except Exception as e:
-        return (f"connection error: could not get Reports:{e}"),400
+        return ( {
+                'msg': {
+                    "message": "Unable to get reports",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400
     
 #get report by id    
 @reports_route.route("/report/<id>",methods = ['GET'])
@@ -50,7 +57,14 @@ def getReportById(id):
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400        
+        return( {
+                'msg': {
+                    "message": "Unable to get report",
+                    "dev_messgage": "ID doesn't exist",
+                    "description": e
+                },
+                "status": False
+            }),400        
 
 #create Report
 @reports_route.route("/report",methods = ['POST'])
@@ -90,9 +104,22 @@ def createReport():
             else:
                  return "Patient id does not exist"        
         except Exception as e:
-                print(f'Report could not be created: {e}')
+                ( {
+                'msg': {
+                    "message": "Report could't be created",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            })
     else:
-        return ('Error: Content-Type Error'),400    
+        return ( {
+                'msg': {
+                    "message": "Unable to create report",
+                    "dev_messgage": "Content-type error",
+                },
+                "status": False
+            }),400    
         
 
 # delete report by id
@@ -116,7 +143,14 @@ def deleteReportById(id):
             
             }),200
      except Exception as e:
-        return(f"Error: Could not delete report: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to delete report",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 
 
 
 #Update Report by id
@@ -148,4 +182,11 @@ def updateReportDetailsById(id):
             
             }),200
     except Exception as e:
-        return(f"Error: Could not update patient details: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to update report details",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 

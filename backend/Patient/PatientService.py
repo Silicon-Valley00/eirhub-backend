@@ -36,7 +36,14 @@ def getPatients():
             } for patient in patients ]
         return jsonify(Json_patients),200
     except Exception as e:
-        return (f"connection error: could not get patients:{e}"),400    
+        return ( {
+                'msg': {
+                    "message": "Unable to get patients",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400    
 
 #get patients by ID
 @patients_route.route("/patients/<id>",methods = ['GET'])
@@ -67,7 +74,14 @@ def getPatientById(id):
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400        
+        return( {
+                'msg': {
+                    "message": "Unable to get patient by id",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),400        
 
 
 
@@ -83,10 +97,14 @@ def createPatient():
             user_password = req["user_password"]
             isPatient = session.query(Patient).filter(Patient.user_email == user_email).first()
             if(isPatient):
-                return ({
-                    'status': False,
-                    'msg':"Patient Email already registered. Do you want to login?"
-                }),200
+                return ( {
+                'msg': {
+                    "message": "Patint email already exist. Do you want to login?",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": "{Exception}"
+                },
+                "status": False
+            }),200
             first_name = req["first_name"]
             last_name = req["last_name"]
             user_email = req["user_email"]
@@ -103,7 +121,14 @@ def createPatient():
                 session.add(newPatient) 
                 session.commit()
             except Exception as e:
-                return ("Connection Error: User not recorded : %s",e),400
+                return ( {
+                'msg': {
+                    "message": "Unable to create patient",
+                    "dev_messgage": "failed to commit session",
+                    "description": e
+                },
+                "status": False
+            }),400
             id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
             patientInfo = session.query(Patient).get(id_patient)
             session.commit()
@@ -124,7 +149,13 @@ def createPatient():
                     'status':True
                 }),200  #StatusCode
         else:
-            return 'Error: Content-Type Error',400
+            return ( {
+                'msg': {
+                    "message": "Unable to create patient",
+                    "dev_messgage": "Invalid query parameters"
+                },
+                "status": False
+            }),400
 
 
 
@@ -165,10 +196,13 @@ def patientLogin():
                     'status':True
                 }),200  #StatusCode
                     else:
-                        return ({
-                            'status': False,
-                            'msg': "Incorrect Password. Kindly Try again"
-                        }) #Check Status Code for wrong login 
+                        return ( {
+                'msg': {
+                    "message": "Incorrect password try again",
+                    
+                },
+                "status": False
+            }) #Check Status Code for wrong login 
                 except Exception as e:
                     return("Connection Error : %s",(e)),400
             else:
@@ -177,16 +211,21 @@ def patientLogin():
                     'msg':"User not registered.Do you want to sign up?"
                 }),200 #Check Status Code for wrong login
         except Exception as e:
-            print(e)
-            return({
-                'status':False,
-                'msg':"Connection Error: Check your network connection"
+            return( {
+                'msg': {
+                    "message": "Connection error: Check your network connection.",
+                    "description": e
+                },
+                "status": False
             }),400
     else:
-        return ({
-            'status': False,
-            'msg':"Bad Request Error"
-        }),400
+        return ( {
+                'msg': {
+                    "message": "Unable to login patient",
+                    "dev_messgage": "Bad request error",
+                },
+                "status": False
+            }),400
 
 
 #delete patient
@@ -216,7 +255,14 @@ def deletePatientById(id):
             
             }),200
      except Exception as e:
-        return(f"Error: Could not delete patient: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to delete patient",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 
 
 #Update patient info
 @patients_route.route("/patients/<id>",methods = ["PUT"])
@@ -266,7 +312,14 @@ def updatePatientDetailsById(id):
             
             }),200
     except Exception as e:
-        return(f"Error: Could not update patient details: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to update patient details",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 
 
 #Get Doctor by patientID
 @patients_route.route("/patients/doctors/<patientId>",methods = ['GET'])
@@ -295,4 +348,11 @@ def getDoctorByPatientId(patientId):
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: No Doctor found for patient : %s",e),400
+        return ( {
+                'msg': {
+                    "message": "No doctor found for patient",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400
