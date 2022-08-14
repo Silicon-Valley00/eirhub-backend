@@ -1,11 +1,13 @@
 from flask import jsonify
+from werkzeug.wrappers import response
 
-def generate_response_message(appointments: list, doctor_model, session):
+def generate_response_message(appointments: list, patient_doctor="doctor", delete=False):
     '''
     Utility for generating the right `JSON` reponse when the list of appointments are provided as argument
     '''
-    reponse_message = [{
-        "msg": {
+    response_message = {
+        "status": True,
+        "detail": [{
             "idAppointment": appointment.idAppointment,
             "appointment_date": appointment.appointment_date,
             "appointment_start_time": str(appointment.appointment_start_time),
@@ -16,18 +18,51 @@ def generate_response_message(appointments: list, doctor_model, session):
             "idPatient": appointment.idPatient,
             "idDoctor": appointment.idDoctor,
             "doctor_names": [
-                session.query(doctor_model).get(appointment.idDoctor).first_name,
-                session.query(doctor_model).get(appointment.idDoctor).middle_name,
-                session.query(doctor_model).get(appointment.idDoctor).last_name
-            ]
-        },
-        "status": True
-    } for appointment in appointments]
-    if len(reponse_message) == 1:
-        return jsonify(reponse_message[0])
-    elif len(reponse_message) > 1:
-        return jsonify(reponse_message)
-    elif len(reponse_message) == 0:
+                appointment.doctor.first_name,
+                appointment.doctor.middle_name,
+                appointment.doctor.last_name
+            ] if not delete else "",
+            "patient_names": [
+                appointment.patient.first_name,
+                appointment.patient.middle_name,
+                appointment.patient.last_name
+            ] if not delete else ""
+        } for appointment in appointments]
+    }
+
+    if patient_doctor == "doctor":
+        response_message["detail"] = list(map(pop_doctor_names, response_message["detail"]))
+    elif patient_doctor == "patient":
+        response_message["detail"] = list(map(pop_patient_names, response_message["detail"]))
+    elif patient_doctor != "both":
+        raise Exception("Invalid value provided for patient_doctor argument. ")
+
+    if len(response_message["detail"]) == 1:
+        response_message["detail"] = response_message["detail"][0]
+        return jsonify(response_message)
+    elif len(response_message["detail"]) > 1:
+        return jsonify(response_message)
+    elif len(response_message) == 0:
         return "No Appointments Found"
     else:
-        raise Exception("Error generating reponse message.")
+        raise Exception("Could not get appointment details from appointment list provided")
+
+
+def pop_doctor_names(x):
+    x.pop("doctor_names")
+    return x
+
+def pop_patient_names(x):
+    x.pop("patient_names")
+    return x
+
+def generate_error_response(message, dev_message, e):
+    error_message = {
+        "status": False,
+        "detail": {
+            "message": message,
+            "dev_message": dev_message,
+            "description": str(e)
+        }
+    }
+    return jsonify(error_message)

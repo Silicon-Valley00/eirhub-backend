@@ -13,12 +13,12 @@ class Appointment(Base):
     idAppointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
 
     # defining attributes for appointment details
-    appointment_date = Column("appointment_date", Date)
-    appointment_start_time = Column("appointment_start_time", Time)
-    appointment_end_time = Column("appointment_end_time", Time)
+    appointment_date = Column("appointment_date", Date, nullable=True)
+    appointment_start_time = Column("appointment_start_time", Time, nullable=True)
+    appointment_end_time = Column("appointment_end_time", Time, nullable=True)
     appointment_reason = Column("appointment_reason", String(300))
     appointment_status = Column("appointment_status", ENUM("Pending", "Accepted", "Declined"), nullable=False)
-    appointment_location = Column("appointment_location", String(100))
+    appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment
     idPatient = Column(Integer, ForeignKey(Patient.idPatient))
@@ -27,14 +27,14 @@ class Appointment(Base):
 
     def __init__(
         self, 
-        appointment_date, 
-        appointment_start_time, 
-        appointment_end_time, 
         appointment_status, 
         appointment_reason,
-        appointment_location,
         idPatient,
-        idDoctor
+        idDoctor,
+        appointment_date=None, 
+        appointment_start_time=None, 
+        appointment_end_time=None, 
+        appointment_location=None,
     ):
         self.appointment_date = appointment_date
         self.appointment_start_time = appointment_start_time
