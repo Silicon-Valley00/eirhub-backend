@@ -1,15 +1,10 @@
-import enum
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Time, Enum
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Time
+from sqlalchemy.dialects.mysql import ENUM
 
 from Patient.PatientModel import Patient
 from Doctor.DoctorModel import Doctor
 
 from base import Base
-
-class statuses(enum.Enum):
-    Pending = "Pending"
-    Accepted = "Accepted"
-    Declined = "Declined"
 
 class Appointment(Base):
     __tablename__ = "Appointment"
@@ -20,7 +15,7 @@ class Appointment(Base):
     appointment_start_time = Column("appointment_start_time", Time, nullable=True)
     appointment_end_time = Column("appointment_end_time", Time, nullable=True)
     appointment_reason = Column("appointment_reason", String(300))
-    appointment_status = Column("appointment_status", Enum(statuses), nullable=False)
+    appointment_status = Column(ENUM("Pending", "Accepted", "Declined"), nullable=False)
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment

@@ -1,7 +1,7 @@
 from flask import jsonify
 from werkzeug.wrappers import response
 
-def generate_response_message(appointments: list, patient_doctor="doctor", delete=False):
+def generate_response_message(appointments: list, patient_doctor="doctor"):
     '''
     Utility for generating the right `JSON` reponse when the list of appointments are provided as argument
     '''
@@ -17,16 +17,16 @@ def generate_response_message(appointments: list, patient_doctor="doctor", delet
             "appointment_location": appointment.appointment_location,
             "idPatient": appointment.idPatient,
             "idDoctor": appointment.idDoctor,
-            "doctor_names": [
-                appointment.doctor.first_name,
-                appointment.doctor.middle_name,
-                appointment.doctor.last_name
-            ] if not delete else "",
-            "patient_names": [
-                appointment.patient.first_name,
-                appointment.patient.middle_name,
-                appointment.patient.last_name
-            ] if not delete else ""
+            "doctor_names": {
+                "first_name": appointment.doctor.first_name,
+                "middle_name": appointment.doctor.middle_name,
+                "last_name": appointment.doctor.last_name
+             },
+            "patient_names": {
+                "fist_name": appointment.patient.first_name,
+                "middle_name": appointment.patient.middle_name,
+                "last_name": appointment.patient.last_name
+             }
         } for appointment in appointments]
     }
 

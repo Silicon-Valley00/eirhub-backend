@@ -6,7 +6,6 @@ from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
-from .AppointmentModel import statuses
 
 appointment_route = Blueprint("appointment_route", __name__)
 CORS(appointment_route) 
@@ -47,7 +46,7 @@ def getAppointments():
                 appointments = session.query(Appointment).filter(Appointment.idPatient == patient_id).filter(Appointment.appointment_status != "Accepted").all()
             else:
                 appointments = session.query(Appointment).filter(Appointment.idPatient == patient_id).all()
-            respones_message = generate_response_message(appointments, "doctor")
+            respones_message = generate_response_message(appointments, "patient")
             return (respones_message, 200)
         except Exception as e:
             return (generate_error_response("Error getting appointment(s)", "Provided patient ID might not exist.", e), 404)
@@ -117,7 +116,7 @@ def updateAppointmentById():
                 appointment.appointment_start_time= req["appointment_start_time"],
                 appointment.appointment_end_time= req["appointment_end_time"],
                 appointment.appointment_reason= req["appointment_reason"],
-                appointment.appointment_status= statuses.Accepted,
+                appointment.appointment_status= req["appointment_status"],
                 appointment.appointment_location = req["appointment_location"]
                 appointment.idPatient= req["idPatient"],
                 appointment.idDoctor= req["idDoctor"]
@@ -144,9 +143,9 @@ def deleteAppointmentById():
             return (generate_error_response("Error updating appointment", "appointment_id should be an int.", e), 400)
         try:
             appointment = session.query(Appointment).get(appointment_id)
+            response_message = generate_response_message([appointment], "both")
             session.delete(appointment)
             session.commit()
-            response_message = generate_response_message([appointment], "both", delete=True)
             return (response_message, 200)
         except Exception as e:
             return (generate_error_response("Error deleting appointment", "appointment_id provided might not exist", None), 400)
