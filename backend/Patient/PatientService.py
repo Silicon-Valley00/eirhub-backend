@@ -1,14 +1,13 @@
-import json
-from urllib.request import Request
 from flask import request,jsonify,Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
 from Patient.PatientModel import Patient
+from Doctor.DoctorModel import Doctor
 from flask_cors import CORS
 
 patients_route = Blueprint("patients_route",__name__)
 CORS(patients_route)
 #Get all patients
-@patients_route.route("/patient",methods = ['GET'])
+@patients_route.route("/patients",methods = ['GET'])
 def getPatients():
     from app import session
     try:
@@ -21,7 +20,7 @@ def getPatients():
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "date_of_birth":patient.date_of_birth,
                 "phone_number":patient.phone_number,
@@ -40,7 +39,7 @@ def getPatients():
         return (f"connection error: could not get patients:{e}"),400    
 
 #get patients by ID
-@patients_route.route("/patient/<id>",methods = ['GET'])
+@patients_route.route("/patients/<id>",methods = ['GET'])
 def getPatientById(id):
     from app import session
     try:
@@ -53,7 +52,7 @@ def getPatientById(id):
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "date_of_birth":patient.date_of_birth,
                 "phone_number":patient.phone_number,
@@ -73,7 +72,7 @@ def getPatientById(id):
 
 
 #Patient Sign Up 
-@patients_route.route("/patient/signup",methods = ['POST'])
+@patients_route.route("/patients/signup",methods = ['POST'])
 def createPatient():
     from app import session
     if request.method == 'POST':
@@ -130,7 +129,7 @@ def createPatient():
 
 
 #Patient LogIn 
-@patients_route.route("/patient/login",methods = ['POST'])
+@patients_route.route("/patients/login",methods = ['POST'])
 def patientLogin():
     from app import session
     content_type = request.headers.get('Content-Type')
@@ -191,7 +190,7 @@ def patientLogin():
 
 
 #delete patient
-@patients_route.route("/patient/<id>",methods =["DELETE"] )
+@patients_route.route("/patients/<id>",methods =["DELETE"] )
 def deletePatientById(id):
      from app import session
      try:
@@ -205,7 +204,7 @@ def deletePatientById(id):
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "id_number": patient.id_number,
                 "id_guardian": patient.id_guardian,
@@ -220,7 +219,7 @@ def deletePatientById(id):
         return(f"Error: Could not delete patient: {e}"),400 
 
 #Update patient info
-@patients_route.route("/patient/<id>",methods = ["PUT"])
+@patients_route.route("/patients/<id>",methods = ["PUT"])
 def updatePatientDetailsById(id):
     from app import session
     req = request.json
@@ -251,7 +250,7 @@ def updatePatientDetailsById(id):
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "id_number": patient.id_number,
                 "id_guardian": patient.id_guardian,
@@ -268,3 +267,32 @@ def updatePatientDetailsById(id):
             }),200
     except Exception as e:
         return(f"Error: Could not update patient details: {e}"),400 
+
+#Get Doctor by patientID
+@patients_route.route("/patients/doctors/<patientId>",methods = ['GET'])
+def getDoctorByPatientId(patientId):
+    from app import session
+    try:
+        #filtering doctors based on patient IDs
+        doctors = session.query(Doctor).filter(Patient.idDoctor == patientId).all()
+        returnInfo =  {
+                'idDoctor': doctors.idDoctor,
+                'first_name': doctors.first_name,
+                'middle_name': doctors.middle_name,
+                'last_name': doctors.last_name,
+                'user_email': doctors.user_email,
+                'person_image': doctors.person_image,
+                'date_of_birth': doctors.person_image,
+                'house_address': doctors.house_address,
+                'doctor_ratings':doctors.doctor_ratings,
+                'doctor_specialties': doctors.doctor_specialties,
+                'license_number': doctors.license_number,
+                'gender':doctors.gender,
+                'hospital_code':doctors.hospital_code
+        }
+        return ({
+            'status': True,
+            'msg': returnInfo
+        }),200
+    except Exception as e:
+        return ("Connection Error: No Doctor found for patient : %s",e),400

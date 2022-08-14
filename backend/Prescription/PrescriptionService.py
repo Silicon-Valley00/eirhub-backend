@@ -75,16 +75,27 @@ def createPrescription():
         last_taken_date = req["last_taken_date"]
         dosage = req["dosage"]
         time_of_administration = req["time_of_administration"]
+<<<<<<< HEAD
             #verify that prescription doesn't already exist
         prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.id_patient == id_patient).first()
         
+=======
+                #verify that prescription doesn't already exist
+        prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.idPatient == idPatient).first()
+            
+>>>>>>> 4d0c1d98c28bbc2eb4835432e0af296921cd252f
         if (prescriptionExists):
             return ({
                 "status": False,
                 "msg":"Prescription already exists for this patient. Enter another"
             }),200
+<<<<<<< HEAD
         #create prescription because it doesn't exist
         newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,id_patient)
+=======
+            #create prescription because it doesn't exist
+        newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,idPatient)
+>>>>>>> 4d0c1d98c28bbc2eb4835432e0af296921cd252f
         try:# add it to the database
             session.add(newPrescription)
             session.commit()
@@ -101,7 +112,7 @@ def createPrescription():
                     'last_taken_date': str(newPrescription.last_taken_date),
                     'dosage': newPrescription.dosage,
                     'time_of_administration':str(newPrescription.time_of_administration)
-                    
+                        
                     }
                 }),200
 
@@ -121,7 +132,10 @@ def updatePrescriptionById(id):
                 Prescription.drug_name : req["drug_name"],
                 Prescription.start_date : req["start_date"],
                 Prescription.end_date : req['end_date'],
+<<<<<<< HEAD
                 Prescription.id_patient : req['id_patient'],
+=======
+>>>>>>> 4d0c1d98c28bbc2eb4835432e0af296921cd252f
                 Prescription.last_taken_date : req["last_taken_date"],
                 Prescription.dosage : req["dosage"],
                 Prescription.time_of_administration :req["time_of_administration"]

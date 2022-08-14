@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float,Time
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import declarative_base
-from Patient.PatientModel import Patient,Base
+from Patient.PatientModel import Patient
 
+from base import Base
 
 
 #Base = declarative_base()

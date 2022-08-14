@@ -29,7 +29,8 @@ def createGuardian():
         phone_number = req["phone_number"]
         id_number = req["id_number"]
         gender = req["gender"]
-        newGuardian = GuardianPerson(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,person_image=person_image,date_of_birth=date_of_birth,house_address=house_address,phone_number=phone_number,id_number=id_number,gender=gender)
+
+        newGuardian = GuardianPerson(first_name=first_name,middle_name=middle_name,last_name=last_name,user_email=user_email,date_of_birth=date_of_birth,house_address=house_address,phone_number=phone_number,id_number=id_number,gender=gender)
         try: 
             session.add(newGuardian)
             session.commit()
@@ -40,7 +41,7 @@ def createGuardian():
                     'first_name':guardianDetail.first_name,
                     'middle_name':guardianDetail.middle_name,
                     'last_name':guardianDetail.last_name,
-                    'email':guardianDetail.user_email,
+                    'user_email':guardianDetail.user_email,
                     'date_of_birth':guardianDetail.date_of_birth,
                     'house_address':guardianDetail.house_address,
                     'phone_number':guardianDetail.phone_number,
@@ -64,7 +65,7 @@ def getGuardianById(id):
                     'first_name':guardian.first_name,
                     'middle_name':guardian.middle_name,
                     'last_name':guardian.last_name,
-                    'email':guardian.user_email,
+                    'user_email':guardian.user_email,
                     'date_of_birth':guardian.date_of_birth,
                     'phone_number':guardian.phone_number,
                     'house_address':guardian.house_address,
@@ -89,7 +90,8 @@ def getGuardians():
         for guardian in guardians:
             returnInfo.append((
                 {
-                'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,'person_image':guardian.person_image,
+                'idGuardian': guardian.idGuardian,
+                'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,
             'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
             }
             ))
@@ -125,19 +127,25 @@ def updateGuardianById(guardianId):
              )
         session.commit()
         guardianInfo = session.query(GuardianPerson).get(int(guardianId))
-        returnInfo = {
-            'first_name':guardianInfo.first_name,'middle_name':guardianInfo.middle_name,'last_name':guardianInfo.last_name,'person_image':guardianInfo.person_image,
-            'user_email':guardianInfo.user_email,'date_of_birth':guardianInfo.date_of_birth,'phone_number':guardianInfo.phone_number,'id_number':guardianInfo.id_number,
-            'gender':guardianInfo.gender, 'house_address': guardianInfo.house_address
-            }
+
         return ({
             'status': True,
-            'msg': returnInfo
+            'msg':{  
+            'first_name':guardianInfo.first_name,
+            'middle_name':guardianInfo.middle_name,
+            'last_name':guardianInfo.last_name,
+            'user_email':guardianInfo.user_email,
+            'date_of_birth':guardianInfo.date_of_birth,
+            'phone_number':guardianInfo.phone_number,
+            'id_number':guardianInfo.id_number,
+            'gender':guardianInfo.gender, 
+            'house_address': guardianInfo.house_address
+            }
         }),200
     except Exception as e:
         return ({
             'status':False,
-            'msg': ("Connection Error: User not updated : %s",e)
+            'msg': ("Connection Error: User not updated : %s", str(e))
         }),400
 
 

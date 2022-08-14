@@ -5,7 +5,7 @@ from sqlalchemy.orm import declarative_base
 
 from Patient.PatientModel import Patient
 
-Base = declarative_base()
+from base import Base
 
 class Report(Base):
     __tablename__ = 'Report'

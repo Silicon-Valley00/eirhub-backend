@@ -13,19 +13,20 @@ from Doctor.DoctorService import doctor_route
 from Prescription.PrescriptionService import prescription_route
 from HealthDetails.HealthDetailsService import health_details_route
 from Hospital.HospitalService import hospital_route
+from Appointment.AppointmentServices import appointment_route
 # from Report.ReportService import reports_route
 
 from Report.ReportService import reports_route
-from HealthDetails.HealthDetailsModel import HealthDetails
-
 
 app = Flask(__name__)
 load_dotenv()
-engine = create_engine( os.getenv('dbconnectionstring'))#establish a connection with the database
+
+engine = create_engine( os.getenv('dbconnectionstring'),pool_pre_ping = True,pool_size=20, max_overflow=0)#establish a connection with the database
+
 Session = sessionmaker(bind=engine)
 session = Session()
 meta = MetaData()
-Base = declarative_base()
+from base import Base
 
 
 #App Blueprint
@@ -36,6 +37,7 @@ app.register_blueprint(prescription_route)
 app.register_blueprint(reports_route)
 app.register_blueprint(health_details_route)
 app.register_blueprint(hospital_route)
+app.register_blueprint(appointment_route)
 # app.register_blueprint(reports_route)
 
 # Database Connection not needed right now. Commented out for now

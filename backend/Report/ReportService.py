@@ -61,6 +61,7 @@ def createReport():
         req = request.json
         report_type = req['report_type']
         description = req['description']
+        idPatient = req['idPatient']
         upload_date = req['created_date']
         
         new_report = Report(report_type=report_type,description=description,id_patient=id_patient)
