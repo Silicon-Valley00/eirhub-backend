@@ -16,10 +16,10 @@ def getReports():
             
             "msg": {
 
-               "idReport": report.idReport,
+               "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
                 
             },
@@ -40,7 +40,7 @@ def getReportById(id):
         return ({
             
             "msg": {
-                "idReport": report.idReport,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
                 'upload_date': report.created_date
@@ -63,11 +63,11 @@ def createReport():
         description = req['description']
         upload_date = req['created_date']
         
-        new_report = Report(report_type=report_type,description=description,idPatient=idPatient)
+        new_report = Report(report_type=report_type,description=description,id_patient=id_patient)
 
         try:
             #Checking if the patient Id actually exists
-            if session.query(Patient).filter(Patient.idPatient == idPatient).first():
+            if session.query(Patient).filter(Patient.id_patient == id_patient).first():
                 #add report to the database
                 session.add(new_report)
                 session.commit()
@@ -76,10 +76,10 @@ def createReport():
                     
                     "msg": {
 
-                    "idReport": new_report.idReport,
+                    "id_report": new_report.id_report,
                     "report_type": new_report.report_type,
                     "description": new_report.description,
-                    "idPatient": new_report.idPatient,
+                    "id_patient": new_report.id_patient,
                     
                 
                     },
@@ -105,7 +105,7 @@ def deleteReportById(id):
         return ({
           
             "msg": {
-                 "idReport": report.idReport,
+                 "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
                 'upload_date': report.created_date
@@ -128,16 +128,16 @@ def updateReportDetailsById(id):
         report = session.query(Report).get(id)
         
         #update details with new parameters
-        report.idReport = req["idReport"]
+        report.id_report = req["id_report"]
         report.first_name = req["report_type"]
         report.middle_name = req["description"]
-        report.last_name = req["idPatient"]
+        report.last_name = req["id_patient"]
         
         session.commit()
         return ({
           
             "msg": {
-                "idReport": report.idReport,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
                 'upload_date': report.created_date

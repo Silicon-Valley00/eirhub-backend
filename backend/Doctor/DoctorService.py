@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
-#Doctor Sign Up
+#Doctor Sign Up ./
 @doctor_route.route("/doctor/signup",methods = ['POST'])
 def createDoctor():
     from app import session
@@ -51,12 +51,12 @@ def createDoctor():
                 session.commit()
             except Exception as e:
                 return ("Connection Error: User not recorded : %s",e),400
-            idDoctor = session.query(Doctor.idDoctor).filter( Doctor.hospital_code == req['hospital_code']).first()
-            returnDoctor = session.query(Doctor).get(idDoctor)
+            id_doctor = session.query(Doctor.id_doctor).filter( Doctor.hospital_code == req['hospital_code']).first()
+            returnDoctor = session.query(Doctor).get(id_doctor)
             session.commit()
             return ({
                 'msg':{
-                    'idDoctor': returnDoctor.idDoctor,
+                    'id_doctor': returnDoctor.id_doctor,
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
                     'last_name':returnDoctor.last_name,
@@ -80,9 +80,9 @@ def doctorLogin():
             user_email = req["user_email"]
             user_password = req["user_password"]
             try:
-                idDoctor = session.query(Doctor.idDoctor).filter(Doctor.user_email == user_email).first()
-                if(idDoctor):
-                    doctorInfo = session.query(Doctor).get(idDoctor)
+                id_doctor = session.query(Doctor.id_doctor).filter(Doctor.user_email == user_email).first()
+                if(id_doctor):
+                    doctorInfo = session.query(Doctor).get(id_doctor)
                     session.commit()
                 #Check Password after doctor email has been verified
                     try :
@@ -90,7 +90,7 @@ def doctorLogin():
                         if(check_password_hash(doctorHashPassword,user_password)):
                             return ({
                             'msg':{
-                                'idDoctor': doctorInfo.idDoctor,
+                                'id_doctor': doctorInfo.id_doctor,
                                 'first_name':doctorInfo.first_name,
                                 'middle_name':doctorInfo.middle_name,
                                 'last_name':doctorInfo.last_name,
@@ -133,7 +133,7 @@ def getDoctors():
         for doctor in doctors:
             returnInfo.append((
                 {
-                    'doctor_id':doctor.idDoctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
+                    'doctor_id':doctor.id_doctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
                     'user_email': doctor.user_email,'person_image': doctor.person_image,'date_of_birth': doctor.person_image,'house_address': doctor.house_address,
                     'doctor_ratings':doctor.doctor_ratings,'doctor_specialties': doctor.doctor_specialties,'license_number': doctor.license_number,
                     'gender':doctor.gender,'hospital_code':doctor.hospital_code
@@ -153,7 +153,7 @@ def updateDoctorById(doctorId):
     from app import session
     req = request.json
     try: 
-        session.query(Doctor).filter(Doctor.idDoctor == int(doctorId)).update(
+        session.query(Doctor).filter(Doctor.id_doctor == int(doctorId)).update(
              {
                 Doctor.first_name:req["frist_name"],
                 Doctor.middle_name :req["middle_name"],
@@ -196,7 +196,7 @@ def getDoctorById(doctorId):
     try:
         doctor = session.query(Doctor).get(int(doctorId))
         returnInfo =  {
-                'idDoctor': doctor.idDoctor,
+                'id_doctor': doctor.id_doctor,
                 'first_name': doctor.first_name,
                 'middle_name': doctor.middle_name,
                 'last_name': doctor.last_name,

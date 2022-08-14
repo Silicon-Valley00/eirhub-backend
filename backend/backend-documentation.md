@@ -36,7 +36,7 @@ API EndPoint Routes:
 
 # Prescription
 - **Get Prescription By ID**
-    GET: /prescription/`idPrescription`
+    GET: /prescription/`id_prescription`
 
     BODY PARAMS: None
 
@@ -155,7 +155,7 @@ API EndPoint Routes:
         "start_date":"2022-12-31",
         "end_date":"2022-12-31",
         "last_taken_date":"2022-12-31",
-        "idPatient":28
+        "id_patient":28
     }
     ```
     RESPONSE:
@@ -166,7 +166,7 @@ API EndPoint Routes:
         "drug_name": "laravelS",
         "end_date": "2022-12-31",
         "id": 8,
-        "idPatient": 28,
+        "id_patient": 28,
         "last_taken_date": "2022-12-31",
         "start_date": "2022-12-31",
         "time_of_administration": "23:59:40"
@@ -174,7 +174,7 @@ API EndPoint Routes:
     "status": true
     ```
 - **Update Prescription By Prescription ID**
-    PUT: /prescription/`idPrescription`
+    PUT: /prescription/`id_prescription`
 
     BODY PARAMS:
     ```
@@ -185,7 +185,7 @@ API EndPoint Routes:
     "start_date":"2022-12-31",
     "end_date":"2022-12-31",
     "last_taken_date":"2022-12-31",
-    "idPatient":28
+    "id_patient":28
     }
 	```
     RESPONSE:
@@ -196,7 +196,7 @@ API EndPoint Routes:
         "drug_name": "laravelS",
         "end_date": "2022-12-31",
         "id": 8,
-        "idPatient": 28,
+        "id_patient": 28,
         "last_taken_date": "2022-12-31",
         "start_date": "2022-12-31",
         "time_of_administration": "23:59:40"
@@ -205,7 +205,7 @@ API EndPoint Routes:
     ```
 - **Delete Prescription by Prescription ID**
     
-    DELETE: /prescription/`idPrescription`
+    DELETE: /prescription/`id_prescription`
 
     BODY PARAMS: None
 
@@ -216,7 +216,7 @@ API EndPoint Routes:
         "drug_name": "laravel",
         "end_date": "2022-12-31",
         "id": 6,
-        "idPatient": 28,
+        "id_patient": 28,
         "last_taken_date": "2022-12-31",
         "start_date": "2022-12-31",
         "time_of_administration": "23:59:40"
@@ -617,9 +617,9 @@ RESPONSE:
             "first_name": "Molly",
             "gender": "Male",
             "house_address": "House-4",
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "idPatient": 30,
+            "id_doctor": 20,
+            "id_guardian": 20,
+            "id_patient": 30,
             "id_number": "GHA-00809238HJJ",
             "last_name": "Malloy",
             "middle_name": "Patient",
@@ -646,9 +646,9 @@ RESPONSE:
             "first_name": "Molly",
             "gender": "Male",
             "house_address": "House-4",
-            "idDoctor": 20,
-            "idGuardian": 20,
-            "idPatient": 30,
+            "id_doctor": 20,
+            "id_guardian": 20,
+            "id_patient": 30,
             "id_number": "GHA-00809238HJJ",
             "last_name": "Malloy",
             "middle_name": "Patient",
@@ -674,9 +674,9 @@ RESPONSE:
             "email": "Jackman@gmail.com",
             "first_name": "Jerry",
             "house_address": "12 molly street",
-            "idPatient": 24,
-            "idDoctor": null,
-            "idGuardian": null,
+            "id_patient": 24,
+            "id_doctor": null,
+            "id_guardian": null,
             "id_number": "57849003",
             "last_name": "Jackman",
             "middle_name": "Leo",
@@ -719,8 +719,8 @@ RESPONSE:
         "first_name": "Pete",
         "house_address": "12 sesame street",
         "id": 34,
-        "idDoctor": 20,
-        "idGuardian": 20,
+        "id_doctor": 20,
+        "id_guardian": 20,
         "id_number": "GHA-08006335HJJ",
         "last_name": "Greg",
         "middle_name": "Leta",
@@ -868,7 +868,7 @@ RESPONSE:
         }
     ```
 - **Delete Healh Details On ID**   
-    DELETE: /healthdetails/`idHealthDetails`  
+    DELETE: /healthdetails/`id_health_details`  
 
     BODY PARAMS: None   
 
@@ -929,7 +929,7 @@ RESPONSE:
 
 **Delete hospital by id**
 
-DELETE: /deletehospital/`idHospital`
+DELETE: /deletehospital/`id_hospital`
 
 BODY PARAMS: None
 
@@ -952,7 +952,7 @@ RESPONSE:
 **Update hospital by id**
 
 
-PUT: /updatehospital/`idHospital`
+PUT: /updatehospital/`id_hospital`
 
 BODY PARAMS:None
 
@@ -1027,7 +1027,7 @@ RESPONSE:
 
 
 **Get hospital based on id**
-GET:/hospital/`idHospital`
+GET:/hospital/`id_hospital`
 
 
 BODY PARAMS: None
@@ -1105,7 +1105,7 @@ RESPONSE:
     {
     "report_type":"Lab report",
     "description":"Lab report ordered by Dr.Raymond Brown",
-    "idPatient": 31
+    "id_patient": 31
      }
     ```
 
@@ -1114,8 +1114,8 @@ RESPONSE:
      {
         "msg": {
             "description": "Lab report ordered by Dr.Raymond Brown",
-            "idPatient": 31,
-            "idReport": 12,
+            "id_patient": 31,
+            "id_report": 12,
             "report_type": "Lab report"
         },
         "status": true

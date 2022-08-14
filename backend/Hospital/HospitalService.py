@@ -75,7 +75,7 @@ def deleteHospital(id):
             "msg": {
                 "hospital_name": hospital.hospital_name,
                 "location": hospital.location,
-                "id": hospital.idHospital,
+                "id": hospital.id_hospital,
                 "hospital_specialities": hospital.hospital_specialities,
                 "number_of_doctors": hospital.number_of_doctors,
                 "hospital_code": hospital.hospital_code,
@@ -95,7 +95,7 @@ def updateHospitalById(id):
     from app import session
     req = request.json 
     try:
-        session.query(Hospital).filter(Hospital.idHospital == id).update(
+        session.query(Hospital).filter(Hospital.id_hospital == id).update(
             {   
                 Hospital.hospital_name : req["hospital_name"],
                 Hospital.location : req["location"],
@@ -112,7 +112,7 @@ def updateHospitalById(id):
         session.commit()
         return_hospital = session.query(Hospital).get(id)
         hospital_data = {
-            "id": return_hospital.idHospital,
+            "id": return_hospital.id_hospital,
             "location" : return_hospital.location,
             "hospital_name" : return_hospital.hospital_name,
             "hospital_specialities" : return_hospital.hospital_specialities,
@@ -140,7 +140,7 @@ def getHospitals():
         for hospital in hospitals:
             hospitalInfo.append((
                 {
-                    "id": hospital.idHospital,
+                    "id": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,
@@ -166,7 +166,7 @@ def getHositalById(id):
         hospital =  session.query(Hospital).get(id)
         return ({
             'msg': {
-                    "id": hospital.idHospital,
+                    "id": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,

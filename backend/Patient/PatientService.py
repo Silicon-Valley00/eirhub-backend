@@ -17,7 +17,7 @@ def getPatients():
             
             "msg": {
 
-               "idPatient": patient.idPatient,
+               "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -27,8 +27,8 @@ def getPatients():
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -49,7 +49,7 @@ def getPatientById(id):
         return ({
             
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -59,8 +59,8 @@ def getPatientById(id):
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -105,13 +105,13 @@ def createPatient():
                 session.commit()
             except Exception as e:
                 return ("Connection Error: User not recorded : %s",e),400
-            idPatient = session.query(Patient.idPatient).filter(Patient.user_email == user_email).first()
-            patientInfo = session.query(Patient).get(idPatient)
+            id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+            patientInfo = session.query(Patient).get(id_patient)
             session.commit()
             if(check_password_hash(patientInfo.user_password,user_password)):
                 return ({
                     'msg':{
-                        'idPatient':patientInfo.idPatient,
+                        'id_patient':patientInfo.id_patient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -140,9 +140,9 @@ def patientLogin():
         user_password = req["user_password"]
     #Check Email 
         try:
-            idPatient = session.query(Patient.idPatient).filter(Patient.user_email == user_email).first()
-            if(idPatient):
-                patientInfo = session.query(Patient).get(idPatient)
+            id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+            if(id_patient):
+                patientInfo = session.query(Patient).get(id_patient)
                 session.commit()
                 #Check Password after user email has been verified
                 try :
@@ -150,7 +150,7 @@ def patientLogin():
                     if(check_password_hash(userDbPassword,user_password)):
                         return ({
                     'msg':{
-                        'idPatient':patientInfo.idPatient,
+                        'id_patient':patientInfo.id_patient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -159,8 +159,8 @@ def patientLogin():
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.idGuardian,
-                        'idDoctor': patientInfo.idDoctor
+                        'guardian_id': patientInfo.id_guardian,
+                        'id_doctor': patientInfo.id_doctor
 
                     },
                     'status':True
@@ -201,15 +201,15 @@ def deletePatientById(id):
         return ({
           
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -240,22 +240,22 @@ def updatePatientDetailsById(id):
         patient.id_number = req["id_number"]
         patient.nationality = req["nationality"]
         patient.gender = req["gender"]
-        patient.idDoctor = req["idDoctor"]
-        patient.idGuardian = req["idGuardian"]
+        patient.id_doctor = req["id_doctor"]
+        patient.id_guardian = req["id_guardian"]
 
         session.commit()
         return ({
           
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
                 "email": patient.user_email,
                 "person_image": patient.person_image,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality,
                 "phone_number":patient.phone_number,

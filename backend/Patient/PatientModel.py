@@ -15,9 +15,9 @@ Base = declarative_base()
 
 class Patient(Base):
     __tablename__ = 'Patient'
-    idPatient = Column(Integer,primary_key= True,unique = True,autoincrement=True,nullable = False)
-    idGuardian = Column(Integer,ForeignKey(GuardianPerson.idGuardian))
-    idDoctor = Column(Integer,ForeignKey(Doctor.idDoctor))
+    id_patient = Column(Integer,primary_key= True,unique = True,autoincrement=True,nullable = False)
+    id_guardian = Column(Integer,ForeignKey(GuardianPerson.id_guardian))
+    id_doctor = Column(Integer,ForeignKey(Doctor.id_doctor))
     first_name = Column("first_name",String(60))
     middle_name = Column("middle_name",String(60),nullable = True)
     last_name = Column("last_name",String(60))
@@ -49,5 +49,5 @@ class Patient(Base):
         # self.id_number = id_number
         self.gender = gender
         # self.nationality = nationality
-        self.idDoctor = doctor_id if doctor_id is not None else None
-        self.idGuardian = guardian_id if guardian_id is not None else None
+        self.id_doctor = doctor_id if doctor_id is not None else None
+        self.id_guardian = guardian_id if guardian_id is not None else None

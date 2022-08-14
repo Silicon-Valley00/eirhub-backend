@@ -6,7 +6,7 @@ Base = declarative_base()
 
 class Hospital(Base):
     __tablename__ = "Hospital"
-    idHospital = Column(Integer,primary_key = True)
+    id_hospital = Column(Integer,primary_key = True)
     hospital_name = Column("hospital_name",String(200))
     location = Column("location",String(200))
     hospital_specialities = Column("hospital_specialities",Text(200))

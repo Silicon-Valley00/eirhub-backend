@@ -9,16 +9,16 @@ Base = declarative_base()
 
 class Report(Base):
     __tablename__ = 'Report'
-    idReport = Column(Integer, primary_key=True,autoincrement=True)
+    id_report = Column(Integer, primary_key=True,autoincrement=True)
     report_type = Column('report_type',String(45))
     description = Column('description',Text)
-    idPatient = Column(Integer,ForeignKey(Patient.idPatient, ondelete='CASCADE'), nullable=True,)
+    id_patient = Column(Integer,ForeignKey(Patient.id_patient, ondelete='CASCADE'), nullable=True)
     created_at = Column('created_at',DateTime, nullable=True)
     #to be added when the merge is done
     
-    def __init__(self,report_type,description,idPatient):
+    def __init__(self,report_type,description,id_patient):
         self.report_type = report_type
         self.description = description
-        self.idPatient = idPatient
+        self.id_patient = id_patient
         
     

@@ -8,8 +8,8 @@ from Patient.PatientModel import Patient,Base
 
 class HealthDetails(Base):
     __tablename__ = 'HealthDetails'
-    idHealthDetails = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
-    patient_id = Column(Integer,ForeignKey(Patient.idPatient),nullable = False,unique = True)
+    id_health_details = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
+    patient_id = Column(Integer,ForeignKey(Patient.id_patient),nullable = False,unique = True)
     last_visit = Column("last_visit",Date)
     blood_group = Column(ENUM('A','AB','B','O','unknown'), nullable = True)
     temperature = Column('temperature',Integer)

@@ -13,12 +13,12 @@ CORS(prescription_route)
 def getPrescriptionById(id):
     from app import session
     try:#query for the data and display it if it exists
-        prescriptions =  session.query(Prescription).filter(Prescription.idPatient==id).all()
+        prescriptions =  session.query(Prescription).filter(Prescription.id_patient==id).all()
         prescription_info = []
         for prescription in prescriptions:
             prescription_info.append((# put all the prescriptions into the list prescriptionInfor
                 {
-                    'id': prescription.idPrescription,
+                    'id': prescription.id_prescription,
                     'drug_name':prescription.drug_name,
                     'dosage':prescription.dosage,
                     'time_of_administration':str(prescription.time_of_administration),
@@ -44,7 +44,7 @@ def getPrescriptions():
         for prescription in prescriptions:
             prescriptionInfo.append((# put all the prescriptions into the list prescriptionInfo
                 {
-                    'id': prescription.idPrescription,
+                    'id': prescription.id_prescription,
                     'drug_name':prescription.drug_name,
                     'dosage':prescription.dosage,
                     'time_of_administration':str(prescription.time_of_administration),
@@ -71,12 +71,12 @@ def createPrescription():
         drug_name = req["drug_name"]
         start_date = req["start_date"]
         end_date = req["end_date"]
-        idPatient = req["idPatient"]
+        id_patient = req["id_patient"]
         last_taken_date = req["last_taken_date"]
         dosage = req["dosage"]
         time_of_administration = req["time_of_administration"]
             #verify that prescription doesn't already exist
-        prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.idPatient == idPatient).first()
+        prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.id_patient == id_patient).first()
         
         if (prescriptionExists):
             return ({
@@ -84,7 +84,7 @@ def createPrescription():
                 "msg":"Prescription already exists for this patient. Enter another"
             }),200
         #create prescription because it doesn't exist
-        newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,idPatient)
+        newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,id_patient)
         try:# add it to the database
             session.add(newPrescription)
             session.commit()
@@ -93,11 +93,11 @@ def createPrescription():
         return({#return it as proof that it was indeed added to the database
                 'status': True,
                 'msg':{
-                    'idPrescrition':newPrescription.idPrescription,
+                    'idPrescrition':newPrescription.id_prescription,
                     'drug_name': newPrescription.drug_name,
                     'start_date': str(newPrescription.start_date),
                     'end_date': str(newPrescription.end_date),
-                    'idPatient':newPrescription.idPatient,
+                    'id_patient':newPrescription.id_patient,
                     'last_taken_date': str(newPrescription.last_taken_date),
                     'dosage': newPrescription.dosage,
                     'time_of_administration':str(newPrescription.time_of_administration)
@@ -116,12 +116,12 @@ def updatePrescriptionById(id):
     from app import session
     req = request.json 
     try:
-        session.query(Prescription).filter(Prescription.idPrescription == id).update(
+        session.query(Prescription).filter(Prescription.id_prescription == id).update(
             {   
                 Prescription.drug_name : req["drug_name"],
                 Prescription.start_date : req["start_date"],
                 Prescription.end_date : req['end_date'],
-                Prescription.idPatient : req['idPatient'],
+                Prescription.id_patient : req['id_patient'],
                 Prescription.last_taken_date : req["last_taken_date"],
                 Prescription.dosage : req["dosage"],
                 Prescription.time_of_administration :req["time_of_administration"]
@@ -131,14 +131,14 @@ def updatePrescriptionById(id):
         session.commit()
         return_prescription = session.query(Prescription).get(id)
         prescription_data = {
-            "id": return_prescription.idPrescription,
+            "id": return_prescription.id_prescription,
             "drug_name":return_prescription.drug_name,
             "dosage":return_prescription.dosage,
             "time_of_administration":str(return_prescription.time_of_administration),#made str because object type of date isn't json serializable
             "start_date":str(return_prescription.start_date),
             "end_date":str(return_prescription.end_date),
             "last_taken_date":str(return_prescription.last_taken_date),
-            "idPatient":return_prescription.idPatient
+            "id_patient":return_prescription.id_patient
         }
         return ({
             'status': True,
@@ -161,14 +161,14 @@ def deletePrescription(id):
         
         return({
             "msg": {
-                "id": prescription.idPrescription,
+                "id": prescription.id_prescription,
                 "drug_name":prescription.drug_name,
                 "dosage":prescription.dosage,
                 "time_of_administration":str(prescription.time_of_administration),#made str because object type of date isn't json serializable
                 "start_date":str(prescription.start_date),
                 "end_date":str(prescription.end_date),
                 "last_taken_date":str(prescription.last_taken_date),
-                "idPatient":prescription.idPatient
+                "id_patient":prescription.id_patient
             },
             "status": True
             

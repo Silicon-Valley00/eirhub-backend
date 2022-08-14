@@ -6,7 +6,7 @@ Base = declarative_base()
 
 class Doctor(Base):
     __tablename__ = "Doctor"
-    idDoctor = Column(Integer,primary_key = True,autoincrement = True)
+    id_doctor = Column(Integer,primary_key = True,autoincrement = True)
     first_name = Column('first_name',String(60), nullable  = False)
     middle_name = Column('middle_name',String(60))
     last_name = Column('last_name',String(60), nullable = False)
