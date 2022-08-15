@@ -9,10 +9,10 @@ from base import Base
 
 class Report(Base):
     __tablename__ = 'Report'
-    id_report = Column(Integer, primary_key=True,autoincrement=True)
+    id_report = Column('id_report', Integer, primary_key=True,autoincrement=True)
     report_type = Column('report_type',String(45))
     description = Column('description',Text)
-    id_patient = Column(Integer,ForeignKey(Patient.id_patient, ondelete='CASCADE'), nullable=True)
+    id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='CASCADE'), nullable=True)
     created_at = Column('created_at',DateTime, nullable=True)
     #to be added when the merge is done
     

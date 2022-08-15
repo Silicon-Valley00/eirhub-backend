@@ -42,19 +42,21 @@ def getReports():
 def getReportById(id):
     from app import session
     try:
-        report = session.query(Report).get(id)
-      
-        return ({
-            
-            "msg": {
+        reports = session.query(Report).filter(Report.id_patient == id).all()
+        report_info = []
+        for report in reports:
+            report_info.append((
+                {
                 "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
-            },
-            "status": True
-            
+            }
+            ))
+        return ({
+            "status": True,
+            "msg": report_info
             }),200
     except Exception as e:
         return( {
