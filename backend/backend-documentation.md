@@ -308,7 +308,7 @@ API EndPoint Routes:
     "msg": [
         {
             "date_of_birth": "https://img.com/G.O.A.T",
-            "doctor_id": 20,
+            "id_doctor": 20,
             "doctor_ratings": 3,
             "doctor_specialties": "Gynaecology, Paediatric",
             "first_name": "Rexford",
@@ -551,7 +551,7 @@ RESPONSE:
 	{
     "msg": {
         "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
-        "doctor_id": 20,
+        "id_doctor": 20,
         "email": "baddest69@st.knust.edu.gh",
         "first_name": "Rexford",
         "gender": "Male",
@@ -577,7 +577,7 @@ RESPONSE:
     "user_email":"greg@st.knust.edu.gh",
     "user_password": "gregy",
     "date_of_birth":"2009-12-01",
-    "doctor_id": 20,
+    "id_doctor": 20,
     "guardian_id": 20
     }
 	```
@@ -587,7 +587,7 @@ RESPONSE:
 	{
     "msg": {
         "date_of_birth": "Tue, 01 Dec 2009 00:00:00 GMT",
-        "doctor_id": 20,
+        "id_doctor": 20,
         "first_name": "Peter",
         "gender": null,
         "guardian_id": 20,
@@ -706,7 +706,7 @@ RESPONSE:
         "phone_number" : "+233265936575",
         "id_number": "GHA-08006335HJJ",
         "nationality":"Ghanaian",
-        "doctor_id": 20,
+        "id_doctor": 20,
         "guardian_id": 20
     }
     ```

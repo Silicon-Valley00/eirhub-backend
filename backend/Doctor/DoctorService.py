@@ -135,7 +135,7 @@ def getDoctors():
         for doctor in doctors:
             returnInfo.append((
                 {
-                    'doctor_id':doctor.id_doctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
+                    'id_doctor':doctor.id_doctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
                     'user_email': doctor.user_email,'person_image': doctor.person_image,'date_of_birth': doctor.person_image,'house_address': doctor.house_address,
                     'doctor_ratings':doctor.doctor_ratings,'doctor_specialties': doctor.doctor_specialties,'license_number': doctor.license_number,
                     'gender':doctor.gender,'hospital_code':doctor.hospital_code
@@ -178,7 +178,7 @@ def updateDoctorById(doctorId):
             {
                 "status": True,
             "msg":{
-                "idDoctor": doctor.idDoctor,
+                "id_doctor": doctor.id_doctor,
                 "first_name": doctor.first_name,
                 "middle_name": doctor.middle_name,
                 "last_name": doctor.last_name,
@@ -235,11 +235,11 @@ def getpatientsByDoctorId(doctorId):
     from app import session
     try:
         #filtering patients based on doctor IDs
-        patients = session.query(Patient).filter(Patient.idDoctor == doctorId).all()
+        patients = session.query(Patient).filter(Patient.id_doctor == doctorId).all()
         returnInfo =  [{
             'status': True,
             'msg': {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
@@ -249,8 +249,8 @@ def getpatientsByDoctorId(doctorId):
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },

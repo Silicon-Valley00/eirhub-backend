@@ -8,7 +8,7 @@ from base import Base
 
 class Appointment(Base):
     __tablename__ = "Appointment"
-    idAppointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
+    id_appointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
 
     # defining attributes for appointment details
     appointment_date = Column("appointment_date", Date, nullable=True)

@@ -9,7 +9,7 @@ from base import Base
 
 class GuardianPerson(Base):
     __tablename__ = 'GuardianPerson'
-    id_guardian = Column("idGuardian",Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
+    id_guardian = Column("id_guardian",Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
     first_name = Column("first_name",String(60))
     middle_name = Column("middle_name",String(60))
     last_name = Column("last_name",String(60))
