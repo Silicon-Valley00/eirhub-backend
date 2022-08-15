@@ -37,7 +37,7 @@ class Patient(Base):
    
    
     
-    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,gender,guardian_id = None,doctor_id = None):
+    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,gender,guardian_id = None,id_doctor = None):
         self.first_name = first_name
         # self.middle_name = middle_name
         self.last_name = last_name
@@ -50,5 +50,5 @@ class Patient(Base):
         # self.id_number = id_number
         self.gender = gender
         # self.nationality = nationality
-        self.id_doctor = doctor_id if doctor_id is not None else None
+        self.id_doctor = id_doctor if id_doctor is not None else None
         self.id_guardian = guardian_id if guardian_id is not None else None

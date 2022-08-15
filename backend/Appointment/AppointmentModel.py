@@ -8,14 +8,14 @@ from base import Base
 
 class Appointment(Base):
     __tablename__ = "Appointment"
-    idAppointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
+    id_appointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
 
     # defining attributes for appointment details
     appointment_date = Column("appointment_date", Date, nullable=True)
     appointment_start_time = Column("appointment_start_time", Time, nullable=True)
     appointment_end_time = Column("appointment_end_time", Time, nullable=True)
     appointment_reason = Column("appointment_reason", String(300))
-    appointment_status = Column(ENUM("Pending", "Accepted", "Declined"), nullable=False)
+    appointment_status = Column(ENUM('Pending', 'Accepted', 'Declined'), nullable=False)
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment

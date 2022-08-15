@@ -14,20 +14,20 @@ CORS(appointment_route)
 @appointment_route.route("/appointments/", methods=["GET"])
 def getAppointments():
     from app import session
-    # returning all appointments related to a specific doctor whose doctor_id is provided as query parameter
-    if request.args.get("doctor_id"):
+    # returning all appointments related to a specific doctor whose id_doctor is provided as query parameter
+    if request.args.get("id_doctor"):
         try:
-            doctor_id = int(request.args.get("doctor_id"))
+            id_doctor = int(request.args.get("id_doctor"))
         except Exception as e:
-            return (generate_error_response("Error getting appointment(s)", "doctor_id should be an int.", e), 400)
+            return (generate_error_response("Error getting appointment(s)", "id_doctor should be an int.", e), 400)
         try:
             # filtering appointments based on doctor IDs
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
-                appointments = session.query(Appointment).filter(Appointment.idDoctor == doctor_id).filter(Appointment.appointment_status == "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == "Accepted").all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.idDoctor == doctor_id).filter(Appointment.appointment_status != "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status != "Accepted").all()
             else:
-                appointments = session.query(Appointment).filter(Appointment.idDoctor == doctor_id).all()
+                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).all()
             respones_message = generate_response_message(appointments, "doctor")
             return (respones_message, 200)
         except Exception as e:
@@ -41,11 +41,11 @@ def getAppointments():
         try:
             # filtering appointments based on patient IDs
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
-                appointments = session.query(Appointment).filter(Appointment.idPatient == patient_id).filter(Appointment.appointment_status == "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).filter(Appointment.appointment_status == "Accepted").all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.idPatient == patient_id).filter(Appointment.appointment_status != "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).filter(Appointment.appointment_status != "Accepted").all()
             else:
-                appointments = session.query(Appointment).filter(Appointment.idPatient == patient_id).all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).all()
             respones_message = generate_response_message(appointments, "patient")
             return (respones_message, 200)
         except Exception as e:
@@ -61,7 +61,7 @@ def getAppointments():
 
 
 # adding appointments to the table
-@appointment_route.route("/appointments", methods=["POST"])
+@appointment_route.route("/appointments/", methods=["POST"])
 def addAppointment():
     from app import session
     content_type = request.headers.get("Content-Type")
@@ -69,6 +69,7 @@ def addAppointment():
     if content_type == "application/json":
         try:
             request_content = request.json
+
             # creating a new instance of appointment with the data from request
             new_appointment = Appointment(
                 appointment_date=request_content["appointment_date"],
@@ -77,14 +78,15 @@ def addAppointment():
                 appointment_reason=request_content["appointment_reason"],
                 appointment_status=request_content["appointment_status"],
                 appointment_location=request_content["appointment_location"],
-                idPatient=request_content["idPatient"],
-                idDoctor=request_content["idDoctor"]
+                id_patient=request_content["id_patient"],
+                id_doctor=request_content["id_doctor"]
             )
+            
             # checking if the patient and doctors IDs actually exist
             if (
-                session.query(Patient).filter(Patient.idPatient == new_appointment.idPatient)
+                session.query(Patient).filter(Patient.id_patient == new_appointment.id_patient)
                 and
-                session.query(Doctor).filter(Doctor.idDoctor == new_appointment.idDoctor)
+                session.query(Doctor).filter(Doctor.id_doctor == new_appointment.id_doctor)
             ):
                 # adding the new appointment to table if doctor and patient do exist
                 session.add(new_appointment)
@@ -111,6 +113,7 @@ def updateAppointmentById():
             req = request.json
             try:
                 appointment = session.query(Appointment).get(appointment_id)
+
                 # updating details with new attributes
                 appointment.appointment_date= req["appointment_date"],
                 appointment.appointment_start_time= req["appointment_start_time"],
@@ -118,8 +121,9 @@ def updateAppointmentById():
                 appointment.appointment_reason= req["appointment_reason"],
                 appointment.appointment_status= req["appointment_status"],
                 appointment.appointment_location = req["appointment_location"]
-                appointment.idPatient= req["idPatient"],
-                appointment.idDoctor= req["idDoctor"]
+                appointment.id_patient= req["id_patient"],
+                appointment.id_doctor= req["id_doctor"]
+
                 # Commiting changes to memory 
                 session.commit()
                 respones_message = generate_response_message([appointment], "both")

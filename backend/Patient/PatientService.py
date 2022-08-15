@@ -93,7 +93,7 @@ def createPatient():
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
             gender = req["gender"]
-            # doctor_id = req["doctor_id"]
+            # id_doctor = req["id_doctor"]
             # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
@@ -274,9 +274,9 @@ def getDoctorByPatientId(patientId):
     from app import session
     try:
         #filtering doctors based on patient IDs
-        doctors = session.query(Doctor).filter(Patient.idDoctor == patientId).all()
+        doctors = session.query(Doctor).filter(Patient.id_doctor == patientId).all()
         returnInfo =  {
-                'idDoctor': doctors.idDoctor,
+                'id_doctor': doctors.id_doctor,
                 'first_name': doctors.first_name,
                 'middle_name': doctors.middle_name,
                 'last_name': doctors.last_name,
