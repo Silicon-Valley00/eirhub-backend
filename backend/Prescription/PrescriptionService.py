@@ -89,9 +89,9 @@ def createPrescription():
         last_taken_date = req["last_taken_date"]
         dosage = req["dosage"]
         time_of_administration = req["time_of_administration"]
-                #verify that prescription doesn't already exist
-        prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.idPatient == idPatient).first()
-            
+            #verify that prescription doesn't already exist
+        prescriptionExists = session.query(Prescription).filter(Prescription.time_of_administration == time_of_administration,Prescription.dosage == dosage,Prescription.last_taken_date == last_taken_date,Prescription.drug_name ==drug_name,Prescription.start_date == start_date,Prescription.end_date == end_date,Prescription.id_patient == id_patient).first()
+        
         if (prescriptionExists):
             return ( {
                 'msg': {
@@ -99,8 +99,8 @@ def createPrescription():
                 },
                 "status": False
             }),200
-            #create prescription because it doesn't exist
-        newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,idPatient)
+        #create prescription because it doesn't exist
+        newPrescription = Prescription(drug_name,dosage,time_of_administration,start_date,end_date,last_taken_date,id_patient)
         try:# add it to the database
             session.add(newPrescription)
             session.commit()
@@ -151,6 +151,7 @@ def updatePrescriptionById(id):
                 Prescription.drug_name : req["drug_name"],
                 Prescription.start_date : req["start_date"],
                 Prescription.end_date : req['end_date'],
+                Prescription.id_patient : req['id_patient'],
                 Prescription.last_taken_date : req["last_taken_date"],
                 Prescription.dosage : req["dosage"],
                 Prescription.time_of_administration :req["time_of_administration"]

@@ -200,32 +200,6 @@ def updateDoctorById(doctorId):
         return (f"Could not update doctor details: {e}"),400    
    
    
-    #         {
-    #         'status': True,
-    #         'msg': {
-    #         'idDoctor': doctor.idDoctor,
-    #         'first_name': doctor.first_name,
-    #         'middle_name': doctor.middle_name,
-    #         'last_name': doctor.last_name,
-    #         'user_email': doctor.user_email,
-    #         'person_image': doctor.person_image,
-    #         'date_of_birth': doctor.person_image,
-    #         'house_address': doctor.house_address,
-    #         'doctor_ratings':doctor.doctor_ratings,
-    #         'doctor_specialties': doctor.doctor_specialties,
-    #         'license_number': doctor.license_number,
-    #         'gender': doctor.gender,
-    #         'hospital_code': doctor.hospital_code,
-
-    #         }
-            
-    #     }),200
-    # except Exception as e:
-    #     return ({
-    #         'status':False,
-    #         'msg': ("Connection Error: User not updated : %s",e)
-    #     }),400
-
 
 # Get Doctor by doctorId
 @doctor_route.route('/doctor/<doctorId>', methods = ['GET'])
