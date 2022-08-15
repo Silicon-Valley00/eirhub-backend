@@ -1,5 +1,4 @@
 from flask import jsonify
-from werkzeug.wrappers import response
 
 def generate_response_message(appointments: list, patient_doctor="doctor"):
     '''

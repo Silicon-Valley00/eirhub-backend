@@ -19,16 +19,16 @@ class Appointment(Base):
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment
-    idPatient = Column(Integer, ForeignKey(Patient.idPatient))
-    idDoctor = Column(Integer, ForeignKey(Doctor.idDoctor))
+    id_patient = Column(Integer, ForeignKey(Patient.id_patient))
+    id_doctor = Column(Integer, ForeignKey(Doctor.id_doctor))
 
 
     def __init__(
         self, 
         appointment_status, 
         appointment_reason,
-        idPatient,
-        idDoctor,
+        id_patient,
+        id_doctor,
         appointment_date=None, 
         appointment_start_time=None, 
         appointment_end_time=None, 
@@ -39,7 +39,7 @@ class Appointment(Base):
         self.appointment_end_time = appointment_end_time
         self.appointment_reason = appointment_reason
         self.appointment_status = appointment_status
-        self.idPatient = idPatient
-        self.idDoctor = idDoctor
+        self.id_patient = id_patient
+        self.id_doctor = id_doctor
         self.appointment_location = appointment_location
 
