@@ -69,6 +69,7 @@ def addAppointment():
     if content_type == "application/json":
         try:
             request_content = request.json
+
             # creating a new instance of appointment with the data from request
             new_appointment = Appointment(
                 appointment_date=request_content["appointment_date"],
@@ -80,6 +81,7 @@ def addAppointment():
                 id_patient=request_content["id_patient"],
                 id_doctor=request_content["id_doctor"]
             )
+            
             # checking if the patient and doctors IDs actually exist
             if (
                 session.query(Patient).filter(Patient.id_patient == new_appointment.id_patient)
@@ -111,6 +113,7 @@ def updateAppointmentById():
             req = request.json
             try:
                 appointment = session.query(Appointment).get(appointment_id)
+
                 # updating details with new attributes
                 appointment.appointment_date= req["appointment_date"],
                 appointment.appointment_start_time= req["appointment_start_time"],
@@ -120,6 +123,7 @@ def updateAppointmentById():
                 appointment.appointment_location = req["appointment_location"]
                 appointment.id_patient= req["id_patient"],
                 appointment.id_doctor= req["id_doctor"]
+
                 # Commiting changes to memory 
                 session.commit()
                 respones_message = generate_response_message([appointment], "both")
