@@ -110,13 +110,13 @@ def createPatient():
             user_email = req["user_email"]
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
-            gender = req["gender"]
+            # gender = req["gender"]
             # id_doctor = req["id_doctor"]
             # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
             newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-           date_of_birth=date_of_birth,gender=gender)
+            date_of_birth=date_of_birth)
             try: 
                 session.add(newPatient) 
                 session.commit()
@@ -253,13 +253,16 @@ def patientLogin():
 def deletePatientById(id):
      from app import session
      try:
-        patient = session.query(Patient).get(id)
 
+        patient = session.query(Patient).get(id)
+      
         #delete patient with corresponding ID
+      
+
         session.delete(patient)
         session.commit()
         return ({
-          
+            
             "msg": {
                 "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
@@ -267,6 +270,9 @@ def deletePatientById(id):
                 "last_name": patient.last_name,
                 "user_email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
                 "id_guardian": patient.id_guardian,
                 "id_doctor": patient.id_doctor,
@@ -278,12 +284,12 @@ def deletePatientById(id):
             }),200
      except Exception as e:
         return ({
-                            'status': False,
-                             'msg':{
-                            "dev_messsage" : e,
+                    'status': False,
+                     'msg':{
+                            "dev_messsage" : (f"{e}"),
                             "message":"Error: Could not delete patient" 
                         }
-                        }),400
+                 }),400
     
 
 #Update patient info

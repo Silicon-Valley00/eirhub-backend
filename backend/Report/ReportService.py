@@ -129,17 +129,21 @@ def createReport():
 def deleteReportById(id):
      from app import session
      try:
+
         report = session.query(Report).get(id)
+
+        #delete report with corresponding ID
         session.delete(report)
+
         session.commit()
+       
         return ({
           
             "msg": {
-                 "id_report": report.id_report,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
-                
+                'upload_date': report.created_at
             },
             "status": True
             
