@@ -25,10 +25,14 @@ def createDoctor():
                         'msg':"Doctor already registered. Do you want to login?"
                     }),200
             except Exception as e:
-                print("Network Connection Error: {}",(e))
                 return ({
                         'status': False,
-                        'msg':"Network Connection Error"
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Network Connection Error" 
+
+
+                        }
                 }),400
 
             first_name = req["first_name"]
@@ -109,7 +113,13 @@ def doctorLogin():
                                 'msg': "Incorrect Password. Kindly Try again"
                             }),200 #Check Status Code for wrong login 
                     except Exception as e:
-                        return("Connection Error : %s",(e)),400
+                         return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Network Connection Error" 
+                        }
+                }),400
                 else:
                     return({
                         'status': False,
@@ -122,7 +132,14 @@ def doctorLogin():
                     'msg':"Connection Error: Check your network connection"
                 }),400
         else:
-            return 'Error: Content-Type Error',400
+            return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":'Error: Content-Type Error'
+                        }
+                }),400
+
 
 
 #Get All Doctors 
@@ -146,7 +163,13 @@ def getDoctors():
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : e,
+                        "message":"Could not get doctors"
+                        }
+                }),400
 
 
 #Update Doctors By Id Method.
@@ -197,7 +220,8 @@ def updateDoctorById(doctorId):
         ),200
 
     except Exception as e:
-        return (f"Could not update doctor details: {e}"),400    
+        return 
+        (f"Could not update doctor details: {e}"),400    
    
    
 
@@ -227,7 +251,14 @@ def getDoctorById(doctorId):
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : e,
+                        "message":"Could not get specified doctor ID"
+                        }
+                }),400
+        
 
 #Get patients by DoctorID
 @doctor_route.route("/doctors/patients/<doctorId>",methods = ['GET'])
@@ -258,4 +289,10 @@ def getpatientsByDoctorId(doctorId):
         
         return jsonify(returnInfo),200
     except Exception as e:
-        return ("Connection Error: No Doctor found for patient : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : e,
+                        "message":"Connection Error: No Doctor found for patient"
+                        }
+                }),400
