@@ -61,7 +61,7 @@ def getAppointments():
 
 
 # adding appointments to the table
-@appointment_route.route("/appointments", methods=["POST"])
+@appointment_route.route("/appointments/", methods=["POST"])
 def addAppointment():
     from app import session
     content_type = request.headers.get("Content-Type")

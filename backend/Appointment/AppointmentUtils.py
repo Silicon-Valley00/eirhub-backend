@@ -22,7 +22,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
                 "last_name": appointment.doctor.last_name,
                 "person_image": appointment.doctor.person_image
              },
-            "patient_names": {
+            "patient_info": {
                 "fist_name": appointment.patient.first_name,
                 "middle_name": appointment.patient.middle_name,
                 "last_name": appointment.patient.last_name,
@@ -50,11 +50,11 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
 
 
 def pop_doctor_names(x):
-    x.pop("doctor_names")
+    x.pop("doctor_info")
     return x
 
 def pop_patient_names(x):
-    x.pop("patient_names")
+    x.pop("patient_info")
     return x
 
 def generate_error_response(message, dev_message, e):
