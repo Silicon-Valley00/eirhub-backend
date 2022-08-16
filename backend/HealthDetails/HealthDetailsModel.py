@@ -9,7 +9,7 @@ from base import Base
 class HealthDetails(Base):
     __tablename__ = 'HealthDetails'
     id_health_details = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
-    patient_id = Column(Integer,ForeignKey(Patient.id_patient),nullable = False,unique = True)
+    id_patient = Column(Integer,ForeignKey(Patient.id_patient),nullable = False,unique = True)
     last_visit = Column("last_visit",Date)
     blood_group = Column(ENUM('A','AB','B','O','unknown'), nullable = True)
     temperature = Column('temperature',Integer)
@@ -24,7 +24,7 @@ class HealthDetails(Base):
     patient = relationship("Patient",back_populates = "health_details")
 
 
-    def __init__(self, last_visit, blood_group,temperature,blood_pressure, respiratory_rate, pulse, blood_sugar,weight,height,patient_id):
+    def __init__(self, last_visit, blood_group,temperature,blood_pressure, respiratory_rate, pulse, blood_sugar,weight,height,id_patient):
         self.last_visit = last_visit
         self.blood_group = blood_group
         self.temperature = temperature
@@ -32,7 +32,7 @@ class HealthDetails(Base):
         self. respiratory_rate = respiratory_rate
         self. pulse = pulse
         self. blood_sugar = blood_sugar
-        self.patient_id = patient_id 
+        self.id_patient = id_patient 
         self.weight = weight
         self.height = height
     
