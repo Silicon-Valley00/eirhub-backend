@@ -111,7 +111,7 @@ def doctorLogin():
                             return ({
                                 'status': False,
                                 'msg': "Incorrect Password. Kindly Try again"
-                            }),200 #Check Status Code for wrong login 
+                            }),401 #Check Status Code for wrong login 
                     except Exception as e:
                          return ({
                         'status': False,
@@ -124,7 +124,7 @@ def doctorLogin():
                     return({
                         'status': False,
                         'msg':"User not registered.Do you want to sign up?"
-                    }),200 #Check Status Code for wrong login
+                    }),401 #Check Status Code for wrong login
             except Exception as e:
                 print(e)
                 return({
@@ -136,7 +136,7 @@ def doctorLogin():
                         'status': False,
                         'msg':{
                             "dev_messsage" : "",
-                            "message":'Error: Content-Type Error'
+                            "message":"Error: Content-Type Error"
                         }
                 }),400
 
@@ -220,8 +220,14 @@ def updateDoctorById(doctorId):
         ),200
 
     except Exception as e:
-        return 
-        (f"Could not update doctor details: {e}"),400    
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : e,
+                        "message":"Could not update doctor details"
+                        }
+                }),400
+      
    
    
 
