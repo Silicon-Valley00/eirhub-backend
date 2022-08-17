@@ -28,7 +28,7 @@ def createDoctor():
                 return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" :(f"{e}"),
                             "message":"Network Connection Error" 
 
 
@@ -116,7 +116,7 @@ def doctorLogin():
                          return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Network Connection Error" 
                         }
                 }),400
@@ -166,7 +166,7 @@ def getDoctors():
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : e,
+                        "dev_messsage" : (f"{e}"),
                         "message":"Could not get doctors"
                         }
                 }),400
@@ -260,7 +260,7 @@ def getDoctorById(doctorId):
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : e,
+                        "dev_messsage" : (f"{e}"),
                         "message":"Could not get specified doctor ID"
                         }
                 }),400
@@ -298,7 +298,7 @@ def getpatientsByDoctorId(doctorId):
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : e,
+                        "dev_messsage" : (f"{e}"),
                         "message":"Connection Error: No Doctor found for patient"
                         }
                 }),400
