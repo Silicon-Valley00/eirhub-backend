@@ -95,7 +95,7 @@ def deleteHospital(id):
     except Exception as e:
         return ( {
                 'msg': {
-                    "message": "Unable to delete hospital",
+                    "message": "Connection error: Unable to delete hospital",
                     "dev_messgage": e,
                     
                 },
@@ -141,7 +141,7 @@ def updateHospitalById(id):
     except Exception as e:
         return ( {
                 'msg': {
-                    "message": "Unable to update hospital by id",
+                    "message": "Connection error: Unable to update hospital by id",
                     "dev_messgage": e
                 },
                 "status": False
@@ -173,7 +173,7 @@ def getHospitals():
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to get all hospitals",
+                    "message": "Connection error: Unable to get all hospitals",
                     "dev_messgage": e
                 },
                 "status": False
@@ -202,7 +202,7 @@ def getHositalById(id):
     except Exception as e:#display error code if data doesn't exist
         return( {
                 'msg': {
-                    "message": "Unable to get hospital by id",
+                    "message": "Connection error: Unable to get hospital by id",
                     "dev_messgage": e
                 },
                 "status": False

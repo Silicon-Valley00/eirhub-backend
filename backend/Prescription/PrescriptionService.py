@@ -67,7 +67,7 @@ def getPrescriptions():
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to get all presriptions",
+                    "message": "Connection error: Unable to get all presriptions",
                     "dev_messgage": e
                 },
                 "status": False
@@ -174,7 +174,7 @@ def updatePrescriptionById(id):
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to update precription",
+                    "message": "Connection error: Unable to update precription",
                     "dev_messgage": e
                 },
                 "status": False
@@ -207,7 +207,7 @@ def deletePrescription(id):
     except Exception as e:
         return ( {
                 'msg': {
-                    "message": "Unable to delete prescription.",
+                    "message": "Connection error: Unable to delete prescription.",
                     "dev_messgage": e
                 },
                 "status": False
