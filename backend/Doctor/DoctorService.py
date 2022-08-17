@@ -223,7 +223,7 @@ def updateDoctorById(doctorId):
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : e,
+                        "dev_messsage" : (f"{e}"),
                         "message":"Could not update doctor details"
                         }
                 }),400
@@ -244,7 +244,7 @@ def getDoctorById(doctorId):
                 'last_name': doctor.last_name,
                 'user_email': doctor.user_email,
                 'person_image': doctor.person_image,
-                'date_of_birth': doctor.person_image,
+                'date_of_birth': doctor.date_of_birth,
                 'house_address': doctor.house_address,
                 'doctor_ratings':doctor.doctor_ratings,
                 'doctor_specialties': doctor.doctor_specialties,

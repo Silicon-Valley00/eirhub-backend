@@ -15,7 +15,7 @@ class Appointment(Base):
     appointment_start_time = Column("appointment_start_time", Time, nullable=True)
     appointment_end_time = Column("appointment_end_time", Time, nullable=True)
     appointment_reason = Column("appointment_reason", String(300))
-    appointment_status = Column(ENUM("Pending", "Accepted", "Declined", "A"), nullable=False)
+    appointment_status = Column("appointment_status", String(10))
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment
