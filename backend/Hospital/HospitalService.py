@@ -11,7 +11,7 @@ hospital_route = Blueprint("hospital_route",__name__)
 CORS(hospital_route)
 # Will move signup into a service function later. Currently cleaning
 #Hospital Sign Up
-@hospital_route.route("/hospitals",methods = ['POST'])
+@hospital_route.route("/hospital",methods = ['POST'])
 def createHospital():
     from app import session
     if request.method == 'POST':
@@ -70,7 +70,7 @@ def createHospital():
 
 
 #delete hospital by id
-@hospital_route.route("/hospitals/<id>",methods = ["DELETE"])
+@hospital_route.route("/hospital/<id>",methods = ["DELETE"])
 def deleteHospital(id):
     from app import session
     try:
@@ -104,7 +104,7 @@ def deleteHospital(id):
 
 
 # update hospital by id
-@hospital_route.route("/hospitals/<id>",methods = ["PUT"])
+@hospital_route.route("/hospital/<id>",methods = ["PUT"])
 def updateHospitalById(id):
     from app import session
     req = request.json 
@@ -148,7 +148,7 @@ def updateHospitalById(id):
             }),400
 
 #get all hospitals
-@hospital_route.route("/hospitals",methods = ['GET'])
+@hospital_route.route("/hospital",methods = ['GET'])
 def getHospitals():
     from app import session 
     try:
@@ -182,7 +182,7 @@ def getHospitals():
 
 
 #get the hospital based on id
-@hospital_route.route('/hospitals/<id>',methods = ['GET'])
+@hospital_route.route('/hospital/<id>',methods = ['GET'])
 def getHositalById(id):
     from app import session
     try:#query for the data and display it if it exists
