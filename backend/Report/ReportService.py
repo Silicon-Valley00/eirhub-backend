@@ -37,12 +37,12 @@ def getReports():
                 "status": False
             }),400
     
-#get report by id    
-@reports_route.route("/report/<id>",methods = ['GET'])
-def getReportById(id):
+#get report by patient id    
+@reports_route.route("/report/<id_patient>",methods = ['GET'])
+def getReportByPatientId(id_patient):
     from app import session
     try:
-        reports = session.query(Report).filter(Report.id_patient == id).all()
+        reports = session.query(Report).filter(Report.id_patient == id_patient).all()
         report_info = []
         for report in reports:
             report_info.append((
