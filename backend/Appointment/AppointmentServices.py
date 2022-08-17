@@ -32,20 +32,20 @@ def getAppointments():
             return (respones_message, 200)
         except Exception as e:
             return (generate_error_response("Error getting appointment(s)", "Provided doctor ID might not exist.", e), 404)
-    # returning all appointments related to a specific patient whose patient_id is provided as query parameter
-    elif request.args.get("patient_id"):
+    # returning all appointments related to a specific patient whose id_patient is provided as query parameter
+    elif request.args.get("id_patient"):
         try:
-            patient_id = int(request.args.get("patient_id"))
+            id_patient = int(request.args.get("id_patient"))
         except Exception as e:
-            return (generate_error_response("Error getting appointment(s)", "patient_id should be an int.", e), 400)
+            return (generate_error_response("Error getting appointment(s)", "id_patient should be an int.", e), 400)
         try:
             # filtering appointments based on patient IDs
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
-                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).filter(Appointment.appointment_status == "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(Appointment.appointment_status == "Accepted").all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).filter(Appointment.appointment_status != "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(Appointment.appointment_status != "Accepted").all()
             else:
-                appointments = session.query(Appointment).filter(Appointment.id_patient == patient_id).all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).all()
             respones_message = generate_response_message(appointments, "patient")
             return (respones_message, 200)
         except Exception as e:
