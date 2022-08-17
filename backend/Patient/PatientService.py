@@ -194,7 +194,7 @@ def patientLogin():
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.id_guardian,
+                        'id_guardian': patientInfo.id_guardian,
                         'id_doctor': patientInfo.id_doctor
 
                     },
@@ -305,7 +305,7 @@ def updatePatientDetailsById(id):
         patient.first_name = req["first_name"]
         patient.middle_name = req["middle_name"]
         patient.last_name = req["last_name"]
-        patient.user_email = req["email"]
+        patient.user_email = req["user_email"]
         patient.person_image = req["person_image"]
         patient.date_of_birth =req["date_of_birth"]
         patient.house_address = req["house_address"]
