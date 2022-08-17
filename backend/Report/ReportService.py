@@ -16,10 +16,10 @@ def getReports():
             
             "msg": {
 
-               "idReport": report.idReport,
+               "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
                 
             },
@@ -28,29 +28,45 @@ def getReports():
             } for report in reports ]
         return jsonify(Json_reports),200
     except Exception as e:
-        return (f"connection error: could not get Reports:{e}"),400
+        return ( {
+                'msg': {
+                    "message": "Unable to get reports",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400
     
 #get report by id    
 @reports_route.route("/report/<id>",methods = ['GET'])
 def getReportById(id):
     from app import session
     try:
-        report = session.query(Report).get(id)
-      
-        return ({
-            
-            "msg": {
-                "idReport": report.idReport,
+        reports = session.query(Report).filter(Report.id_patient == id).all()
+        report_info = []
+        for report in reports:
+            report_info.append((
+                {
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
+                'upload_date': report.created_at
                 
-            },
-            "status": True
-            
+            }
+            ))
+        return ({
+            "status": True,
+            "msg": report_info
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400        
+        return( {
+                'msg': {
+                    "message": "Unable to get report",
+                    "dev_messgage": "ID doesn't exist",
+                    "description": e
+                },
+                "status": False
+            }),400        
 
 #create Report
 @reports_route.route("/report",methods = ['POST'])
@@ -61,14 +77,14 @@ def createReport():
         req = request.json
         report_type = req['report_type']
         description = req['description']
-        idPatient = req['idpatient']
+        id_patient = req['id_patient']
         upload_date = req['created_date']
         
-        new_report = Report(report_type=report_type,description=description,idPatient=idPatient)
+        new_report = Report(report_type=report_type,description=description,id_patient=id_patient)
 
         try:
             #Checking if the patient Id actually exists
-            if session.query(Patient).filter(Patient.idPatient == idPatient).first():
+            if session.query(Patient).filter(Patient.id_patient == id_patient).first():
                 #add report to the database
                 session.add(new_report)
                 session.commit()
@@ -77,10 +93,10 @@ def createReport():
                     
                     "msg": {
 
-                    "idReport": new_report.idReport,
+                    "id_report": new_report.id_report,
                     "report_type": new_report.report_type,
                     "description": new_report.description,
-                    "idPatient": new_report.idPatient,
+                    "id_patient": new_report.id_patient,
                     
                 
                     },
@@ -90,9 +106,22 @@ def createReport():
             else:
                  return "Patient id does not exist"        
         except Exception as e:
-                print(f'Report could not be created: {e}')
+                ( {
+                'msg': {
+                    "message": "Report could't be created",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            })
     else:
-        return ('Error: Content-Type Error'),400    
+        return ( {
+                'msg': {
+                    "message": "Unable to create report",
+                    "dev_messgage": "Content-type error",
+                },
+                "status": False
+            }),400    
         
 
 # delete report by id
@@ -100,23 +129,34 @@ def createReport():
 def deleteReportById(id):
      from app import session
      try:
+
         report = session.query(Report).get(id)
+
+        #delete report with corresponding ID
         session.delete(report)
+
         session.commit()
+       
         return ({
           
             "msg": {
-                 "idReport": report.idReport,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
-                
+                'upload_date': report.created_at
             },
             "status": True
             
             }),200
      except Exception as e:
-        return(f"Error: Could not delete report: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to delete report",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 
 
 
 #Update Report by id
@@ -129,16 +169,16 @@ def updateReportDetailsById(id):
         report = session.query(Report).get(id)
         
         #update details with new parameters
-        report.idReport = req["idReport"]
+        report.id_report = req["id_report"]
         report.first_name = req["report_type"]
         report.middle_name = req["description"]
-        report.last_name = req["idPatient"]
+        report.last_name = req["id_patient"]
         
         session.commit()
         return ({
           
             "msg": {
-                "idReport": report.idReport,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
                 'upload_date': report.created_date
@@ -148,4 +188,11 @@ def updateReportDetailsById(id):
             
             }),200
     except Exception as e:
-        return(f"Error: Could not update patient details: {e}"),400 
+        return( {
+                'msg': {
+                    "message": "Unable to update report details",
+                    "dev_messgage": "Invalid query parameters",
+                    "description": e
+                },
+                "status": False
+            }),400 

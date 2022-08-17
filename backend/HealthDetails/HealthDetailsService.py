@@ -15,9 +15,9 @@ def createHealthDetails():
         content_type = request.headers.get('Content-Type')
         if(content_type =="application/json"):
             req = request.json
-            patientId = req["patient_id"]
+            patientId = req["id_patient"]
             try:
-                healthDetail_Exists = session.query(HealthDetails).filter_by(patient_id = int(patientId)).first()
+                healthDetail_Exists = session.query(HealthDetails).filter_by(id_patient = int(patientId)).first()
                 if(healthDetail_Exists):
                     return({
                         'status': False,
@@ -52,11 +52,11 @@ def createHealthDetails():
                 return("Connection Error: Health details not recorded: %s",e),400
             # Confirming that it has been recorded
             try:
-                healthdetails = session.query(HealthDetails).filter(HealthDetails.patient_id == int(patientId)).first()
+                healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first()
                 return ({
                     
                     "msg": {
-                        "patient_id": healthdetails.patient_id,
+                        "id_patient": healthdetails.id_patient,
                         "last_visit": healthdetails.last_visit,
                         "blood_group": healthdetails.blood_group,
                         'temperature': healthdetails.temperature,
@@ -81,11 +81,11 @@ def getHealthDetailsByPatientId(id):
     from app import session
    
     try:
-        healthdetails = session.query(HealthDetails).filter(HealthDetails.patient_id == int(id)).first()
+        healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(id)).first()
         return ({
             
             "msg": {
-                "patient_id": healthdetails.patient_id,
+                "id_patient": healthdetails.id_patient,
                 "last_visit": healthdetails.last_visit,
                 "blood_group": healthdetails.blood_group,
                 "temperature": healthdetails.temperature,
@@ -104,13 +104,13 @@ def getHealthDetailsByPatientId(id):
         return(f"Error : ID does not exist: {e}"),400
 
 
-#Update healthdetails by ID / 
+#Update healthdetails by ID 
 @health_details_route.route("/healthdetails/<patientId>",methods = ['PUT'])
 def updateHealthDetailsById(patientId):
     from app import session
     req = request.json
     try: 
-        healthdetails = session.query(HealthDetails).filter(HealthDetails.patient_id == int(patientId)).first()
+        healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first()
             
         healthdetails.last_visit=str(req["last_visit"])
         healthdetails.blood_group= req["blood_group"]
@@ -124,9 +124,9 @@ def updateHealthDetailsById(patientId):
             
         session.commit()
         # print('pass')
-        healthDetailsIn = session.query(HealthDetails).filter_by(patient_id = int(patientId)).first()
+        healthDetailsIn = session.query(HealthDetails).filter_by(id_patient = int(patientId)).first()
         healthDetailsInfo = {
-                    "patient_id": healthDetailsIn.patient_id,
+                    "id_patient": healthDetailsIn.id_patient,
                     "last_visit": healthDetailsIn.last_visit,
                     "blood_group": healthDetailsIn.blood_group,
                     "temperature": healthDetailsIn.temperature,
@@ -158,7 +158,7 @@ def getHealthDetails():
         for health_detail in health_details:
             health_info.append((
                 {
-                    "patient_id": health_detail.patient_id,
+                    "id_patient": health_detail.id_patient,
                     "last_visit": health_detail.last_visit,
                     "blood_group": health_detail.blood_group,
                     "temperature": health_details.temperature,
@@ -190,7 +190,7 @@ def deleteHealthDetails(id):
         
         return({
             "msg":{
-                    "patient_id": health_detail.patient_id,
+                    "id_patient": health_detail.id_patient,
                     "last_visit": health_detail.last_visit,
                     "blood_group": health_detail.blood_group,
                     "temperature": health_detail.temperature,

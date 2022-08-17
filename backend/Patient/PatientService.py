@@ -16,18 +16,18 @@ def getPatients():
             
             "msg": {
 
-               "idPatient": patient.idPatient,
+               "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "date_of_birth":patient.date_of_birth,
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -36,7 +36,14 @@ def getPatients():
             } for patient in patients ]
         return jsonify(Json_patients),200
     except Exception as e:
-        return (f"connection error: could not get patients:{e}"),400    
+        return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Connection error: could not get patients" 
+                        }
+                }),400
+       
 
 #get patients by ID
 @patients_route.route("/patients/<id>",methods = ['GET'])
@@ -48,18 +55,18 @@ def getPatientById(id):
         return ({
             
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "date_of_birth":patient.date_of_birth,
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -67,7 +74,14 @@ def getPatientById(id):
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400        
+        return  ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Error: Patient ID does not exist" 
+                        }
+                }),400
+        
 
 
 
@@ -77,11 +91,15 @@ def createPatient():
     from app import session
     if request.method == 'POST':
         content_type = request.headers.get('Content-Type')
+
+        #Check for right body parameter type
         if (content_type == 'application/json'):
             req = request.json
             user_email = req["user_email"]
             user_password = req["user_password"]
             isPatient = session.query(Patient).filter(Patient.user_email == user_email).first()
+
+            #If patient has already been registered
             if(isPatient):
                 return ({
                     'status': False,
@@ -92,25 +110,34 @@ def createPatient():
             user_email = req["user_email"]
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
-            gender = req["gender"]
-            # doctor_id = req["doctor_id"]
+            # gender = req["gender"]
+            # id_doctor = req["id_doctor"]
             # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
             newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-           date_of_birth=date_of_birth,gender=gender)
+            date_of_birth=date_of_birth)
             try: 
                 session.add(newPatient) 
                 session.commit()
             except Exception as e:
-                return ("Connection Error: User not recorded : %s",e),400
-            idPatient = session.query(Patient.idPatient).filter(Patient.user_email == user_email).first()
-            patientInfo = session.query(Patient).get(idPatient)
+                return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Connection Error: User not recorded" 
+                        }
+                }),400
+                
+
+            id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+            patientInfo = session.query(Patient).get(id_patient)
             session.commit()
+
             if(check_password_hash(patientInfo.user_password,user_password)):
                 return ({
                     'msg':{
-                        'idPatient':patientInfo.idPatient,
+                        'id_patient':patientInfo.id_patient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -124,7 +151,14 @@ def createPatient():
                     'status':True
                 }),200  #StatusCode
         else:
-            return 'Error: Content-Type Error',400
+            return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"Error: Content-Type Error" 
+                        }
+                }),400
+           
 
 
 
@@ -137,19 +171,21 @@ def patientLogin():
         req = request.json
         user_email = req["user_email"]
         user_password = req["user_password"]
-    #Check Email 
+
+    #Check Email to make sure the patient is already registered
         try:
-            idPatient = session.query(Patient.idPatient).filter(Patient.user_email == user_email).first()
-            if(idPatient):
-                patientInfo = session.query(Patient).get(idPatient)
+            id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+            if(id_patient):
+                patientInfo = session.query(Patient).get(id_patient)
                 session.commit()
-                #Check Password after user email has been verified
+
+                #Check Password after user email has been verified to retreive corresponsing password hash 
                 try :
                     userDbPassword =  str(patientInfo.user_password)
                     if(check_password_hash(userDbPassword,user_password)):
                         return ({
                     'msg':{
-                        'idPatient':patientInfo.idPatient,
+                        'id_patient':patientInfo.id_patient,
                         'first_name':patientInfo.first_name,
                         'middle_name':patientInfo.middle_name,
                         'last_name':patientInfo.last_name,
@@ -158,8 +194,8 @@ def patientLogin():
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
-                        'guardian_id': patientInfo.idGuardian,
-                        'idDoctor': patientInfo.idDoctor
+                        'guardian_id': patientInfo.id_guardian,
+                        'id_doctor': patientInfo.id_doctor
 
                     },
                     'status':True
@@ -167,26 +203,49 @@ def patientLogin():
                     else:
                         return ({
                             'status': False,
-                            'msg': "Incorrect Password. Kindly Try again"
-                        }) #Check Status Code for wrong login 
+                             'msg':{
+                            "dev_messsage" : "",
+                            "message":"Incorrect Password. Kindly Try again" 
+                        }
+                        }),401
+
                 except Exception as e:
-                    return("Connection Error : %s",(e)),400
+                    return  ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"Connection Error" 
+                        }
+                }),400
+
+            # User has not yet been registered        
             else:
-                return({
-                    'status': False,
-                    'msg':"User not registered.Do you want to sign up?"
-                }),200 #Check Status Code for wrong login
+                return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"User not registered.Do you want to sign up?" 
+                        }
+                }),401
+             
+
         except Exception as e:
             print(e)
-            return({
-                'status':False,
-                'msg':"Connection Error: Check your network connection"
-            }),400
+            return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : e,
+                            "message":"Connection Error: Check your network connection"
+                        }
+                }),400
     else:
         return ({
-            'status': False,
-            'msg':"Bad Request Error"
-        }),400
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"Bad Request Error"
+                        }
+                }),404
 
 
 #delete patient
@@ -194,21 +253,29 @@ def patientLogin():
 def deletePatientById(id):
      from app import session
      try:
+
         patient = session.query(Patient).get(id)
+      
+        #delete patient with corresponding ID
+      
+
         session.delete(patient)
         session.commit()
         return ({
-          
+            
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality
             },
@@ -216,7 +283,14 @@ def deletePatientById(id):
             
             }),200
      except Exception as e:
-        return(f"Error: Could not delete patient: {e}"),400 
+        return ({
+                    'status': False,
+                     'msg':{
+                            "dev_messsage" : (f"{e}"),
+                            "message":"Error: Could not delete patient" 
+                        }
+                 }),400
+    
 
 #Update patient info
 @patients_route.route("/patients/<id>",methods = ["PUT"])
@@ -239,22 +313,22 @@ def updatePatientDetailsById(id):
         patient.id_number = req["id_number"]
         patient.nationality = req["nationality"]
         patient.gender = req["gender"]
-        patient.idDoctor = req["idDoctor"]
-        patient.idGuardian = req["idGuardian"]
+        patient.id_doctor = req["id_doctor"]
+        patient.id_guardian = req["id_guardian"]
 
         session.commit()
         return ({
           
             "msg": {
-                "idPatient": patient.idPatient,
+                "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
                 "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "email": patient.user_email,
+                "user_email": patient.user_email,
                 "person_image": patient.person_image,
                 "id_number": patient.id_number,
-                "idGuardian": patient.idGuardian,
-                "idDoctor": patient.idDoctor,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
                 "nationality": patient.nationality,
                 "phone_number":patient.phone_number,
@@ -266,7 +340,14 @@ def updatePatientDetailsById(id):
             
             }),200
     except Exception as e:
-        return(f"Error: Could not update patient details: {e}"),400 
+        return ({
+                     'status': False,
+                     'msg':{
+                            "dev_messsage" : e,
+                            "message":"Error: Could not update patient details" 
+                        }
+                }),400
+       
 
 #Get Doctor by patientID
 @patients_route.route("/patients/doctors/<patientId>",methods = ['GET'])
@@ -274,9 +355,9 @@ def getDoctorByPatientId(patientId):
     from app import session
     try:
         #filtering doctors based on patient IDs
-        doctors = session.query(Doctor).filter(Patient.idDoctor == patientId).all()
+        doctors = session.query(Doctor).filter(Patient.id_doctor == patientId).all()
         returnInfo =  {
-                'idDoctor': doctors.idDoctor,
+                'id_doctor': doctors.id_doctor,
                 'first_name': doctors.first_name,
                 'middle_name': doctors.middle_name,
                 'last_name': doctors.last_name,
@@ -295,4 +376,10 @@ def getDoctorByPatientId(patientId):
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: No Doctor found for patient : %s",e),400
+        return ({
+                     'status': False,
+                     'msg':{
+                            "dev_messsage" : e,
+                            "message":"Connection Error: No Doctor found for patient" 
+                        }
+                }),400

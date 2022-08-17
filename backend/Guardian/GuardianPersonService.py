@@ -41,7 +41,7 @@ def createGuardian():
                     'first_name':guardianDetail.first_name,
                     'middle_name':guardianDetail.middle_name,
                     'last_name':guardianDetail.last_name,
-                    'email':guardianDetail.user_email,
+                    'user_email':guardianDetail.user_email,
                     'date_of_birth':guardianDetail.date_of_birth,
                     'house_address':guardianDetail.house_address,
                     'phone_number':guardianDetail.phone_number,
@@ -65,7 +65,7 @@ def getGuardianById(id):
                     'first_name':guardian.first_name,
                     'middle_name':guardian.middle_name,
                     'last_name':guardian.last_name,
-                    'email':guardian.user_email,
+                    'user_email':guardian.user_email,
                     'date_of_birth':guardian.date_of_birth,
                     'phone_number':guardian.phone_number,
                     'house_address':guardian.house_address,
@@ -90,6 +90,7 @@ def getGuardians():
         for guardian in guardians:
             returnInfo.append((
                 {
+                'id_guardian': guardian.id_guardian,
                 'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,
             'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
             }
@@ -110,7 +111,7 @@ def updateGuardianById(guardianId):
     from app import session
     req = request.json
     try: 
-        session.query(GuardianPerson).filter(GuardianPerson.idGuardian== int(guardianId)).update(
+        session.query(GuardianPerson).filter(GuardianPerson.id_guardian== int(guardianId)).update(
              {
                  GuardianPerson.first_name:req["first_name"],
                  GuardianPerson.middle_name:req["middle_name"],
