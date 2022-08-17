@@ -34,9 +34,9 @@ def getPrescriptionById(id):
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to get presription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Unable to get presription. Prescription doesn't exist",
+                    "dev_messgage": e
+    
                 },
                 "status": False
             }),400
@@ -68,8 +68,7 @@ def getPrescriptions():
         return( {
                 'msg': {
                     "message": "Unable to get all presriptions",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
@@ -107,9 +106,8 @@ def createPrescription():
         except Exception as e:
             return ( {
                 'msg': {
-                    "message": "Unable to create presription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Connection Error: Check your network connection",
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
@@ -132,8 +130,7 @@ def createPrescription():
         return ( {
                 'msg': {
                     "message": "Unable to create prescription",
-                    "dev_messgage": "Content-Type Error",
-                    "description": "{Exception}"
+                    "dev_messgage": "Error: Content-Type Error",
                 },
                 "status": False
             }),400
@@ -178,8 +175,7 @@ def updatePrescriptionById(id):
         return( {
                 'msg': {
                     "message": "Unable to update precription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
@@ -211,9 +207,8 @@ def deletePrescription(id):
     except Exception as e:
         return ( {
                 'msg': {
-                    "message": "Unable to delete prescription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Unable to delete prescription.",
+                    "dev_messgage": e
                 },
                 "status": False
             }),400

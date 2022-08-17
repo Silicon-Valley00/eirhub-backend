@@ -57,13 +57,13 @@ def createHospital():
 
                     ,
                     'status':True
-                }),200  #StatusCodem
+                }),200  #StatusCode
         else:
             return ( {
                 'msg': {
                     "message": "Unable to create hospital",
                     "dev_messgage": "Invalid query parameters",
-                    "description": "{Exception}"
+                
                 },
                 "status": False
             }),400
@@ -96,8 +96,8 @@ def deleteHospital(id):
         return ( {
                 'msg': {
                     "message": "Unable to delete hospital",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": "{Exception}"
+                    "dev_messgage": e,
+                    
                 },
                 "status": False
             }),400
@@ -142,8 +142,7 @@ def updateHospitalById(id):
         return ( {
                 'msg': {
                     "message": "Unable to update hospital by id",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": "{Exception}"
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
@@ -175,8 +174,7 @@ def getHospitals():
         return( {
                 'msg': {
                     "message": "Unable to get all hospitals",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": "{Exception}"
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
@@ -205,8 +203,7 @@ def getHositalById(id):
         return( {
                 'msg': {
                     "message": "Unable to get hospital by id",
-                    "dev_messgage": "Hospital doesn't exist",
-                    "description": "{Exception}"
+                    "dev_messgage": e
                 },
                 "status": False
             }),400
