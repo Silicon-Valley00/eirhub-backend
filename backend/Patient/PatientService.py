@@ -39,7 +39,7 @@ def getPatients():
         return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Connection error: could not get patients" 
                         }
                 }),400
@@ -77,7 +77,7 @@ def getPatientById(id):
         return  ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Error: Patient ID does not exist" 
                         }
                 }),400
@@ -104,7 +104,7 @@ def createPatient():
                 return ({
                     'status': False,
                     'msg':"Patient Email already registered. Do you want to login?"
-                }),200
+                }),400
             first_name = req["first_name"]
             last_name = req["last_name"]
             user_email = req["user_email"]
@@ -124,7 +124,7 @@ def createPatient():
                 return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Connection Error: User not recorded" 
                         }
                 }),400
@@ -149,7 +149,7 @@ def createPatient():
 
                     },
                     'status':True
-                }),200  #StatusCode
+                }),200  
         else:
             return ({
                         'status': False,
@@ -207,14 +207,14 @@ def patientLogin():
                             "dev_messsage" : "",
                             "message":"Incorrect Password. Kindly Try again" 
                         }
-                        }),401
+                        }),400
 
                 except Exception as e:
                     return  ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : "",
-                            "message":"Connection Error" 
+                            "dev_messsage" : (f"{e}"),
+                            "message":"Connection Error: Could not login" 
                         }
                 }),400
 
@@ -226,7 +226,7 @@ def patientLogin():
                             "dev_messsage" : "",
                             "message":"User not registered.Do you want to sign up?" 
                         }
-                }),401
+                }),400
              
 
         except Exception as e:
@@ -234,7 +234,7 @@ def patientLogin():
             return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Connection Error: Check your network connection"
                         }
                 }),400
@@ -343,7 +343,7 @@ def updatePatientDetailsById(id):
         return ({
                      'status': False,
                      'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Error: Could not update patient details" 
                         }
                 }),400
@@ -379,7 +379,7 @@ def getDoctorByPatientId(patientId):
         return ({
                      'status': False,
                      'msg':{
-                            "dev_messsage" : e,
+                            "dev_messsage" : (f"{e}"),
                             "message":"Connection Error: No Doctor found for patient" 
                         }
                 }),400
