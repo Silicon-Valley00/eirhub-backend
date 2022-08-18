@@ -123,7 +123,7 @@ def doctorLogin():
                         'status': False,
                         'msg':{
                             "dev_messsage" : (f"{e}"),
-                            "message":"Network Connection Error" 
+                            "message":"Network Connection Error: could not login" 
                         }
                 }),400
                 else:
@@ -173,7 +173,7 @@ def getDoctors():
                  'status': False,
                  'msg':{
                         "dev_messsage" : (f"{e}"),
-                        "message":"Could not get doctors"
+                        "message":"Could not get  all doctors"
                         }
                 }),400
 

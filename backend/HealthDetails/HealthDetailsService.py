@@ -18,17 +18,24 @@ def createHealthDetails():
             patientId = req["id_patient"]
             try:
                 healthDetail_Exists = session.query(HealthDetails).filter_by(id_patient = int(patientId)).first()
+
+                #Health details for the patient specified already exists
                 if(healthDetail_Exists):
                     return({
                         'status': False,
                         'msg': "Health Details already exists"
-                    }),200
+                    }),400
+
             except Exception as e:
-                print("Network Connection Error: {}",(e))
                 return ({
-                        'status': False,
-                        'msg':"Network Connection Error"
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Network Connection Error"
+                        }
                 }),400
+                
+               
             last_visit=req["last_visit"]
             blood_group=req["blood_group"]
             temperature=req["temperature"]
@@ -71,9 +78,23 @@ def createHealthDetails():
                     "status": True
                     }),200
             except Exception as e:
-                return(f"Error : ID does not exist: {e}"),400
+                return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Error : Patient ID does not exist"
+                        }
+                }),400
         else:
-            return "Error: Content-Type Error",400
+            return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : "",
+                        "message":"Error: Content-Type Error"
+                        }
+                }),400
+            
+         
 
 # Get HealthDetials By Id
 @health_details_route.route("/healthdetails/<id>",methods = ["GET"])
@@ -101,7 +122,15 @@ def getHealthDetailsByPatientId(id):
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400
+        return  ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Error : Healthdetails ID does not exist"
+                        }
+                }),400
+        
+        
 
 
 #Update healthdetails by ID 
@@ -143,10 +172,13 @@ def updateHealthDetailsById(patientId):
             }
         }),200
     except Exception as e:
-        return ({
-            'status':False,
-            'msg': ("Connection Error: User not updated : %s",e)
-        }),400
+        return  ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Connection Error: Patient health details not updated"
+                        }
+                }),400
 
 #get all health details 
 @health_details_route.route("/healthdetails",methods=["GET"])
@@ -162,7 +194,7 @@ def getHealthDetails():
                     "id_patient": health_detail.id_patient,
                     "last_visit": health_detail.last_visit,
                     "blood_group": health_detail.blood_group,
-                    "temperature": health_details.temperature,
+                    "temperature": health_detail.temperature,
                     "bmi": health_detail.bmi,
                     "blood_pressure": health_detail.blood_pressure,
                     "respiratory_rate": health_detail.respiratory_rate,
@@ -177,10 +209,18 @@ def getHealthDetails():
             'msg': health_info
         }),200
     except Exception as e:
-        return("Error: %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Connection Error: could not get all health details"
+                        }
+                }),400
+        
+      
 
 
-#delete  health detail by heatlh detials id 
+#delete  health detail by heatlh details id 
 @health_details_route.route("/healthdetails/<int:id>",methods = ["DELETE"])
 def deleteHealthDetails(id):
     from app import session 
