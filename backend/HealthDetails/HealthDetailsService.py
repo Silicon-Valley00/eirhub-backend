@@ -110,36 +110,37 @@ def updateHealthDetailsById(patientId):
     from app import session
     req = request.json
     try: 
-        healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first()
-            
-        healthdetails.last_visit=str(req["last_visit"])
-        healthdetails.blood_group= req["blood_group"]
-        healthdetails.temperature=req["temperature"]
-        healthdetails.blood_pressure= req["blood_pressure"]
-        healthdetails.respiratory_rate= req["respiratory_rate"]
-        healthdetails.pulse= req["pulse"]
-        healthdetails.blood_sugar=req["blood_sugar"]
-        healthdetails.weight= req["weight"]
-        healthdetails.height= req["height"]
+       
+
+        patientDetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first() 
+
+        patientDetails.last_visit=str(req["last_visit"])
+        patientDetails.blood_group= req["blood_group"]
+        patientDetails.temperature=req["temperature"]
+        patientDetails.blood_pressure= req["blood_pressure"]
+        patientDetails.respiratory_rate= req["respiratory_rate"]
+        patientDetails.pulse= req["pulse"]
+        patientDetails.blood_sugar=req["blood_sugar"]
+        patientDetails.weight= req["weight"]
+        patientDetails.height= req["height"]
             
         session.commit()
-        # print('pass')
-        healthDetailsIn = session.query(HealthDetails).filter_by(id_patient = int(patientId)).first()
-        healthDetailsInfo = {
-                    "id_patient": healthDetailsIn.id_patient,
-                    "last_visit": healthDetailsIn.last_visit,
-                    "blood_group": healthDetailsIn.blood_group,
-                    "temperature": healthDetailsIn.temperature,
-                    "blood_pressure": healthDetailsIn.blood_pressure,
-                    "respiratory_rate": healthDetailsIn.respiratory_rate,
-                    "pulse": healthDetailsIn.pulse,
-                    "blood_sugar":healthDetailsIn.blood_sugar,
-                    "weight": healthDetailsIn.weight,
-                    "height": healthDetailsIn.height
-            }
+      
         return ({
             'status': True,
-            'msg': healthDetailsInfo
+            'msg':
+            {
+                "id_patient": patientDetails.id_patient,
+                "last_visit": patientDetails.last_visit,
+                "blood_group": patientDetails.blood_group,
+                "temperature": patientDetails.temperature,
+                "blood_pressure": patientDetails.blood_pressure,
+                "respiratory_rate": patientDetails.respiratory_rate,
+                "pulse": patientDetails.pulse,
+                "blood_sugar":patientDetails.blood_sugar,
+                "weight": patientDetails.weight,
+                "height": patientDetails.height
+            }
         }),200
     except Exception as e:
         return ({
