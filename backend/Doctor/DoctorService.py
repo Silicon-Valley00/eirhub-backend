@@ -30,9 +30,7 @@ def createDoctor():
                         'msg':{
                             "dev_messsage" :(f"{e}"),
                             "message":"Network Connection Error" 
-
-
-                        }
+                            }
                 }),400
 
             first_name = req["first_name"]
@@ -72,7 +70,15 @@ def createDoctor():
                 'status':True
             }),200  #StatusCode
         else:
-            return 'Error: Content-Type Error',400
+            return({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"Error: Content-Type Error" 
+                        }
+                }),400
+            
+           
 
 
 # Doctor Login
@@ -143,7 +149,7 @@ def doctorLogin():
 
 
 #Get All Doctors 
-@doctor_route.route("/doctors/",methods = ['GET'])
+@doctor_route.route("/doctors",methods = ['GET'])
 def getDoctors():
     from app import session
     try: 
