@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.dialects.mysql import ENUM
@@ -9,7 +10,7 @@ from base import Base
 class HealthDetails(Base):
     __tablename__ = 'HealthDetails'
     id_healthDetails = Column(Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
-    id_patient = Column(Integer,ForeignKey(Patient.id_patient),nullable = False,unique = True)
+    id_patient = Column(Integer,ForeignKey(Patient.id_patient,ondelete=CASCADE),nullable = False,unique = True)
     last_visit = Column("last_visit",Date)
     blood_group = Column(ENUM('A','AB','B','O','unknown'), nullable = True)
     temperature = Column('temperature',Integer)

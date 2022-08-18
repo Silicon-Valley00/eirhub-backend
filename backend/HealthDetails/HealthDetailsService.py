@@ -34,12 +34,11 @@ def createHealthDetails():
                         "message":"Network Connection Error"
                         }
                 }),400
-                
-               
+
+          
             last_visit=req["last_visit"]
             blood_group=req["blood_group"]
             temperature=req["temperature"]
-            bmi= req["bmi"]
             temperature= req["temperature"]
             blood_pressure= req["blood_pressure"]
             respiratory_rate= req["respiratory_rate"]
@@ -49,17 +48,30 @@ def createHealthDetails():
             height= req["height"]
             
 
-            
+          
             # Creating an instance
-            newHealthDetails = HealthDetails(last_visit,blood_group,temperature,bmi,blood_pressure,respiratory_rate,pulse,blood_sugar,weight,height,patientId)
+            newHealthDetails = HealthDetails(last_visit,blood_group,temperature,blood_pressure,respiratory_rate,pulse,blood_sugar,weight,height,patientId)
             try:
                 session.add(newHealthDetails)
+               
                 session.commit()
+               
             except Exception as e:
-                return("Connection Error: Health details not recorded: %s",e),400
+                return ({
+                 'status': False,
+                 'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Connection Error: Health details not recorded"
+                        }
+                }),400
+                
+                
+
             # Confirming that it has been recorded
             try:
-                healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first()
+                    
+                healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == patientId).first()
+              
                 return ({
                     
                     "msg": {
@@ -67,7 +79,6 @@ def createHealthDetails():
                         "last_visit": healthdetails.last_visit,
                         "blood_group": healthdetails.blood_group,
                         'temperature': healthdetails.temperature,
-                        "bmi": healthdetails.bmi,
                         "blood_pressure": healthdetails.blood_pressure,
                         "respiratory_rate": healthdetails.respiratory_rate,
                         "pulse": healthdetails.pulse,
@@ -110,7 +121,6 @@ def getHealthDetailsByPatientId(id):
                 "last_visit": healthdetails.last_visit,
                 "blood_group": healthdetails.blood_group,
                 "temperature": healthdetails.temperature,
-                "bmi": healthdetails.bmi,
                 "blood_pressure": healthdetails.blood_pressure,
                 "respiratory_rate": healthdetails.respiratory_rate,
                 "pulse": healthdetails.pulse,
@@ -195,7 +205,6 @@ def getHealthDetails():
                     "last_visit": health_detail.last_visit,
                     "blood_group": health_detail.blood_group,
                     "temperature": health_detail.temperature,
-                    "bmi": health_detail.bmi,
                     "blood_pressure": health_detail.blood_pressure,
                     "respiratory_rate": health_detail.respiratory_rate,
                     "pulse": health_detail.pulse,
@@ -235,7 +244,6 @@ def deleteHealthDetails(id):
                     "last_visit": health_detail.last_visit,
                     "blood_group": health_detail.blood_group,
                     "temperature": health_detail.temperature,
-                    "bmi": health_detail.bmi,
                     "blood_pressure": health_detail.blood_pressure,
                     "respiratory_rate": health_detail.respiratory_rate,
                     "pulse": health_detail.pulse,
