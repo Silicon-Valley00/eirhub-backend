@@ -10,7 +10,7 @@ from Doctor.DoctorModel import Doctor
 
 from base import Base
 
-# class_associations = Table('patients_doctors',Base.metadata,Column("patient_id",ForeignKey = ))
+# class_associations = Table('patients_doctors',Base.metadata,Column("id_patient",ForeignKey = ))
 
 class Patient(Base):
     __tablename__ = 'Patient'

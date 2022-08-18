@@ -38,15 +38,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
     elif patient_doctor != "both":
         raise Exception("Invalid value provided for patient_doctor argument. ")
 
-    if len(response_message["msg"]) == 1:
-        response_message["msg"] = response_message["msg"][0]
-        return jsonify(response_message)
-    elif len(response_message["msg"]) > 1:
-        return jsonify(response_message)
-    elif len(response_message) == 0:
-        return "No Appointments Found"
-    else:
-        raise Exception("Could not get appointment details from appointment list provided")
+    return jsonify(response_message)
 
 
 def pop_doctor_names(x):
