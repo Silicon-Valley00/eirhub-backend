@@ -17,9 +17,13 @@ def createGuardian():
         isGuardian = session.query(GuardianPerson).filter(GuardianPerson.user_email == user_email, GuardianPerson.id_number == id_number).first()
         if(isGuardian):
             return ({
-                'status': False,
-                'msg':"Guardian Person already registered. Do you want to login?"
-            }),200
+                "status": False,
+                "msg": {
+                    "dev_message": "",
+                    "message": "Guardian already registered"
+                },
+                 }),400
+        
         first_name = req["first_name"]
         middle_name = req["middle_name"]
         last_name = req["last_name"]
@@ -50,7 +54,15 @@ def createGuardian():
                 }
             }),200
         except Exception as e:
-            return ("Connection Error: User not recorded : %s",e),400
+            return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Guardian could not be recorded "
+                },
+                 }),400
+            
+           
 
 #Get Guardian by id 
 @guardian_route.route("/guardian/<id>",methods = ['GET'])
@@ -60,7 +72,7 @@ def getGuardianById(id):
         guardian = session.query(GuardianPerson).get(id)
       
         return ({
-            
+            "status": True,
             "msg": {
                     'first_name':guardian.first_name,
                     'middle_name':guardian.middle_name,
@@ -71,12 +83,20 @@ def getGuardianById(id):
                     'house_address':guardian.house_address,
                     'id_number':guardian.id_number,
                     'gender':guardian.gender
-            },
-            "status": True
+            }
+           
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400   
+        return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Error : Guardian ID does not exist"
+                },
+                 }),400
+        
+        
 
 
 
@@ -100,8 +120,14 @@ def getGuardians():
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
-
+        return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Could not fetch all guardians"
+                },
+                 }),400
+        
 
 
 
@@ -144,9 +170,13 @@ def updateGuardianById(guardianId):
         }),200
     except Exception as e:
         return ({
-            'status':False,
-            'msg': ("Connection Error: User not updated : %s", str(e))
-        }),400
-
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Guardian details could not be updated"
+                },
+                 }),400
+        
+       
 
 
