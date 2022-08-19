@@ -9,7 +9,7 @@ class Doctor(Base):
     first_name = Column('first_name',String(60), nullable  = False)
     middle_name = Column('middle_name',String(60))
     last_name = Column('last_name',String(60), nullable = False)
-    person_image = Column('person_image',String(2083),nullable  = False)
+    person_image = Column('person_image',String(2900000),nullable  = False)
     user_email = Column('user_email',String(50),unique = True)
     user_password = Column('user_password',String(250))
     date_of_birth = Column('date_of_birth',DATE, nullable  = False)
