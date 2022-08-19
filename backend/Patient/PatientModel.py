@@ -15,8 +15,8 @@ from base import Base
 class Patient(Base):
     __tablename__ = 'Patient'
     id_patient = Column(Integer,primary_key= True,unique = True,autoincrement=True,nullable = False)
-    id_guardian = Column(Integer,ForeignKey(GuardianPerson.id_guardian))
-    id_doctor = Column(Integer,ForeignKey(Doctor.id_doctor))
+    id_guardian = Column(Integer,ForeignKey(GuardianPerson.id_guardian,ondelete = "SET NULL"))
+    id_doctor = Column(Integer,ForeignKey(Doctor.id_doctor,ondelete="SET NULL"))
     first_name = Column("first_name",String(60))
     middle_name = Column("middle_name",String(60),nullable = True)
     last_name = Column("last_name",String(60))

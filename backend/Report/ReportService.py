@@ -13,7 +13,7 @@ def getReports():
     try:
         reports = session.query(Report).all()
         Json_reports = [{
-            
+            "status": True,
             "msg": {
 
                "id_report": report.id_report,
@@ -23,7 +23,7 @@ def getReports():
                 
                 
             },
-            "status": True
+            
             
             } for report in reports ]
         return jsonify(Json_reports),200

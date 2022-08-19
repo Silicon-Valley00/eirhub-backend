@@ -73,7 +73,7 @@ def createHealthDetails():
                 healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == patientId).first()
               
                 return ({
-                    
+                    "status": True,
                     "msg": {
                         "id_patient": healthdetails.id_patient,
                         "last_visit": healthdetails.last_visit,
@@ -86,7 +86,7 @@ def createHealthDetails():
                         "weight": healthdetails.weight,
                         "height": healthdetails.height,
                     },
-                    "status": True
+                    
                     }),200
             except Exception as e:
                 return ({
@@ -115,7 +115,7 @@ def getHealthDetailsByPatientId(id):
     try:
         healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(id)).first()
         return ({
-            
+            "status": True,
             "msg": {
                 "id_patient": healthdetails.id_patient,
                 "last_visit": healthdetails.last_visit,
@@ -127,8 +127,8 @@ def getHealthDetailsByPatientId(id):
                 "blood_sugar":healthdetails.blood_sugar,
                 "weight": healthdetails.weight,
                 "height": healthdetails.height,
-            },
-            "status": True
+            }
+           
             
             }),200
     except Exception as e:
@@ -239,6 +239,7 @@ def deleteHealthDetails(id):
         session.commit()
         
         return({
+            "status": True,
             "msg":{
                     "id_patient": health_detail.id_patient,
                     "last_visit": health_detail.last_visit,
