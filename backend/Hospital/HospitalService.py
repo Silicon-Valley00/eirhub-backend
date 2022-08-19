@@ -96,7 +96,7 @@ def deleteHospital(id):
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete hospital",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                     
                 },
                 "status": False
@@ -142,7 +142,7 @@ def updateHospitalById(id):
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to update hospital by id",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -174,7 +174,7 @@ def getHospitals():
         return( {
                 'msg': {
                     "message": "Connection error: Unable to get all hospitals",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -203,7 +203,7 @@ def getHositalById(id):
         return( {
                 'msg': {
                     "message": "Connection error: Unable to get hospital by id",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400

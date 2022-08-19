@@ -35,7 +35,7 @@ def getPrescriptionById(id):
         return( {
                 'msg': {
                     "message": "Unable to get presription. Prescription doesn't exist",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
     
                 },
                 "status": False
@@ -68,7 +68,7 @@ def getPrescriptions():
         return( {
                 'msg': {
                     "message": "Connection error: Unable to get all presriptions",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -107,7 +107,7 @@ def createPrescription():
             return ( {
                 'msg': {
                     "message": "Connection Error: Check your network connection",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -175,7 +175,7 @@ def updatePrescriptionById(id):
         return( {
                 'msg': {
                     "message": "Connection error: Unable to update precription",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -208,7 +208,7 @@ def deletePrescription(id):
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete prescription.",
-                    "dev_messgage": e
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
