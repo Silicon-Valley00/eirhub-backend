@@ -82,7 +82,7 @@ def deleteHospital(id):
             "msg": {
                 "hospital_name": hospital.hospital_name,
                 "location": hospital.location,
-                "id": hospital.id_hospital,
+                "id_hospital": hospital.id_hospital,
                 "hospital_specialities": hospital.hospital_specialities,
                 "number_of_doctors": hospital.number_of_doctors,
                 "hospital_code": hospital.hospital_code,
@@ -126,7 +126,7 @@ def updateHospitalById(id):
         session.commit()
         return_hospital = session.query(Hospital).get(id)
         hospital_data = {
-            "id": return_hospital.id_hospital,
+            "id_hospital": return_hospital.id_hospital,
             "location" : return_hospital.location,
             "hospital_name" : return_hospital.hospital_name,
             "hospital_specialities" : return_hospital.hospital_specialities,
@@ -157,7 +157,7 @@ def getHospitals():
         for hospital in hospitals:
             hospitalInfo.append((
                 {
-                    "id": hospital.id_hospital,
+                    "id_hospital": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,
@@ -189,7 +189,7 @@ def getHositalById(id):
         hospital =  session.query(Hospital).get(id)
         return ({
             'msg': {
-                    "id": hospital.id_hospital,
+                    "id_hospital": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,
