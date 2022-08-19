@@ -6,7 +6,8 @@ from flask_cors import CORS
 
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
-#Doctor Sign Up ./
+
+#Doctor Sign Up 
 @doctor_route.route("/doctor/signup",methods = ['POST'])
 def createDoctor():
     from app import session
@@ -54,18 +55,29 @@ def createDoctor():
                 session.add(newDoctor)
                 session.commit()
             except Exception as e:
-                return ("Connection Error: User not recorded : %s",e),400
-            id_doctor = session.query(Doctor.id_doctor).filter( Doctor.hospital_code == req['hospital_code']).first()
+                return ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" :(f"{e}"),
+                            "message":"Connection Error: Doctor could not be registered" 
+                            }
+                }),400
+                
+                
+            id_doctor = session.query(Doctor.id_doctor).filter( Doctor.user_email == newDoctor.user_email).first()
             returnDoctor = session.query(Doctor).get(id_doctor)
             session.commit()
             return ({
                 'msg':{
-                    'id_doctor': returnDoctor.id_doctor,
+                   'id_doctor': returnDoctor.id_doctor,
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
                     'last_name':returnDoctor.last_name,
-                    # 'license_number':returnDoctor.license_number,
-                    'user_email': returnDoctor.user_email
+                    'user_email':returnDoctor.user_email,
+                    'date_of_birth':returnDoctor.date_of_birth,
+                    'license_number':returnDoctor.license_number,
+                    'hospital_code':returnDoctor.hospital_code,
+                    'gender':returnDoctor.gender
                 },
                 'status':True
             }),200  #StatusCode
@@ -109,6 +121,7 @@ def doctorLogin():
                                 'user_email':doctorInfo.user_email,
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
+                                'hospital_code':doctorInfo.hospital_code,
                                 'gender':doctorInfo.gender
                             },
                             'status':True
@@ -195,7 +208,7 @@ def updateDoctorById(doctorId):
         doctor.date_of_birth = docReq["date_of_birth"]
         doctor.house_address = docReq["house_address"]
         doctor.license_number = docReq["license_number"]
-        doctor.doctor_ratings = docReq["doctor_ratings"]
+        # doctor.doctor_ratings = docReq["doctor_ratings"]
         doctor.doctor_specialties = docReq["doctor_specialties"]
         doctor.gender = docReq["gender"]
         doctor.hospital_code = docReq["hospital_code"]
