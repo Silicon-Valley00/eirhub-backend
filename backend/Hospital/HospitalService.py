@@ -96,7 +96,7 @@ def deleteHospital(id):
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete hospital",
-                    "dev_messgage": e,
+                    "dev_messgage": (f"{e}"),
                     
                 },
                 "status": False
