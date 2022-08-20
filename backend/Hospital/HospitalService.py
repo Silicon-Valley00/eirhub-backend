@@ -88,7 +88,7 @@ def deleteHospital(id):
                 "id_hospital" : hospital.id_hospital,
                 "hospital_name": hospital.hospital_name,
                 "location": hospital.location,
-                "id": hospital.id_hospital,
+                "id_hospital": hospital.id_hospital,
                 "hospital_specialities": hospital.hospital_specialities,
                 "number_of_doctors": hospital.number_of_doctors,
                 "hospital_code": hospital.hospital_code,
