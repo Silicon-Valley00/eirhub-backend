@@ -19,6 +19,7 @@ class Doctor(Base):
     doctor_specialties = Column('doctor_specialties',String(200),nullable  = False)
     gender = Column('gender',String(45),nullable  = False)
     hospital_code = Column('hospital_code',String(45),unique = True,nullable  = False)
+    hospital_name = Column('hospital_name',String(200),unique = True,nullable  = False)
 
     # relationships
     appointments = relationship("Appointment", backref="doctor")

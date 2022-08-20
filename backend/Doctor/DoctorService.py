@@ -4,6 +4,8 @@ from Patient.PatientModel import Patient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
+from Hospital.HospitalModel import Hospital
+
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
 
@@ -47,10 +49,12 @@ def createDoctor():
             # # license_number = req["license_number"]
             # gender = req["gender"]
             hospital_code = req["hospital_code"]
+            hospital_name = session.query(Hospital.hospital_name).filter(Hospital.hospital_code == req["hospital_code"]).scalar()
+       
 
             #hash password
             hashed_password = generate_password_hash(user_password)
-            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code)
+            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code,hospital_name=hospital_name )
             try: 
                 session.add(newDoctor)
                 session.commit()
@@ -72,12 +76,14 @@ def createDoctor():
                    'id_doctor': returnDoctor.id_doctor,
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
-                    'last_name':returnDoctor.last_name,
-                    'user_email':returnDoctor.user_email,
-                    'date_of_birth':returnDoctor.date_of_birth,
-                    'license_number':returnDoctor.license_number,
-                    'hospital_code':returnDoctor.hospital_code,
-                    'gender':returnDoctor.gender
+                    'last_name': returnDoctor.last_name,
+                    'user_email': returnDoctor.user_email,
+                    'date_of_birth': returnDoctor.date_of_birth,
+                    'license_number': returnDoctor.license_number,
+                    'hospital_code': returnDoctor.hospital_code,
+                    'gender': returnDoctor.gender,
+                    'hospital_name': returnDoctor.hospital_name
+
                 },
                 'status':True
             }),200  #StatusCode
@@ -122,15 +128,19 @@ def doctorLogin():
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
                                 'hospital_code':doctorInfo.hospital_code,
+                                'hospital_name': doctorInfo.hospital_name,
                                 'gender':doctorInfo.gender
                             },
                             'status':True
                         }),200  #StatusCode
                         else:
-                            return ({
-                                'status': False,
-                                'msg': "Incorrect Password. Kindly Try again"
-                            }),401 #Check Status Code for wrong login 
+                            return  ({
+                            'status': False,
+                            'msg':{
+                                    "dev_messsage" : "",
+                                    "message":"Incorrect Password. Kindly Try again"
+                        }
+                }),400 
                     except Exception as e:
                          return ({
                         'status': False,
@@ -140,16 +150,26 @@ def doctorLogin():
                         }
                 }),400
                 else:
-                    return({
+                    #Doctor has not yet been registered
+                    return ({
                         'status': False,
-                        'msg':"User not registered.Do you want to sign up?"
-                    }),401 #Check Status Code for wrong login
-            except Exception as e:
-                print(e)
-                return({
-                    'status':False,
-                    'msg':"Connection Error: Check your network connection"
+                        'msg':{
+                            "dev_messsage" : "",
+                            "message":"Doctor not registered.Do you want to sign up?" 
+                        }
                 }),400
+                    
+            
+            except Exception as e:
+                
+                return  ({
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : (f"{e}"),
+                            "message":"Connection Error: Check your network connection" 
+                        }
+                }),400
+                
         else:
             return ({
                         'status': False,
@@ -174,7 +194,7 @@ def getDoctors():
                     'id_doctor':doctor.id_doctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
                     'user_email': doctor.user_email,'person_image': doctor.person_image,'date_of_birth': doctor.person_image,'house_address': doctor.house_address,
                     'doctor_ratings':doctor.doctor_ratings,'doctor_specialties': doctor.doctor_specialties,'license_number': doctor.license_number,
-                    'gender':doctor.gender,'hospital_code':doctor.hospital_code
+                    'gender':doctor.gender,'hospital_code':doctor.hospital_code,'hospital_name': doctor.hospital_name
             }
             ))
         return ({
@@ -212,7 +232,9 @@ def updateDoctorById(doctorId):
         doctor.doctor_specialties = docReq["doctor_specialties"]
         doctor.gender = docReq["gender"]
         doctor.hospital_code = docReq["hospital_code"]
-
+        
+        doctor.hospital_name = session.query(Hospital.hospital_name).filter(Hospital.hospital_code == docReq["hospital_code"]).scalar()
+       
 
         session.commit()
 
@@ -232,7 +254,8 @@ def updateDoctorById(doctorId):
                 "doctor_ratings":doctor.doctor_ratings,
                 "doctor_specialties": doctor.doctor_specialties,
                 "gender": doctor.gender,
-                "hospital_code": doctor.hospital_code
+                "hospital_code": doctor.hospital_code,
+                "hospital_name": doctor.hospital_name
 
             }
             }
@@ -269,7 +292,8 @@ def getDoctorById(doctorId):
                 'doctor_specialties': doctor.doctor_specialties,
                 'license_number': doctor.license_number,
                 'gender':doctor.gender,
-                'hospital_code':doctor.hospital_code
+                'hospital_code':doctor.hospital_code,
+                'hospital_name': doctor.hospital_name
         }
         return ({
             'status': True,

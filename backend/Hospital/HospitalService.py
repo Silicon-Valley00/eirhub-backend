@@ -37,27 +37,32 @@ def createHospital():
                 session.add(newHospital)
                 session.commit()
             except Exception as e:
-                return ("Connection Error: User not recorded : %s",e),400
+                return  ( {
+                'msg': {
+                    "message": "Connection Error: Unable to register hospital",
+                    "dev_message": (f"{e}"),
+                    
+                },
+                "status": False
+            }),400
+                
+               
             
             session.commit()
             hospitalDetails = session.query(Hospital).filter(Hospital.hospital_code == hospital_code).first()
 
             return ({
                     'msg':{
-                        
+                        "id_hospital" : hospitalDetails.id_hospital,
                         "hospital_name": hospitalDetails.hospital_name,
                         "location": hospitalDetails.location,
                         "hospital_specialities": hospitalDetails.hospital_specialities,
                         "number_of_doctors": hospitalDetails.number_of_doctors,
                         "hospital_code": hospitalDetails.hospital_code,
                         "phone_number": hospitalDetails.phone_number
-
-
-                    }
-
-                    ,
+                     } ,
                     'status':True
-                }),200  #StatusCode
+                }),200  
         else:
             return ( {
                 'msg': {
@@ -80,6 +85,7 @@ def deleteHospital(id):
         
         return({
             "msg": {
+                "id_hospital" : hospital.id_hospital,
                 "hospital_name": hospital.hospital_name,
                 "location": hospital.location,
                 "id": hospital.id_hospital,
@@ -126,7 +132,7 @@ def updateHospitalById(id):
         session.commit()
         return_hospital = session.query(Hospital).get(id)
         hospital_data = {
-            "id": return_hospital.id_hospital,
+            "id_hospital": return_hospital.id_hospital,
             "location" : return_hospital.location,
             "hospital_name" : return_hospital.hospital_name,
             "hospital_specialities" : return_hospital.hospital_specialities,
@@ -157,7 +163,7 @@ def getHospitals():
         for hospital in hospitals:
             hospitalInfo.append((
                 {
-                    "id": hospital.id_hospital,
+                    "id_hospital": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,
@@ -189,7 +195,7 @@ def getHositalById(id):
         hospital =  session.query(Hospital).get(id)
         return ({
             'msg': {
-                    "id": hospital.id_hospital,
+                    "id_hospital": hospital.id_hospital,
                     "location" : hospital.location,
                     "hospital_name" : hospital.hospital_name,
                     "hospital_specialities" : hospital.hospital_specialities,
