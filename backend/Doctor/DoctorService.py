@@ -82,7 +82,7 @@ def createDoctor():
                     'license_number': returnDoctor.license_number,
                     'hospital_code': returnDoctor.hospital_code,
                     'gender': returnDoctor.gender,
-                    'hospital_name': returnDoctor.hospital_name
+                    
 
                 },
                 'status':True
@@ -128,7 +128,6 @@ def doctorLogin():
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
                                 'hospital_code':doctorInfo.hospital_code,
-                                'hospital_name': doctorInfo.hospital_name,
                                 'gender':doctorInfo.gender
                             },
                             'status':True
