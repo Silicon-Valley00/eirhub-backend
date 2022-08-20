@@ -25,7 +25,7 @@ def getAppointments():
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
                 appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == "Accepted").all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status != "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == "Declined").all()
             else:
                 appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).all()
             respones_message = generate_response_message(appointments, "doctor")
