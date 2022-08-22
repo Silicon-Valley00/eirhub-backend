@@ -24,7 +24,7 @@ class Doctor(Base):
     # relationships
     appointments = relationship("Appointment", backref="doctor")
     
-    def __init__ (self,first_name,last_name,user_email,user_password,date_of_birth,hospital_code):
+    def __init__ (self,first_name,last_name,user_email,user_password,date_of_birth,hospital_code,hospital_name):
         self.first_name = first_name
         # self.middle_name = middle_name
         self.last_name = last_name
@@ -38,4 +38,5 @@ class Doctor(Base):
         # self.license_number = license_number
         # self.gender = gender
         self.hospital_code = hospital_code
+        self.hospital_name = hospital_name
         
