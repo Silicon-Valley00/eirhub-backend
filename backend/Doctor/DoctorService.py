@@ -310,12 +310,13 @@ def getDoctorById(doctorId):
         
 
 #Get patients by DoctorID
-@doctor_route.route("/doctors/patients/<doctorId>",methods = ['GET'])
-def getpatientsByDoctorId(doctorId):
+@doctor_route.route("/doctors/",methods = ['GET'])
+def getpatientsByDoctorId():
     from app import session
     try:
         #filtering patients based on doctor IDs
-        patients = session.query(Patient).filter(Patient.id_doctor == doctorId).all()
+        id_doctor = int(request.args.get("id_doctor"))
+        patients = session.query(Patient).filter(Patient.id_doctor == id_doctor).all()
         returnInfo =  [{
             'status': True,
             'msg': {

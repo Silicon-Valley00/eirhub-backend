@@ -3,7 +3,7 @@ from flask import Flask,jsonify,request
 from flask_cors import CORS
 
 
-from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String
+from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String,exc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
@@ -49,11 +49,18 @@ try:
     print("Database Successfully Connected")
 except Exception as e:
     print('Database connection failed: %s'%(e))
+    session.rollback()
+
 
 # Home route
 @app.route("/",methods = ['GET'])
 def home():
     return "Welcome to EirHub"
+
+# @app.errorhandler(exc.SQLAlchemyError)
+# def handle_db_exceptions(error):
+#     session.rollback()
+
 
 
 

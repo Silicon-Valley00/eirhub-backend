@@ -350,31 +350,36 @@ def updatePatientDetailsById(id):
        
 
 #Get Doctor by patientID
-@patients_route.route("/patients/doctors/<patientId>",methods = ['GET'])
-def getDoctorByPatientId(patientId):
+@patients_route.route("/patients/",methods = ['GET'])
+def getDoctorByPatientId():
     from app import session
     try:
         #filtering doctors based on patient IDs
-        doctors = session.query(Doctor).filter(Patient.id_doctor == patientId).all()
-        returnInfo =  {
-                'id_doctor': doctors.id_doctor,
-                'first_name': doctors.first_name,
-                'middle_name': doctors.middle_name,
-                'last_name': doctors.last_name,
-                'user_email': doctors.user_email,
-                'person_image': doctors.person_image,
-                'date_of_birth': doctors.person_image,
-                'house_address': doctors.house_address,
-                'doctor_ratings':doctors.doctor_ratings,
-                'doctor_specialties': doctors.doctor_specialties,
-                'license_number': doctors.license_number,
-                'gender':doctors.gender,
-                'hospital_code':doctors.hospital_code
-        }
-        return ({
-            'status': True,
-            'msg': returnInfo
-        }),200
+        id_patient = int(request.args.get("id_patient"))
+        # patient = session.query(Patient).get(id_patient)
+        doctors = session.query(Doctor).join(Patient,Doctor.id_doctor == Patient.id_doctor).filter(Patient.id_patient == id_patient).all()
+        returnInfo =  [{
+             'msg': {
+                'id_doctor': doctor.id_doctor,
+                'first_name': doctor.first_name,
+                'middle_name': doctor.middle_name,
+                'last_name': doctor.last_name,
+                'user_email': doctor.user_email,
+                'person_image': doctor.person_image,
+                'date_of_birth': doctor.date_of_birth,
+                'house_address': doctor.house_address,
+                'doctor_ratings':doctor.doctor_ratings,
+                'doctor_specialties': doctor.doctor_specialties,
+                'license_number': doctor.license_number,
+                'gender':doctor.gender,
+                'hospital_code':doctor.hospital_code
+                
+
+             },
+                'status': True
+
+        } for doctor in doctors]
+        return jsonify(returnInfo),200
     except Exception as e:
         return ({
                      'status': False,
