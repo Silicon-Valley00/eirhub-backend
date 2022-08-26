@@ -357,8 +357,8 @@ def getDoctorByPatientId():
         #filtering doctors based on patient IDs
         id_patient = int(request.args.get("id_patient"))
         # patient = session.query(Patient).get(id_patient)
-        doctors = session.query(Doctor).join(Patient,Doctor.id_doctor == Patient.id_doctor).filter(Patient.id_patient == id_patient).all()
-        returnInfo =  [{
+        doctor = session.query(Doctor).join(Patient,Doctor.id_doctor == Patient.id_doctor).filter(Patient.id_patient == id_patient).first()
+        returnInfo =  {
              'msg': {
                 'id_doctor': doctor.id_doctor,
                 'first_name': doctor.first_name,
@@ -378,7 +378,7 @@ def getDoctorByPatientId():
              },
                 'status': True
 
-        } for doctor in doctors]
+        } 
         return jsonify(returnInfo),200
     except Exception as e:
         return ({
