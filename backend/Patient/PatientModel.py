@@ -34,8 +34,8 @@ class Patient(Base):
     health_details = relationship("HealthDetails", uselist=False,back_populates="patient")
     prescription = relationship("Prescription", cascade='save-update, merge, delete')
     appointments = relationship("Appointment", backref="patient")
-   
-   
+
+
     
     def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,guardian_id = None,id_doctor = None):
         self.first_name = first_name
