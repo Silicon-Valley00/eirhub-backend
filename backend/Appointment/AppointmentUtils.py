@@ -23,7 +23,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
                 "person_image": appointment.doctor.person_image
              },
             "patient_info": {
-                "fist_name": appointment.patient.first_name,
+                "first_name": appointment.patient.first_name,
                 "middle_name": appointment.patient.middle_name,
                 "last_name": appointment.patient.last_name,
                 "person_image": appointment.patient.person_image
