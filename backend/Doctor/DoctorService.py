@@ -1,7 +1,9 @@
-from black import Report
+#from black import Report
 from flask import Blueprint,request,jsonify
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
+from Report.ReportModel import Report
+from Appointment.AppointmentModel import Appointment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
@@ -349,7 +351,7 @@ def getpatientsByDoctorId():
                 }),400
         
 
-# get the number of patient that are assigned to a particular doctor 
+
 @doctor_route.route("/doctors/patients/",methods = ['GET'])
 def getNumberOfPatientAssignedToDoctor():
     from app import session
@@ -368,22 +370,41 @@ def getNumberOfPatientAssignedToDoctor():
                         }
                 }),400
 
-# #get the number of reports that a particular doctor wrote 
-# @doctor_route.route("/doctors/reports/",methods = ['GET'])
-# def getNumberOfDoctorsReports():
-#     from app import session
-#     try:
-#         id_doctor = int(request.args.get("id_doctor"))
-#         number_of_reports = session.query(Report).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
-#         return ({
-#             'number_of_reports': number_of_reports
-#         })
-#     except Exception as e:
-#         return ({
-#                 'status': False,
-#                 'msg':{
-#                         "dev_messsage" : (f"{e}"),
-#                         "message":"Connection Error: Number of Reports not found for Doctor"
-#                         }
-#                 }),400
+
+@doctor_route.route("/doctors/reports/",methods = ['GET'])
+def getNumberOfDoctorsReports():
+    from app import session
+    try:
+        id_doctor = int(request.args.get("id_doctor"))
+        number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
+        return ({
+            'number_of_reports': number_of_reports
+        })
+    except Exception as e:
+        return ({
+                'status': False,
+                'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Connection Error: Number of Reports not found for Doctor"
+                        }
+                }),400
         
+
+
+@doctor_route.route("/doctors/appointments/",methods = ['GET'])
+def getNumberOfDoctorsAppointments():
+    from app import session
+    try: 
+        id_doctor = int(request.args.get("id_doctor"))
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+        return ({
+            'number_of_reports': number_of_appointments
+        })
+    except Exception as e:
+        return ({
+                'status': False,
+                'msg':{
+                        "dev_messsage" : (f"{e}"),
+                        "message":"Connection Error: Number of Reports not found for Doctor"
+                        }
+                }),400
