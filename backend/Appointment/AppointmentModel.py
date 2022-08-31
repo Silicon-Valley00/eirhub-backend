@@ -19,8 +19,8 @@ class Appointment(Base):
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment
-    id_patient = Column(Integer, ForeignKey(Patient.id_patient))
-    id_doctor = Column(Integer, ForeignKey(Doctor.id_doctor))
+    id_patient = Column(Integer, ForeignKey(Patient.id_patient,ondelete= 'CASCADE'))
+    id_doctor = Column(Integer, ForeignKey(Doctor.id_doctor,ondelete= 'CASCADE'))
 
 
     def __init__(

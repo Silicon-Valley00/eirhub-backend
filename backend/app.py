@@ -57,14 +57,11 @@ except Exception as e:
 def home():
     return "Welcome to EirHub"
 
-# @app.errorhandler(exc.SQLAlchemyError)
-# def handle_db_exceptions(error):
-#     session.rollback()
 
 
 
 
-#main Logic
+#Main Logic
 if __name__ == "__main__":
     CORS(app)
     app.run(debug=True)
