@@ -8,14 +8,14 @@ health_details_route = Blueprint("health_details_route",__name__)
 CORS(health_details_route)
 
 # create health details
-@health_details_route.route("/healthdetails/", methods = ["POST"])
-def createHealthDetails():
+@health_details_route.route("/healthdetails/<patientId>", methods = ["POST"])
+def createHealthDetails(patientId):
     from app import session
     if request.method == 'POST':
         content_type = request.headers.get('Content-Type')
         if(content_type =="application/json"):
             req = request.json
-            patientId = req["id_patient"]
+            # patientId = req["id_patient"]
             try:
                 healthDetail_Exists = session.query(HealthDetails).filter_by(id_patient = int(patientId)).first()
 
@@ -108,12 +108,12 @@ def createHealthDetails():
          
 
 # Get HealthDetials By Id
-@health_details_route.route("/healthdetails/<id>",methods = ["GET"])
-def getHealthDetailsByPatientId(id):
+@health_details_route.route("/healthdetails/<patientId>",methods = ["GET"])
+def getHealthDetailsByPatientId(patientId):
     from app import session
    
     try:
-        healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(id)).first()
+        healthdetails = session.query(HealthDetails).filter(HealthDetails.id_patient == int(patientId)).first()
         return ({
             "status": True,
             "msg": {
@@ -254,4 +254,4 @@ def deleteHealthDetails(id):
             }
         }),200
     except Exception as e:
-        return("Error: Could not delete health detials:%s",e),400
+        return("Error: Could not delete health details:%s",e),400
