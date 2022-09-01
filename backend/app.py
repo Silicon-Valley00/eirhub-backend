@@ -45,11 +45,12 @@ try:
     engine.connect()
     Base.metadata.create_all(engine)
     session.commit()
-    session.close()
     print("Database Successfully Connected")
 except Exception as e:
     print('Database connection failed: %s'%(e))
     session.rollback()
+finally:
+    session.close()
 
 
 # Home route
