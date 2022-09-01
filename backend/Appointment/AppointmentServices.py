@@ -109,7 +109,10 @@ def updateAppointmentById():
     if request.args.get("id_appointment"):
         content_type = request.headers.get("Content-Type")
         if content_type == "application/json":
-            id_appointment = int(request.args.get("id_appointment"))
+            try:
+                id_appointment = int(request.args.get("id_appointment"))
+            except:
+                return (generate_error_response("Error updating appointment", "id_appointment should be an int.", None), 400)
             req = request.json
             try:
                 appointment = session.query(Appointment).get(id_appointment)
