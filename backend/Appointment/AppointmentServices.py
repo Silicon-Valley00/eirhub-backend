@@ -106,13 +106,13 @@ def addAppointment():
 @appointment_route.route("/appointments/", methods = ['PUT'])
 def updateAppointmentById():
     from app import session
-    if request.args.get("appointment_id"):
+    if request.args.get("id_appointment"):
         content_type = request.headers.get("Content-Type")
         if content_type == "application/json":
-            appointment_id = int(request.args.get("appointment_id"))
+            id_appointment = int(request.args.get("id_appointment"))
             req = request.json
             try:
-                appointment = session.query(Appointment).get(appointment_id)
+                appointment = session.query(Appointment).get(id_appointment)
 
                 # updating details with new attributes
                 appointment.appointment_date= req["appointment_date"],
@@ -133,25 +133,25 @@ def updateAppointmentById():
         else:
             return(generate_error_response("Error updating appointment", "Content-Type error. Expecting payload as JSON", None), 455)
     else:
-        return (generate_error_response("Error updating appointment", "Expected query paramter 'appointment_id' does not exist.", None), 400)
+        return (generate_error_response("Error updating appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)
         
 
 # Deleting appointment by its ID
 @appointment_route.route("/appointments/", methods=["DELETE"])
 def deleteAppointmentById():
     from app import session
-    if request.args.get("appointment_id"):
+    if request.args.get("id_appointment"):
         try:
-            appointment_id = int(request.args.get("appointment_id"))
+            id_appointment = int(request.args.get("id_appointment"))
         except Exception as e:
-            return (generate_error_response("Error updating appointment", "appointment_id should be an int.", e), 400)
+            return (generate_error_response("Error updating appointment", "id_appointment should be an int.", e), 400)
         try:
-            appointment = session.query(Appointment).get(appointment_id)
+            appointment = session.query(Appointment).get(id_appointment)
             response_message = generate_response_message([appointment], "both")
             session.delete(appointment)
             session.commit()
             return (response_message, 200)
         except Exception as e:
-            return (generate_error_response("Error deleting appointment", "appointment_id provided might not exist", None), 400)
+            return (generate_error_response("Error deleting appointment", "id_appointment provided might not exist", None), 400)
     else:
-        return (generate_error_response("Error deleting appointment", "Expected query paramter 'appointment_id' does not exist.", None), 400)
+        return (generate_error_response("Error deleting appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)
