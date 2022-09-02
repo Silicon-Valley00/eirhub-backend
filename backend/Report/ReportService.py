@@ -36,7 +36,7 @@ def getReports():
         return ( {
                 'msg': {
                     "message": "Unable to get reports",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                     
                 },
                 "status": False
@@ -69,7 +69,7 @@ def getReportByPatientId(id_patient):
         return( {
                 'msg': {
                     "message": "Unable to get report",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400        
@@ -117,7 +117,7 @@ def createReport():
                 ( {
                 'msg': {
                     "message": "Report could't be created",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             })
@@ -125,7 +125,7 @@ def createReport():
         return ( {
                 'msg': {
                     "message": "Unable to create report",
-                    "dev_messgage": "Content-type error",
+                    "dev_message": "Content-type error",
                 },
                 "status": False
             }),400    
@@ -159,7 +159,7 @@ def deleteReportById(id):
         return( {
                 'msg': {
                     "message": "Unable to delete report",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400 
@@ -198,7 +198,7 @@ def updateReportDetailsById(id):
         return( {
                 'msg': {
                     "message": "Unable to update report details",
-                    "dev_messgage": (f"{e}"),
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400 

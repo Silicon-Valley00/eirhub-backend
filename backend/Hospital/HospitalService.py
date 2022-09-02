@@ -67,7 +67,7 @@ def createHospital():
             return ( {
                 'msg': {
                     "message": "Unable to create hospital",
-                    "dev_messgage": "Invalid query parameters",
+                    "dev_message": "Invalid query parameters",
                 
                 },
                 "status": False

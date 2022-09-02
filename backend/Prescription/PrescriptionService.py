@@ -130,7 +130,7 @@ def createPrescription():
         return ( {
                 'msg': {
                     "message": "Unable to create prescription",
-                    "dev_messgage": "Error: Content-Type Error",
+                    "dev_message": "Error: Content-Type Error",
                 },
                 "status": False
             }),400
