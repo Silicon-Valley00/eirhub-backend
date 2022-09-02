@@ -34,7 +34,7 @@ def createDoctor():
                 return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" :(f"{e}"),
+                            "dev_message" :(f"{e}"),
                             "message":"Network Connection Error" 
                             }
                 }),400
@@ -65,7 +65,7 @@ def createDoctor():
                 return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" :(f"{e}"),
+                            "dev_message" :(f"{e}"),
                             "message":"Connection Error: Doctor could not be registered" 
                             }
                 }),400
@@ -95,7 +95,7 @@ def createDoctor():
             return({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : "",
+                            "dev_message" : "",
                             "message":"Error: Content-Type Error" 
                         }
                 }),400
@@ -140,7 +140,7 @@ def doctorLogin():
                             return  ({
                             'status': False,
                             'msg':{
-                                    "dev_messsage" : "",
+                                    "dev_message" : "",
                                     "message":"Incorrect Password. Kindly Try again"
                         }
                 }),400 
@@ -148,7 +148,7 @@ def doctorLogin():
                          return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : (f"{e}"),
+                            "dev_message" : (f"{e}"),
                             "message":"Network Connection Error: could not login" 
                         }
                 }),400
@@ -157,7 +157,7 @@ def doctorLogin():
                     return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : "",
+                            "dev_message" : "",
                             "message":"Doctor not registered.Do you want to sign up?" 
                         }
                 }),400
@@ -168,7 +168,7 @@ def doctorLogin():
                 return  ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : (f"{e}"),
+                            "dev_message" : (f"{e}"),
                             "message":"Connection Error: Check your network connection" 
                         }
                 }),400
@@ -177,7 +177,7 @@ def doctorLogin():
             return ({
                         'status': False,
                         'msg':{
-                            "dev_messsage" : "",
+                            "dev_message" : "",
                             "message":"Error: Content-Type Error"
                         }
                 }),400
@@ -208,7 +208,7 @@ def getDoctors():
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Could not get  all doctors"
                         }
                 }),400
@@ -268,7 +268,7 @@ def updateDoctorById(doctorId):
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Could not update doctor details"
                         }
                 }),400
@@ -306,7 +306,7 @@ def getDoctorById(doctorId):
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Could not get specified doctor ID"
                         }
                 }),400
@@ -345,7 +345,7 @@ def getpatientsByDoctorId():
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: No Doctor found for patient"
                         }
                 }),400
@@ -365,7 +365,7 @@ def getNumberOfPatientAssignedToDoctor():
         return ({
                 'status': False,
                 'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: Number of Patient not found for Doctor"
                         }
                 }),400
@@ -384,7 +384,7 @@ def getNumberOfDoctorsReports():
         return ({
                 'status': False,
                 'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: Number of Reports not found for Doctor"
                         }
                 }),400
@@ -404,7 +404,7 @@ def getNumberOfDoctorsAppointments():
         return ({
                 'status': False,
                 'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: Number of Reports not found for Doctor"
                         }
                 }),400

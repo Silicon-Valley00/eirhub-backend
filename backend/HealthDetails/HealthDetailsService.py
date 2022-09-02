@@ -30,7 +30,7 @@ def createHealthDetails(patientId):
                 return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Network Connection Error"
                         }
                 }),400
@@ -60,7 +60,7 @@ def createHealthDetails(patientId):
                 return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: Health details not recorded"
                         }
                 }),400
@@ -92,7 +92,7 @@ def createHealthDetails(patientId):
                 return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Error : Patient ID does not exist"
                         }
                 }),400
@@ -100,7 +100,7 @@ def createHealthDetails(patientId):
             return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : "",
+                        "dev_message" : "",
                         "message":"Error: Content-Type Error"
                         }
                 }),400
@@ -135,7 +135,7 @@ def getHealthDetailsByPatientId(patientId):
         return  ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Error : Healthdetails ID does not exist"
                         }
                 }),400
@@ -185,7 +185,7 @@ def updateHealthDetailsById(patientId):
         return  ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: Patient health details not updated"
                         }
                 }),400
@@ -221,7 +221,7 @@ def getHealthDetails():
         return ({
                  'status': False,
                  'msg':{
-                        "dev_messsage" : (f"{e}"),
+                        "dev_message" : (f"{e}"),
                         "message":"Connection Error: could not get all health details"
                         }
                 }),400
