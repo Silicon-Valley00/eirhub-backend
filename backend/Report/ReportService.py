@@ -84,10 +84,10 @@ def createReport():
         report_type = req['report_type']
         description = req['description']
         id_patient = req['id_patient']
-        upload_date = req['created_date']
+        upload_date = req['upload_date']
         id_doctor = req['id_doctor']
         
-        new_report = Report(report_type=report_type,description=description,id_patient=id_patient,id_doctor=id_doctor)
+        new_report = Report(report_type=report_type,description=description,id_patient=id_patient,id_doctor=id_doctor,created_at=upload_date)
 
         try:
             #Checking if the patient Id actually exists
@@ -104,8 +104,8 @@ def createReport():
                     "report_type": new_report.report_type,
                     "description": new_report.description,
                     "id_patient": new_report.id_patient,
-                    "id_doctor": new_report.id_doctor
-                    
+                    "id_doctor": new_report.id_doctor,
+                    "upload_date": new_report.created_at
                 
                     },
                     "status": True
@@ -174,10 +174,10 @@ def updateReportDetailsById(id):
         report = session.query(Report).get(id)
         
         #update details with new parameters
-        report.id_report = req["id_report"]
-        report.first_name = req["report_type"]
-        report.middle_name = req["description"]
-        report.last_name = req["id_patient"]
+        # report.id_report = req["id_report"]
+        report.report_type = req["report_type"]
+        report.description = req["description"]
+        report.id_patient = req["id_patient"]
         report.id_doctor = req["id_doctor"]
         
         session.commit()
@@ -187,8 +187,9 @@ def updateReportDetailsById(id):
                 "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                "upload_date": report.created_date,
-                "id_doctor": report.id_doctor
+                "upload_date": report.created_at,
+                "id_doctor": report.id_doctor,
+                "id_patient": report.id_patient
             
             },
             "status": True

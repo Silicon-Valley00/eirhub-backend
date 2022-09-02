@@ -17,9 +17,10 @@ class Report(Base):
     created_at = Column('created_at',DateTime, nullable=True)
     id_doctor = Column('id_doctor',Integer,ForeignKey(Doctor.id_doctor, ondelete='RESTRICT',onupdate='RESTRICT'))
     
-    def __init__(self,report_type,description,id_patient,id_doctor):
+    def __init__(self,report_type,description,id_patient,id_doctor,created_at):
         self.report_type = report_type
         self.description = description
         self.id_patient = id_patient
         self.id_doctor = id_doctor 
+        self.created_at = created_at
     
