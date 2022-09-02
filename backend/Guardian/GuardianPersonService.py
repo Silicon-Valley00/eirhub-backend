@@ -63,7 +63,7 @@ def createGuardian():
                 },
                  }),400
             
-           
+
 
 #Get Guardian by id 
 @guardian_route.route("/guardian/<id>",methods = ['GET'])
@@ -71,7 +71,7 @@ def getGuardianById(id):
     from app import session
     try:
         guardian = session.query(GuardianPerson).get(id)
-      
+
         return ({
             "status": True,
             "msg": {

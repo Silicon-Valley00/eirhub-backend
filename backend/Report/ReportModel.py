@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declarative_base
 
 from Patient.PatientModel import Patient
+from Doctor.DoctorModel import Doctor 
 
 from base import Base
 
@@ -12,13 +13,13 @@ class Report(Base):
     id_report = Column('id_report', Integer, primary_key=True,autoincrement=True)
     report_type = Column('report_type',String(45))
     description = Column('description',Text)
-    id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='CASCADE'), nullable=True)
+    id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='SET NULL',onupdate='SET NULL'))
     created_at = Column('created_at',DateTime, nullable=True)
-    #to be added when the merge is done
+    id_doctor = Column('id_doctor',Integer,ForeignKey(Doctor.id_doctor, ondelete='RESTRICT',onupdate='RESTRICT'))
     
-    def __init__(self,report_type,description,id_patient):
+    def __init__(self,report_type,description,id_patient,id_doctor):
         self.report_type = report_type
         self.description = description
         self.id_patient = id_patient
-        
+        self.id_doctor = id_doctor 
     

@@ -2,6 +2,7 @@ import json
 from flask import request,jsonify,Blueprint
 from Report.ReportModel import Report
 from Patient.PatientModel import Patient
+from Doctor.DoctorModel import Doctor 
 from flask_cors import CORS
 reports_route = Blueprint("reports_route",__name__)
 CORS(reports_route)
@@ -11,21 +12,24 @@ CORS(reports_route)
 def getReports():
     from app import session
     try:
-        reports = session.query(Report).all()
+        reports = session.query(Report,Doctor.first_name,Doctor.last_name).join(Doctor,Report.id_doctor == Doctor.id_doctor).all()
         Json_reports = [{
             "status": True,
             "msg": {
 
-               "id_report": report.id_report,
+                "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_at
+                "id_patient": report.id_patient,
+                "upload_date": report.created_at,
+                "doctor_first_name": doctor.first_name,
+                "doctor_last_name": doctor.last_name
                 
                 
             },
             
             
-            } for report in reports ]
+            } for report,doctor in reports ]
         return jsonify(Json_reports),200
     except Exception as e:
         return ( {
@@ -42,16 +46,18 @@ def getReports():
 def getReportByPatientId(id_patient):
     from app import session
     try:
-        reports = session.query(Report).filter(Report.id_patient == id_patient).all()
+        reports = session.query(Report,Doctor).join(Doctor,Report.id_doctor == Doctor.id_doctor).filter(Report.id_patient == id_patient).all()
         report_info = []
-        for report in reports:
+        for report,doctor in reports:
             report_info.append((
                 {
+                "id_patient": report.id_patient,
                 "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_at
-                
+                "upload_date": report.created_at,
+                "doctor_first_name": doctor.first_name,
+                "doctor_last_name": doctor.last_name
             }
             ))
         return ({
@@ -78,8 +84,9 @@ def createReport():
         description = req['description']
         id_patient = req['id_patient']
         upload_date = req['created_date']
+        id_doctor = req['id_doctor']
         
-        new_report = Report(report_type=report_type,description=description,id_patient=id_patient)
+        new_report = Report(report_type=report_type,description=description,id_patient=id_patient,id_doctor=id_doctor)
 
         try:
             #Checking if the patient Id actually exists
@@ -96,6 +103,7 @@ def createReport():
                     "report_type": new_report.report_type,
                     "description": new_report.description,
                     "id_patient": new_report.id_patient,
+                    "id_doctor": new_report.id_doctor
                     
                 
                     },
@@ -161,7 +169,6 @@ def deleteReportById(id):
 def updateReportDetailsById(id):
     from app import session
     req = request.json
-   
     try:
         report = session.query(Report).get(id)
         
@@ -170,16 +177,18 @@ def updateReportDetailsById(id):
         report.first_name = req["report_type"]
         report.middle_name = req["description"]
         report.last_name = req["id_patient"]
+        report.id_doctor = req["id_doctor"]
         
         session.commit()
         return ({
-          
+        
             "msg": {
                 "id_report": report.id_report,
                 "report_type": report.report_type,
                 "description": report.description,
-                'upload_date': report.created_date
-               
+                "upload_date": report.created_date,
+                "id_doctor": report.id_doctor
+            
             },
             "status": True
             
