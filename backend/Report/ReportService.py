@@ -12,7 +12,8 @@ CORS(reports_route)
 def getReports():
     from app import session
     try:
-        reports = session.query(Report,Doctor.first_name,Doctor.last_name).join(Doctor,Report.id_doctor == Doctor.id_doctor).all()
+        reports = session.query(Report.id_report,Report.report_type,Report.description,Report.id_patient,Report.created_at,Doctor.first_name,Doctor.last_name).join(Doctor).filter(Report.id_doctor == Doctor.id_doctor).all()
+        print(reports[0])
         Json_reports = [{
             "status": True,
             "msg": {
@@ -22,14 +23,14 @@ def getReports():
                 "description": report.description,
                 "id_patient": report.id_patient,
                 "upload_date": report.created_at,
-                "doctor_first_name": doctor.first_name,
-                "doctor_last_name": doctor.last_name
+                "doctor_first_name": report.first_name,
+                "doctor_last_name": report.last_name
                 
                 
             },
             
             
-            } for report,doctor in reports ]
+            } for report in reports ] #report here being used to refer to the entire query response and not the Report Table.
         return jsonify(Json_reports),200
     except Exception as e:
         return ( {
