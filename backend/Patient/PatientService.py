@@ -102,8 +102,11 @@ def createPatient():
             #If patient has already been registered
             if(isPatient):
                 return ({
-                    'status': False,
-                    'msg':"Patient Email already registered. Do you want to login?"
+                        'status': False,
+                        'msg':{
+                            "dev_messsage" : '',
+                            "message":"Patient Email already registered. Do you want to login?"
+                        }
                 }),400
             first_name = req["first_name"]
             last_name = req["last_name"]

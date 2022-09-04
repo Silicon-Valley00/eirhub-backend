@@ -103,7 +103,7 @@ def getGuardianById(id):
 
 
 #Get All Guardian Persons 
-@guardian_route.route("/guardian/",methods = ['GET'])
+@guardian_route.route("/guardians",methods = ['GET'])
 def getGuardians():
     from app import session
     try: 

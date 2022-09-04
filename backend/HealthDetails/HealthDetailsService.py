@@ -3,7 +3,6 @@ from flask import request,jsonify,Blueprint
 from Patient.PatientModel import Patient
 from HealthDetails.HealthDetailsModel import HealthDetails
 from flask_cors import CORS
-
 health_details_route = Blueprint("health_details_route",__name__)
 CORS(health_details_route)
 
