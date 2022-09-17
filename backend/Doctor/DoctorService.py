@@ -1,12 +1,18 @@
+#from black import Report
 from flask import Blueprint,request,jsonify
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
+from Report.ReportModel import Report
+from Appointment.AppointmentModel import Appointment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
+from Hospital.HospitalModel import Hospital
+
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
-#Doctor Sign Up ./
+
+#Doctor Sign Up 
 @doctor_route.route("/doctor/signup",methods = ['POST'])
 def createDoctor():
     from app import session
@@ -25,10 +31,12 @@ def createDoctor():
                         'msg':"Doctor already registered. Do you want to login?"
                     }),200
             except Exception as e:
-                print("Network Connection Error: {}",(e))
                 return ({
                         'status': False,
-                        'msg':"Network Connection Error"
+                        'msg':{
+                            "dev_message" :(f"{e}"),
+                            "message":"Network Connection Error" 
+                            }
                 }),400
 
             first_name = req["first_name"]
@@ -44,31 +52,55 @@ def createDoctor():
             # # license_number = req["license_number"]
             # gender = req["gender"]
             hospital_code = req["hospital_code"]
+            hospital_name = session.query(Hospital.hospital_name).filter(Hospital.hospital_code == req["hospital_code"]).scalar()
+       
 
             #hash password
             hashed_password = generate_password_hash(user_password)
-            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code)
+            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code,hospital_name=hospital_name )
             try: 
                 session.add(newDoctor)
                 session.commit()
             except Exception as e:
-                return ("Connection Error: User not recorded : %s",e),400
-            id_doctor = session.query(Doctor.id_doctor).filter( Doctor.hospital_code == req['hospital_code']).first()
+                return ({
+                        'status': False,
+                        'msg':{
+                            "dev_message" :(f"{e}"),
+                            "message":"Connection Error: Doctor could not be registered" 
+                            }
+                }),400
+                
+                
+            id_doctor = session.query(Doctor.id_doctor).filter( Doctor.user_email == newDoctor.user_email).first()
             returnDoctor = session.query(Doctor).get(id_doctor)
             session.commit()
             return ({
                 'msg':{
-                    'id_doctor': returnDoctor.id_doctor,
+                   'id_doctor': returnDoctor.id_doctor,
                     'first_name':returnDoctor.first_name,
                     'middle_name':returnDoctor.middle_name,
-                    'last_name':returnDoctor.last_name,
-                    # 'license_number':returnDoctor.license_number,
-                    'user_email': returnDoctor.user_email
+                    'last_name': returnDoctor.last_name,
+                    'user_email': returnDoctor.user_email,
+                    'date_of_birth': returnDoctor.date_of_birth,
+                    'license_number': returnDoctor.license_number,
+                    'hospital_code': returnDoctor.hospital_code,
+                    'hospital_name': returnDoctor.hospital_name,
+                    'gender': returnDoctor.gender,
+                    
+
                 },
                 'status':True
             }),200  #StatusCode
         else:
-            return 'Error: Content-Type Error',400
+            return({
+                        'status': False,
+                        'msg':{
+                            "dev_message" : "",
+                            "message":"Error: Content-Type Error" 
+                        }
+                }),400
+            
+           
 
 
 # Doctor Login
@@ -99,34 +131,61 @@ def doctorLogin():
                                 'user_email':doctorInfo.user_email,
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
+                                'hospital_code':doctorInfo.hospital_code,
                                 'gender':doctorInfo.gender
                             },
                             'status':True
                         }),200  #StatusCode
                         else:
-                            return ({
-                                'status': False,
-                                'msg': "Incorrect Password. Kindly Try again"
-                            }),200 #Check Status Code for wrong login 
+                            return  ({
+                            'status': False,
+                            'msg':{
+                                    "dev_message" : "",
+                                    "message":"Incorrect Password. Kindly Try again"
+                        }
+                }),400 
                     except Exception as e:
-                        return("Connection Error : %s",(e)),400
-                else:
-                    return({
+                         return ({
                         'status': False,
-                        'msg':"User not registered.Do you want to sign up?"
-                    }),200 #Check Status Code for wrong login
-            except Exception as e:
-                print(e)
-                return({
-                    'status':False,
-                    'msg':"Connection Error: Check your network connection"
+                        'msg':{
+                            "dev_message" : (f"{e}"),
+                            "message":"Network Connection Error: could not login" 
+                        }
                 }),400
+                else:
+                    #Doctor has not yet been registered
+                    return ({
+                        'status': False,
+                        'msg':{
+                            "dev_message" : "",
+                            "message":"Doctor not registered.Do you want to sign up?" 
+                        }
+                }),400
+                    
+            
+            except Exception as e:
+                
+                return  ({
+                        'status': False,
+                        'msg':{
+                            "dev_message" : (f"{e}"),
+                            "message":"Connection Error: Check your network connection" 
+                        }
+                }),400
+                
         else:
-            return 'Error: Content-Type Error',400
+            return ({
+                        'status': False,
+                        'msg':{
+                            "dev_message" : "",
+                            "message":"Error: Content-Type Error"
+                        }
+                }),400
+
 
 
 #Get All Doctors 
-@doctor_route.route("/doctors/",methods = ['GET'])
+@doctor_route.route("/doctors",methods = ['GET'])
 def getDoctors():
     from app import session
     try: 
@@ -136,9 +195,9 @@ def getDoctors():
             returnInfo.append((
                 {
                     'id_doctor':doctor.id_doctor,'first_name': doctor.first_name,'middle_name': doctor.middle_name,'last_name': doctor.last_name,
-                    'user_email': doctor.user_email,'person_image': doctor.person_image,'date_of_birth': doctor.person_image,'house_address': doctor.house_address,
+                    'user_email': doctor.user_email,'person_image': doctor.person_image,'date_of_birth': doctor.date_of_birth,'house_address': doctor.house_address,
                     'doctor_ratings':doctor.doctor_ratings,'doctor_specialties': doctor.doctor_specialties,'license_number': doctor.license_number,
-                    'gender':doctor.gender,'hospital_code':doctor.hospital_code
+                    'gender':doctor.gender,'hospital_code':doctor.hospital_code,'hospital_name': doctor.hospital_name
             }
             ))
         return ({
@@ -146,7 +205,13 @@ def getDoctors():
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Could not get  all doctors"
+                        }
+                }),400
 
 
 #Update Doctors By Id Method.
@@ -166,11 +231,13 @@ def updateDoctorById(doctorId):
         doctor.date_of_birth = docReq["date_of_birth"]
         doctor.house_address = docReq["house_address"]
         doctor.license_number = docReq["license_number"]
-        doctor.doctor_ratings = docReq["doctor_ratings"]
+        # doctor.doctor_ratings = docReq["doctor_ratings"]
         doctor.doctor_specialties = docReq["doctor_specialties"]
         doctor.gender = docReq["gender"]
         doctor.hospital_code = docReq["hospital_code"]
-
+        
+        doctor.hospital_name = session.query(Hospital.hospital_name).filter(Hospital.hospital_code == docReq["hospital_code"]).scalar()
+       
 
         session.commit()
 
@@ -190,14 +257,22 @@ def updateDoctorById(doctorId):
                 "doctor_ratings":doctor.doctor_ratings,
                 "doctor_specialties": doctor.doctor_specialties,
                 "gender": doctor.gender,
-                "hospital_code": doctor.hospital_code
+                "hospital_code": doctor.hospital_code,
+                "hospital_name": doctor.hospital_name
 
             }
             }
         ),200
 
     except Exception as e:
-        return (f"Could not update doctor details: {e}"),400    
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Could not update doctor details"
+                        }
+                }),400
+      
    
    
 
@@ -214,28 +289,37 @@ def getDoctorById(doctorId):
                 'last_name': doctor.last_name,
                 'user_email': doctor.user_email,
                 'person_image': doctor.person_image,
-                'date_of_birth': doctor.person_image,
+                'date_of_birth': doctor.date_of_birth,
                 'house_address': doctor.house_address,
                 'doctor_ratings':doctor.doctor_ratings,
                 'doctor_specialties': doctor.doctor_specialties,
                 'license_number': doctor.license_number,
                 'gender':doctor.gender,
-                'hospital_code':doctor.hospital_code
+                'hospital_code':doctor.hospital_code,
+                'hospital_name': doctor.hospital_name
         }
         return ({
             'status': True,
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Could not get specified doctor ID"
+                        }
+                }),400
+        
 
 #Get patients by DoctorID
-@doctor_route.route("/doctors/patients/<doctorId>",methods = ['GET'])
-def getpatientsByDoctorId(doctorId):
+@doctor_route.route("/doctors/",methods = ['GET'])
+def getpatientsByDoctorId():
     from app import session
     try:
         #filtering patients based on doctor IDs
-        patients = session.query(Patient).filter(Patient.id_doctor == doctorId).all()
+        id_doctor = int(request.args.get("id_doctor"))
+        patients = session.query(Patient).filter(Patient.id_doctor == id_doctor).all()
         returnInfo =  [{
             'status': True,
             'msg': {
@@ -258,4 +342,69 @@ def getpatientsByDoctorId(doctorId):
         
         return jsonify(returnInfo),200
     except Exception as e:
-        return ("Connection Error: No Doctor found for patient : %s",e),400
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Connection Error: No Doctor found for patient"
+                        }
+                }),400
+        
+
+
+@doctor_route.route("/doctors/patients/",methods = ['GET'])
+def getNumberOfPatientAssignedToDoctor():
+    from app import session
+    try:
+        id_doctor = int(request.args.get("id_doctor"))
+        number_of_patients = session.query(Patient.id_doctor).filter(Patient.id_doctor == id_doctor).count()
+        return ({
+            'number_of_patients':number_of_patients
+        })
+    except Exception as e:
+        return ({
+                'status': False,
+                'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Connection Error: Number of Patient not found for Doctor"
+                        }
+                }),400
+
+
+@doctor_route.route("/doctors/reports/",methods = ['GET'])
+def getNumberOfDoctorsReports():
+    from app import session
+    try:
+        id_doctor = int(request.args.get("id_doctor"))
+        number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
+        return ({
+            'number_of_reports': number_of_reports
+        })
+    except Exception as e:
+        return ({
+                'status': False,
+                'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Connection Error: Number of Reports not found for Doctor"
+                        }
+                }),400
+        
+
+
+@doctor_route.route("/doctors/appointments/",methods = ['GET'])
+def getNumberOfDoctorsAppointments():
+    from app import session
+    try: 
+        id_doctor = int(request.args.get("id_doctor"))
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+        return ({
+            'number_of_reports': number_of_appointments
+        })
+    except Exception as e:
+        return ({
+                'status': False,
+                'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Connection Error: Number of Reports not found for Doctor"
+                        }
+                }),400

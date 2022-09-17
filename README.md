@@ -12,7 +12,7 @@ Document to track Decision Making : [Silicon Valley - EirHub Decision Document](
 -  Kwabena Darkwa Obeng-Yeboah: System Analyst
 -  Maame Efuah Francis-Eshun
 -  Maxwell Mawube
--  Akwasi Adenkyekye
+-  Akwasi Adenkyekye Badu
 -  Domeh John Kelvin
 -  Ama Osaba Odoom
 -  Nii Odartey Lamptey

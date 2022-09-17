@@ -3,7 +3,7 @@ from flask import Flask,jsonify,request
 from flask_cors import CORS
 
 
-from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String
+from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String,exc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
@@ -45,10 +45,13 @@ try:
     engine.connect()
     Base.metadata.create_all(engine)
     session.commit()
-    session.close()
     print("Database Successfully Connected")
 except Exception as e:
     print('Database connection failed: %s'%(e))
+    session.rollback()
+finally:
+    session.close()
+
 
 # Home route
 @app.route("/",methods = ['GET'])
@@ -57,7 +60,9 @@ def home():
 
 
 
-#main Logic
+
+
+#Main Logic
 if __name__ == "__main__":
     CORS(app)
     app.run(debug=True)

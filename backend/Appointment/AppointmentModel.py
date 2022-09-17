@@ -15,12 +15,12 @@ class Appointment(Base):
     appointment_start_time = Column("appointment_start_time", Time, nullable=True)
     appointment_end_time = Column("appointment_end_time", Time, nullable=True)
     appointment_reason = Column("appointment_reason", String(300))
-    appointment_status = Column(ENUM('Pending', 'Accepted', 'Declined'), nullable=False)
+    appointment_status = Column("appointment_status", String(10))
     appointment_location = Column("appointment_location", String(100), nullable=True)
 
     # defining relationships for appointment
-    id_patient = Column(Integer, ForeignKey(Patient.id_patient))
-    id_doctor = Column(Integer, ForeignKey(Doctor.id_doctor))
+    id_patient = Column(Integer, ForeignKey(Patient.id_patient,ondelete= 'CASCADE'))
+    id_doctor = Column(Integer, ForeignKey(Doctor.id_doctor,ondelete= 'CASCADE'))
 
 
     def __init__(

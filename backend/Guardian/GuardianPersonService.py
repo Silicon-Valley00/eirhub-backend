@@ -6,7 +6,7 @@ guardian_route = Blueprint("guardian_route",__name__)
 CORS(guardian_route)
 
 #Create Guardian Person 
-@guardian_route.route("/guardian/",methods = ['POST'])
+@guardian_route.route("/guardians",methods = ['POST'])
 def createGuardian():
     from app import session
     content_type = request.headers.get('Content-Type')
@@ -17,9 +17,13 @@ def createGuardian():
         isGuardian = session.query(GuardianPerson).filter(GuardianPerson.user_email == user_email, GuardianPerson.id_number == id_number).first()
         if(isGuardian):
             return ({
-                'status': False,
-                'msg':"Guardian Person already registered. Do you want to login?"
-            }),200
+                "status": False,
+                "msg": {
+                    "dev_message": "",
+                    "message": "Guardian already registered"
+                },
+                 }),400
+        
         first_name = req["first_name"]
         middle_name = req["middle_name"]
         last_name = req["last_name"]
@@ -46,11 +50,20 @@ def createGuardian():
                     'house_address':guardianDetail.house_address,
                     'phone_number':guardianDetail.phone_number,
                     'id_number':guardianDetail.id_number,
+                    'id_guardian': guardianDetail.id_guardian, 
                     'gender':guardianDetail.gender
                 }
             }),200
         except Exception as e:
-            return ("Connection Error: User not recorded : %s",e),400
+            return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Guardian could not be recorded "
+                },
+                 }),400
+            
+
 
 #Get Guardian by id 
 @guardian_route.route("/guardian/<id>",methods = ['GET'])
@@ -58,9 +71,9 @@ def getGuardianById(id):
     from app import session
     try:
         guardian = session.query(GuardianPerson).get(id)
-      
+
         return ({
-            
+            "status": True,
             "msg": {
                     'first_name':guardian.first_name,
                     'middle_name':guardian.middle_name,
@@ -70,18 +83,27 @@ def getGuardianById(id):
                     'phone_number':guardian.phone_number,
                     'house_address':guardian.house_address,
                     'id_number':guardian.id_number,
+                    'id_guardian': guardian.id_guardian, 
                     'gender':guardian.gender
-            },
-            "status": True
+            }
+           
             
             }),200
     except Exception as e:
-        return(f"Error : ID does not exist: {e}"),400   
+        return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Error : Guardian ID does not exist"
+                },
+                 }),400
+        
+        
 
 
 
 #Get All Guardian Persons 
-@guardian_route.route("/guardian/",methods = ['GET'])
+@guardian_route.route("/guardians",methods = ['GET'])
 def getGuardians():
     from app import session
     try: 
@@ -92,7 +114,7 @@ def getGuardians():
                 {
                 'id_guardian': guardian.id_guardian,
                 'first_name':guardian.first_name,'middle_name':guardian.middle_name,'last_name':guardian.last_name,
-            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'gender':guardian.gender
+            'user_email':guardian.user_email,'date_of_birth':guardian.date_of_birth,'phone_number':guardian.phone_number,'house_address':guardian.house_address,'id_number':guardian.id_number,'id_guardian': guardian.id_guardian, 'gender':guardian.gender
             }
             ))
         return ({
@@ -100,8 +122,14 @@ def getGuardians():
             'msg': returnInfo
         }),200
     except Exception as e:
-        return ("Connection Error: User not recorded : %s",e),400
-
+        return ({
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Could not fetch all guardians"
+                },
+                 }),400
+        
 
 
 
@@ -138,15 +166,20 @@ def updateGuardianById(guardianId):
             'date_of_birth':guardianInfo.date_of_birth,
             'phone_number':guardianInfo.phone_number,
             'id_number':guardianInfo.id_number,
-            'gender':guardianInfo.gender, 
+            'gender':guardianInfo.gender,
+            'id_guardian': guardianInfo.id_guardian, 
             'house_address': guardianInfo.house_address
             }
         }),200
     except Exception as e:
         return ({
-            'status':False,
-            'msg': ("Connection Error: User not updated : %s", str(e))
-        }),400
-
+                "status": False,
+                "msg": {
+                    "dev_message": (f"{e}"),
+                    "message": "Connection Error: Guardian details could not be updated"
+                },
+                 }),400
+        
+       
 
 

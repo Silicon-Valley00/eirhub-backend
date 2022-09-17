@@ -18,7 +18,7 @@ def getPrescriptionById(id):
         for prescription in prescriptions:
             prescription_info.append((# put all the prescriptions into the list prescriptionInfor
                 {
-                    'id': prescription.id_prescription,
+                    'id_prescription': prescription.id_prescription,
                     'drug_name':prescription.drug_name,
                     'dosage':prescription.dosage,
                     'time_of_administration':str(prescription.time_of_administration),
@@ -34,9 +34,9 @@ def getPrescriptionById(id):
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to get presription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Unable to get presription. Prescription doesn't exist",
+                    "dev_message": (f"{e}"),
+    
                 },
                 "status": False
             }),400
@@ -51,7 +51,7 @@ def getPrescriptions():
         for prescription in prescriptions:
             prescriptionInfo.append((# put all the prescriptions into the list prescriptionInfo
                 {
-                    'id': prescription.id_prescription,
+                    'id_prescription': prescription.id_prescription,
                     'drug_name':prescription.drug_name,
                     'dosage':prescription.dosage,
                     'time_of_administration':str(prescription.time_of_administration),
@@ -67,9 +67,8 @@ def getPrescriptions():
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to get all presriptions",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Connection error: Unable to get all presriptions",
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -107,16 +106,15 @@ def createPrescription():
         except Exception as e:
             return ( {
                 'msg': {
-                    "message": "Unable to create presription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Connection Error: Check your network connection",
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
         return({#return it as proof that it was indeed added to the database
                 'status': True,
                 'msg':{
-                    'idPrescrition':newPrescription.id_prescription,
+                    'id_prescription':newPrescription.id_prescription,
                     'drug_name': newPrescription.drug_name,
                     'start_date': str(newPrescription.start_date),
                     'end_date': str(newPrescription.end_date),
@@ -132,8 +130,7 @@ def createPrescription():
         return ( {
                 'msg': {
                     "message": "Unable to create prescription",
-                    "dev_messgage": "Content-Type Error",
-                    "description": "{Exception}"
+                    "dev_message": "Error: Content-Type Error",
                 },
                 "status": False
             }),400
@@ -161,7 +158,7 @@ def updatePrescriptionById(id):
         session.commit()
         return_prescription = session.query(Prescription).get(id)
         prescription_data = {
-            "id": return_prescription.id_prescription,
+            "id_prescription": return_prescription.id_prescription,
             "drug_name":return_prescription.drug_name,
             "dosage":return_prescription.dosage,
             "time_of_administration":str(return_prescription.time_of_administration),#made str because object type of date isn't json serializable
@@ -177,9 +174,8 @@ def updatePrescriptionById(id):
     except Exception as e:
         return( {
                 'msg': {
-                    "message": "Unable to update precription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Connection error: Unable to update precription",
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
@@ -195,7 +191,7 @@ def deletePrescription(id):
         
         return({
             "msg": {
-                "id": prescription.id_prescription,
+                "id_prescription": prescription.id_prescription,
                 "drug_name":prescription.drug_name,
                 "dosage":prescription.dosage,
                 "time_of_administration":str(prescription.time_of_administration),#made str because object type of date isn't json serializable
@@ -211,9 +207,8 @@ def deletePrescription(id):
     except Exception as e:
         return ( {
                 'msg': {
-                    "message": "Unable to delete prescription",
-                    "dev_messgage": "Invalid query parameters",
-                    "description": e
+                    "message": "Connection error: Unable to delete prescription.",
+                    "dev_message": (f"{e}"),
                 },
                 "status": False
             }),400
