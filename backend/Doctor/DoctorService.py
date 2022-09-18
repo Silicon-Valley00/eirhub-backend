@@ -1,4 +1,5 @@
 #from black import Report
+from random import randint
 from flask import Blueprint,request,jsonify
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
@@ -44,7 +45,8 @@ def createDoctor():
             last_name = req["last_name"]
             user_email = req["user_email"]
             user_password = req["user_password"]
-            # person_image = req["person_image"]
+            person_image = f"https://avatars.dicebear.com/api/bottts/${randint(1,100)}.png"
+
             date_of_birth =req["date_of_birth"]
             # house_address = req["house_address"]
             # doctor_ratings = req["doctor_ratings"]
@@ -57,7 +59,7 @@ def createDoctor():
 
             #hash password
             hashed_password = generate_password_hash(user_password)
-            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code,hospital_name=hospital_name )
+            newDoctor = Doctor(first_name=first_name,last_name=last_name,user_email=user_email,user_password=hashed_password,date_of_birth=date_of_birth,hospital_code=hospital_code,hospital_name=hospital_name,person_image=person_image)
             try: 
                 session.add(newDoctor)
                 session.commit()
@@ -86,6 +88,7 @@ def createDoctor():
                     'hospital_code': returnDoctor.hospital_code,
                     'hospital_name': returnDoctor.hospital_name,
                     'gender': returnDoctor.gender,
+                    'person_image': returnDoctor.person_image
                     
 
                 },
@@ -132,7 +135,9 @@ def doctorLogin():
                                 'date_of_birth':doctorInfo.date_of_birth,
                                 'license_number':doctorInfo.license_number,
                                 'hospital_code':doctorInfo.hospital_code,
-                                'gender':doctorInfo.gender
+                                'gender':doctorInfo.gender,
+                                'person_image':doctorInfo.person_image,
+
                             },
                             'status':True
                         }),200  #StatusCode
