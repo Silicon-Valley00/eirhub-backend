@@ -37,11 +37,11 @@ class Patient(Base):
 
 
     
-    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,guardian_id = None,id_doctor = None):
+    def __init__(self,first_name,last_name,user_email,user_password,date_of_birth,person_image,guardian_id = None,id_doctor = None):
         self.first_name = first_name
         # self.middle_name = middle_name
         self.last_name = last_name
-        # self.person_image = person_image
+        self.person_image = person_image
         self.user_email = user_email
         self.user_password = user_password
         self.date_of_birth = date_of_birth 

@@ -1,8 +1,11 @@
+from datetime import datetime
+from random import randint
 from flask import request,jsonify,Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
 from Patient.PatientModel import Patient
 from Doctor.DoctorModel import Doctor
 from flask_cors import CORS
+from HealthDetails import HealthDetailsService,HealthDetailsModel
 
 patients_route = Blueprint("patients_route",__name__)
 CORS(patients_route)
@@ -113,13 +116,15 @@ def createPatient():
             user_email = req["user_email"]
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
+            person_image = f"https://avatars.dicebear.com/api/bottts/${randint(1,200)}.png"
+
             # gender = req["gender"]
             # id_doctor = req["id_doctor"]
             # guardian_id = req["guardian_id"]
             #Hash Password
             passwordHash = generate_password_hash(user_password)
             newPatient = Patient(first_name=first_name,last_name=last_name,user_email=user_email,user_password=passwordHash,
-            date_of_birth=date_of_birth)
+            date_of_birth=date_of_birth,person_image=person_image)
             try: 
                 session.add(newPatient) 
                 session.commit()
@@ -134,7 +139,10 @@ def createPatient():
                 
 
             id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+            #Health Details added here. Use Standard Healthy person value
             patientInfo = session.query(Patient).get(id_patient)
+            patient_health_details = HealthDetailsModel.HealthDetails(datetime.now(),'unknown',37,'120/120','30',9.0,'90',70.5,33.2,patientInfo.id_patient)
+            session.add(patient_health_details)
             session.commit()
 
             if(check_password_hash(patientInfo.user_password,user_password)):
@@ -148,7 +156,8 @@ def createPatient():
                         'date_of_birth':patientInfo.date_of_birth,
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
-                        'gender':patientInfo.gender
+                        'gender':patientInfo.gender,
+                        'person_image':patientInfo.person_image
 
                     },
                     'status':True
@@ -198,7 +207,8 @@ def patientLogin():
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
                         'id_guardian': patientInfo.id_guardian,
-                        'id_doctor': patientInfo.id_doctor
+                        'id_doctor': patientInfo.id_doctor,
+                        'person_image':patientInfo.person_image
 
                     },
                     'status':True
