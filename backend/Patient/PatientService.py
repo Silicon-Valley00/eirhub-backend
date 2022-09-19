@@ -129,6 +129,7 @@ def createPatient():
                 session.add(newPatient) 
                 session.commit()
             except Exception as e:
+                session.rollback()  #Testing
                 return ({
                         'status': False,
                         'msg':{
@@ -243,6 +244,7 @@ def patientLogin():
              
 
         except Exception as e:
+            session.rollback()  #Testing
             print(e)
             return ({
                         'status': False,
@@ -296,6 +298,7 @@ def deletePatientById(id):
             
             }),200
      except Exception as e:
+        session.rollback()  #Testing
         return ({
                     'status': False,
                      'msg':{
@@ -353,6 +356,7 @@ def updatePatientDetailsById(id):
             
             }),200
     except Exception as e:
+        session.rollback()  #Testing
         return ({
                      'status': False,
                      'msg':{

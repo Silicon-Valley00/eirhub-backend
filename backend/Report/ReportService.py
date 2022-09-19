@@ -114,7 +114,8 @@ def createReport():
             else:
                  return "Patient id does not exist"        
         except Exception as e:
-                ( {
+            session.rollback()  #Testing
+            return ( {
                 'msg': {
                     "message": "Report could't be created",
                     "dev_message": (f"{e}"),
@@ -156,6 +157,7 @@ def deleteReportById(id):
             
             }),200
      except Exception as e:
+        session.rollback()  #Testing
         return( {
                 'msg': {
                     "message": "Unable to delete report",
@@ -196,6 +198,7 @@ def updateReportDetailsById(id):
             
             }),200
     except Exception as e:
+        session.rollback()  #Testing
         return( {
                 'msg': {
                     "message": "Unable to update report details",
