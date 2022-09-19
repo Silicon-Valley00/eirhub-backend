@@ -20,14 +20,21 @@ def getAppointments():
             id_doctor = int(request.args.get("id_doctor"))
         except Exception as e:
             return (generate_error_response("Error getting appointment(s)", "id_doctor should be an int.", e), 400)
+        
+        if request.args.get("status"):
+            status = None
+            try:
+                status = request.args.get("status").capitalize()
+            except Exception as e:
+                return (generate_error_response("Error getting appointment(s)", "status argument provided not right. ", e), 400)
+
         try:
-            # filtering appointments based on doctor IDs
-            if request.args.get("accepted") and (request.args.get("accepted") == "true"):
-                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == "Accepted").all()
-            elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == "Declined").all()
+            # filtering appointments based on status
+            if request.args.get("status") and (request.args.get("status").capitalize() in ["Accepted", "Declined", "Pending"]):
+                appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == status).all()
             else:
                 appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).all()
+
             respones_message = generate_response_message(appointments, "doctor")
             return (respones_message, 200)
         except Exception as e:
