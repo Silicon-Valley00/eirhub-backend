@@ -12,7 +12,7 @@ class HealthDetails(Base):
     id_patient = Column(Integer,ForeignKey(Patient.id_patient,ondelete=CASCADE),nullable = False,unique = True)
     last_visit = Column("last_visit",Date)
     blood_group = Column("blood_group", String(7), nullable = True)
-    temperature = Column('temperature',Integer)
+    temperature = Column('temperature',Float)
     bmi = Column("bmi",Float)
     blood_pressure = Column("blood_pressure",String(10))
     respiratory_rate = Column("respiratory_rate",String(10))
