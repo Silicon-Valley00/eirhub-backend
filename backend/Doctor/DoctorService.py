@@ -327,9 +327,6 @@ def getpatientsByDoctorId():
         #filtering patients based on doctor IDs
         id_doctor = int(request.args.get("id_doctor"))
         patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == id_doctor, (Appointment.appointment_status != 'Declined')).all()
-        number_of_patients = len(patients)
-        number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
-        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
         returnInfo =  {
             'status': True,
             'msg': [{
@@ -337,18 +334,16 @@ def getpatientsByDoctorId():
                 "first_name": patient.first_name,
                 "last_name": patient.last_name,
                 "person_image": patient.person_image,
-              
             } 
-            for patient in patients],
-        "number of patients" : number_of_patients,
-        "number of reports" : number_of_reports,
-        "number of appointments" : number_of_appointments
+            for patient in patients
+            ]
         }
         print(returnInfo)
         return jsonify(
             returnInfo
         ),200
     except Exception as e:
+        session.rollback()
         return ({
                  'status': False,
                  'msg':{
@@ -426,20 +421,47 @@ def getStatsByDoctorId():
         
 
 
-# @doctor_route.route("/doctors/appointments/",methods = ['GET'])
-# def getNumberOfDoctorsAppointments():
-#     from app import session
-#     try: 
-#         id_doctor = int(request.args.get("id_doctor"))
-#         number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
-#         return ({
-#             'number_of_reports': number_of_appointments
-#         })
-#     except Exception as e:
-#         return ({
-#                 'status': False,
-#                 'msg':{
-#                         "dev_message" : (f"{e}"),
-#                         "message":"Connection Error: Number of Reports not found for Doctor"
-#                         }
-#                 }),400
+@doctor_route.route("/doctor/dashboard/",methods = ['GET'])
+def getStatsAndPendingAppointments():
+    from app import session
+    try:
+        #filtering patients based on doctor IDs
+        id_doctor = int(request.args.get("id_doctor"))
+        patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == id_doctor, (Appointment.appointment_status == 'Pending')).all()
+        number_of_patients = len(patients)
+        number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+        returnInfo =  {
+            'status': True,
+            'msg': {
+                'patients': [
+                {
+                "id_patient": patient.id_patient,
+                "first_name": patient.first_name,
+                "last_name": patient.last_name,
+                "person_image": patient.person_image,
+            } 
+            for patient in patients
+                ],
+            "stats": {
+            "number_of_patients" : number_of_patients,
+            "number_of_reports" : number_of_reports,
+            "number_of_appointments" : number_of_appointments
+            }
+            }
+        }
+        print(returnInfo)
+        return jsonify(
+            returnInfo
+        ),200
+    except Exception as e:
+        # session.rollback()
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Connection Error: No Doctor found for patient"
+                        }
+                }),400
+        
+
