@@ -326,36 +326,27 @@ def getpatientsByDoctorId():
     try:
         #filtering patients based on doctor IDs
         id_doctor = int(request.args.get("id_doctor"))
-        patients = session.query(Patient).filter(Patient.id_doctor == id_doctor).all()
-        number_of_patients = session.query(Patient.id_doctor).filter(Patient.id_doctor == id_doctor).count()
+        patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == id_doctor, (Appointment.appointment_status != 'Declined')).all()
+        number_of_patients = len(patients)
         number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
         number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
-        returnInfo =  [{
+        returnInfo =  {
             'status': True,
-            'msg': {
+            'msg': [{
                 "id_patient": patient.id_patient,
                 "first_name": patient.first_name,
-                "middle_name": patient.middle_name,
                 "last_name": patient.last_name,
-                "user_email": patient.user_email,
                 "person_image": patient.person_image,
-                "date_of_birth":patient.date_of_birth,
-                "phone_number":patient.phone_number,
-                "gender":patient.gender,
-                "id_number": patient.id_number,
-                "id_guardian": patient.id_guardian,
-                "id_doctor": patient.id_doctor,
-                "house_address": patient.house_address,
-                "nationality": patient.nationality,
               
-            },
-        } for patient in patients]
-        
+            } 
+            for patient in patients],
+        "number of patients" : number_of_patients,
+        "number of reports" : number_of_reports,
+        "number of appointments" : number_of_appointments
+        }
+        print(returnInfo)
         return jsonify(
-            returnInfo,
-            {"number of patients" : number_of_patients,
-            "number of reports" : number_of_reports,
-            "number of appointments" : number_of_appointments}
+            returnInfo
         ),200
     except Exception as e:
         return ({
