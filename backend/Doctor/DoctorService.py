@@ -343,7 +343,6 @@ def getpatientsByDoctorId():
             returnInfo
         ),200
     except Exception as e:
-        session.rollback()
         return ({
                  'status': False,
                  'msg':{
