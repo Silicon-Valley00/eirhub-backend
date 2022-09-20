@@ -325,6 +325,9 @@ def getpatientsByDoctorId():
         #filtering patients based on doctor IDs
         id_doctor = int(request.args.get("id_doctor"))
         patients = session.query(Patient).filter(Patient.id_doctor == id_doctor).all()
+        number_of_patients = session.query(Patient.id_doctor).filter(Patient.id_doctor == id_doctor).count()
+        number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
         returnInfo =  [{
             'status': True,
             'msg': {
@@ -341,11 +344,17 @@ def getpatientsByDoctorId():
                 "id_guardian": patient.id_guardian,
                 "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+              
             },
         } for patient in patients]
         
-        return jsonify(returnInfo),200
+        return jsonify(
+            returnInfo,
+            {"number of patients" : number_of_patients,
+            "number of reports" : number_of_reports,
+            "number of appointments" : number_of_appointments}
+        ),200
     except Exception as e:
         return ({
                  'status': False,
@@ -357,59 +366,87 @@ def getpatientsByDoctorId():
         
 
 
-@doctor_route.route("/doctors/patients/",methods = ['GET'])
-def getNumberOfPatientAssignedToDoctor():
+# Get statistics for doctor dashboard
+@doctor_route.route("/doctors/stats/",methods = ['GET'])
+def getStatsByDoctorId():
     from app import session
     try:
         id_doctor = int(request.args.get("id_doctor"))
         number_of_patients = session.query(Patient.id_doctor).filter(Patient.id_doctor == id_doctor).count()
-        return ({
-            'number_of_patients':number_of_patients
-        })
-    except Exception as e:
-        return ({
-                'status': False,
-                'msg':{
-                        "dev_message" : (f"{e}"),
-                        "message":"Connection Error: Number of Patient not found for Doctor"
-                        }
-                }),400
-
-
-@doctor_route.route("/doctors/reports/",methods = ['GET'])
-def getNumberOfDoctorsReports():
-    from app import session
-    try:
-        id_doctor = int(request.args.get("id_doctor"))
         number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
-        return ({
-            'number_of_reports': number_of_reports
-        })
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+       
+        return ( 
+            {
+                'status': True,
+                'msg': {
+                    "number of patients" : number_of_patients,
+                    "number of reports" : number_of_reports,
+                    "number of appointments" : number_of_appointments
+                
+                } }),200
     except Exception as e:
         return ({
-                'status': False,
-                'msg':{
+                 'status': False,
+                 'msg':{
                         "dev_message" : (f"{e}"),
-                        "message":"Connection Error: Number of Reports not found for Doctor"
+                        "message":"Connection Error: Could not fetch doctor statistics"
                         }
                 }),400
+
+# @doctor_route.route("/doctors/patients/",methods = ['GET'])
+# def getNumberOfPatientAssignedToDoctor():
+#     from app import session
+#     try:
+#         id_doctor = int(request.args.get("id_doctor"))
+       
+#         return ({
+#             'number_of_patients':number_of_patients
+#         })
+#     except Exception as e:
+#         return ({
+#                 'status': False,
+#                 'msg':{
+#                         "dev_message" : (f"{e}"),
+#                         "message":"Connection Error: Number of Patient not found for Doctor"
+#                         }
+#                 }),400
+
+
+# @doctor_route.route("/doctors/reports/",methods = ['GET'])
+# def getNumberOfDoctorsReports():
+#     from app import session
+#     try:
+#         id_doctor = int(request.args.get("id_doctor"))
+       
+#         return ({
+#             'number_of_reports': number_of_reports
+#         })
+#     except Exception as e:
+#         return ({
+#                 'status': False,
+#                 'msg':{
+#                         "dev_message" : (f"{e}"),
+#                         "message":"Connection Error: Number of Reports not found for Doctor"
+#                         }
+#                 }),400
         
 
 
-@doctor_route.route("/doctors/appointments/",methods = ['GET'])
-def getNumberOfDoctorsAppointments():
-    from app import session
-    try: 
-        id_doctor = int(request.args.get("id_doctor"))
-        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
-        return ({
-            'number_of_reports': number_of_appointments
-        })
-    except Exception as e:
-        return ({
-                'status': False,
-                'msg':{
-                        "dev_message" : (f"{e}"),
-                        "message":"Connection Error: Number of Reports not found for Doctor"
-                        }
-                }),400
+# @doctor_route.route("/doctors/appointments/",methods = ['GET'])
+# def getNumberOfDoctorsAppointments():
+#     from app import session
+#     try: 
+#         id_doctor = int(request.args.get("id_doctor"))
+#         number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+#         return ({
+#             'number_of_reports': number_of_appointments
+#         })
+#     except Exception as e:
+#         return ({
+#                 'status': False,
+#                 'msg':{
+#                         "dev_message" : (f"{e}"),
+#                         "message":"Connection Error: Number of Reports not found for Doctor"
+#                         }
+#                 }),400
