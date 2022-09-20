@@ -362,7 +362,7 @@ def getStatsByDoctorId():
         id_doctor = int(request.args.get("id_doctor"))
         number_of_patients = session.query(Patient.id_doctor).filter(Patient.id_doctor == id_doctor).count()
         number_of_reports = session.query(Report,Doctor,Patient).join(Patient,Report.id_patient == Patient.id_patient).join(Doctor,Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
-        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor).count()
+        number_of_appointments = session.query(Appointment).filter(Appointment.id_doctor == id_doctor,Appointment.appointment_status == "Accepted").count()
        
         return ( 
             {
