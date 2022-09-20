@@ -37,6 +37,7 @@ def createHospital():
                 session.add(newHospital)
                 session.commit()
             except Exception as e:
+                session.rollback()  #Testing
                 return  ( {
                 'msg': {
                     "message": "Connection Error: Unable to register hospital",
@@ -48,7 +49,7 @@ def createHospital():
                 
                
             
-            session.commit()
+            # session.commit()
             hospitalDetails = session.query(Hospital).filter(Hospital.hospital_code == hospital_code).first()
 
             return ({
@@ -99,6 +100,7 @@ def deleteHospital(id):
         }),200
         
     except Exception as e:
+        session.rollback()  #Testing
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete hospital",
@@ -145,6 +147,7 @@ def updateHospitalById(id):
             'msg': hospital_data
         }),200
     except Exception as e:
+        session.rollback()  #Testing
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to update hospital by id",

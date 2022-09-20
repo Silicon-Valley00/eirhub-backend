@@ -104,6 +104,7 @@ def createPrescription():
             session.add(newPrescription)
             session.commit()
         except Exception as e:
+            session.rollback()  #Testing
             return ( {
                 'msg': {
                     "message": "Connection Error: Check your network connection",
@@ -172,6 +173,7 @@ def updatePrescriptionById(id):
             'msg': prescription_data
         }),200
     except Exception as e:
+        session.rollback()  #Testing
         return( {
                 'msg': {
                     "message": "Connection error: Unable to update precription",
@@ -205,6 +207,7 @@ def deletePrescription(id):
         }),200
         
     except Exception as e:
+        session.rollback()  #Testing
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete prescription.",

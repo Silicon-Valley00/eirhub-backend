@@ -56,6 +56,7 @@ def createHealthDetails(patientId):
                 session.commit()
                
             except Exception as e:
+                session.rollback()  #Testing
                 return ({
                  'status': False,
                  'msg':{
@@ -181,6 +182,7 @@ def updateHealthDetailsById(patientId):
             }
         }),200
     except Exception as e:
+        session.rollback()  #Testing
         return  ({
                  'status': False,
                  'msg':{
@@ -253,4 +255,5 @@ def deleteHealthDetails(id):
             }
         }),200
     except Exception as e:
+        session.rollback()  #Testing
         return("Error: Could not delete health details:%s",e),400

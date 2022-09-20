@@ -64,6 +64,7 @@ def createDoctor():
                 session.add(newDoctor)
                 session.commit()
             except Exception as e:
+                session.rollback()  #Testing
                 return ({
                         'status': False,
                         'msg':{
@@ -75,7 +76,7 @@ def createDoctor():
                 
             id_doctor = session.query(Doctor.id_doctor).filter( Doctor.user_email == newDoctor.user_email).first()
             returnDoctor = session.query(Doctor).get(id_doctor)
-            session.commit()
+            # session.commit()
             return ({
                 'msg':{
                    'id_doctor': returnDoctor.id_doctor,
@@ -169,7 +170,7 @@ def doctorLogin():
                     
             
             except Exception as e:
-                
+                session.rollback()  #Testing
                 return  ({
                         'status': False,
                         'msg':{
@@ -270,6 +271,7 @@ def updateDoctorById(doctorId):
         ),200
 
     except Exception as e:
+        session.rollback()  #Testing
         return ({
                  'status': False,
                  'msg':{

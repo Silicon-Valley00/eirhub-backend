@@ -55,6 +55,7 @@ def createGuardian():
                 }
             }),200
         except Exception as e:
+            session.rollback()  #Testing
             return ({
                 "status": False,
                 "msg": {
@@ -172,6 +173,7 @@ def updateGuardianById(guardianId):
             }
         }),200
     except Exception as e:
+        session.rollback()  #Testing
         return ({
                 "status": False,
                 "msg": {
