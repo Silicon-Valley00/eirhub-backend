@@ -382,9 +382,9 @@ def getStatsByDoctorId():
             {
                 'status': True,
                 'msg': {
-                    "number of patients" : number_of_patients,
-                    "number of reports" : number_of_reports,
-                    "number of appointments" : number_of_appointments
+                    "number_of_patients" : number_of_patients,
+                    "number_of_reports" : number_of_reports,
+                    "number_of_appointments" : number_of_appointments
                 
                 } }),200
     except Exception as e:

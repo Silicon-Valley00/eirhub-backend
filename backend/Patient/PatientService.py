@@ -140,6 +140,7 @@ def createPatient():
                 
 
             id_patient = session.query(Patient.id_patient).filter(Patient.user_email == user_email).first()
+
             #Health Details added here. Use Standard Healthy person value
             patientInfo = session.query(Patient).get(id_patient)
             patient_health_details = HealthDetailsModel.HealthDetails(datetime.now(),'unknown',37,'120/120','30',9.0,'90',70.5,33.2,patientInfo.id_patient)
@@ -224,6 +225,7 @@ def patientLogin():
                         }),400
 
                 except Exception as e:
+                    session.rollback()
                     return  ({
                         'status': False,
                         'msg':{
