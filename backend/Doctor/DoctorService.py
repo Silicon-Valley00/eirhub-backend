@@ -122,6 +122,17 @@ def doctorLogin():
                 if(id_doctor):
                     doctorInfo = session.query(Doctor).get(id_doctor)
                     session.commit()
+                    patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == doctorInfo.id_doctor).filter(Appointment.appointment_status != 'Declined').all()
+                    session.commit()
+                    patient_doctor_response = [
+                                    {
+                                            "id_patient": patient.id_patient,
+                                            "first_name": patient.first_name,
+                                            "last_name": patient.last_name,
+                                            "person_image": patient.person_image,
+                                    } 
+                                        for patient in patients
+                                ]
                 #Check Password after doctor email has been verified
                     try :
                         doctorHashPassword =  str(doctorInfo.user_password)
@@ -138,8 +149,8 @@ def doctorLogin():
                                 'hospital_code':doctorInfo.hospital_code,
                                 'gender':doctorInfo.gender,
                                 'person_image':doctorInfo.person_image,
-
-                            },
+                                'patients':patient_doctor_response
+},
                             'status':True
                         }),200  #StatusCode
                         else:
