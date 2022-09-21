@@ -349,7 +349,6 @@ def getpatientsByDoctorId():
             for patient in patients
             ]
         }
-        print(returnInfo)
         return jsonify(
             returnInfo
         ),200
@@ -460,7 +459,6 @@ def getStatsAndPendingAppointments():
             }
             }
         }
-        print(returnInfo)
         return jsonify(
             returnInfo
         ),200
