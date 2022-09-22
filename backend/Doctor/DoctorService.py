@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
 from Hospital.HospitalModel import Hospital
+from backend.Patient.PatientService import patientLogin
 
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
@@ -131,6 +132,7 @@ def doctorLogin():
                                             "first_name": patient.first_name,
                                             "last_name": patient.last_name,
                                             "person_image": patient.person_image,
+                                            "id_message": patient.id_message
                                     } 
                                         for patient in patients
                                 ]
@@ -150,6 +152,7 @@ def doctorLogin():
                                 'hospital_code':doctorInfo.hospital_code,
                                 'gender':doctorInfo.gender,
                                 'person_image':doctorInfo.person_image,
+                                "id_message": doctorInfo.id_message
 
                             },
                             'status':True
