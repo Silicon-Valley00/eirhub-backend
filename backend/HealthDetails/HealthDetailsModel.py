@@ -1,9 +1,7 @@
 from tkinter import CASCADE
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import relationship
 from Patient.PatientModel import Patient
-# from app import Base
-
 from base import Base
 
 class HealthDetails(Base):

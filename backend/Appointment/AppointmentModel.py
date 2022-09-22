@@ -1,6 +1,4 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Time
-from sqlalchemy.dialects.mysql import ENUM
-
 from Patient.PatientModel import Patient
 from Doctor.DoctorModel import Doctor
 

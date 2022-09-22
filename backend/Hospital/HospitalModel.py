@@ -1,6 +1,4 @@
-from enum import unique
 from sqlalchemy import Column,Integer,String,Text
-from sqlalchemy.orm import declarative_base,relationship
 # from app import Base
 from base import Base
 

@@ -1,4 +1,3 @@
-import json
 from flask import request,jsonify,Blueprint
 from Report.ReportModel import Report
 from Patient.PatientModel import Patient
@@ -117,7 +116,7 @@ def createReport():
             else:
                  return "Patient id does not exist"        
         except Exception as e:
-            session.rollback()  #Testing
+            session.rollback()
             return ( {
                 'msg': {
                     "message": "Report could't be created",
@@ -161,7 +160,7 @@ def deleteReportById(id):
             
             }),200
      except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return( {
                 'msg': {
                     "message": "Unable to delete report",
@@ -203,7 +202,7 @@ def updateReportDetailsById(id):
             
             }),200
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return( {
                 'msg': {
                     "message": "Unable to update report details",

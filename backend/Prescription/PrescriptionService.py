@@ -1,9 +1,6 @@
-from hashlib import new
-from flask import Blueprint,request,jsonify
+from flask import Blueprint,request
 from flask_cors import CORS
 from Prescription.PrescriptionModel import Prescription 
-import json
-
 
 prescription_route = Blueprint("prescription_route",__name__)
 CORS(prescription_route)
@@ -104,7 +101,7 @@ def createPrescription():
             session.add(newPrescription)
             session.commit()
         except Exception as e:
-            session.rollback()  #Testing
+            session.rollback()
             return ( {
                 'msg': {
                     "message": "Connection Error: Check your network connection",
@@ -173,7 +170,7 @@ def updatePrescriptionById(id):
             'msg': prescription_data
         }),200
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return( {
                 'msg': {
                     "message": "Connection error: Unable to update precription",
@@ -207,7 +204,7 @@ def deletePrescription(id):
         }),200
         
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete prescription.",

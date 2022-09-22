@@ -1,7 +1,5 @@
 from flask import request, Blueprint
 from flask_cors import CORS
-from werkzeug.wrappers import response
-
 from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
@@ -105,7 +103,7 @@ def addAppointment():
             else:
                 return (generate_error_response("Could not add appointment", "Patient or Doctor does not exist", None), 404)
         except Exception as e:
-            session.rollback()  #Testing
+            session.rollback()  
             return (generate_error_response("Could not add appointment", "Appointment could not be added", e), 400)
     else:
         return (generate_error_response("Could not add appointment", "Error: Content-Type Eror", None), 455)        
@@ -141,7 +139,7 @@ def updateAppointmentById():
                 respones_message = generate_response_message([appointment], "both")
                 return (respones_message, 200)
             except Exception as e:
-                session.rollback()  #Testing
+                session.rollback()  
                 return (generate_error_response("Error updating appointment", "Could not find appointment ID provided", e), 400)
         else:
             return(generate_error_response("Error updating appointment", "Content-Type error. Expecting payload as JSON", None), 455)
@@ -166,7 +164,7 @@ def deleteAppointmentById():
             session.commit()
             return (response_message, 200)
         except Exception as e:
-            session.rollback()  #Testing
+            session.rollback()  
             return (generate_error_response("Error deleting appointment", "id_appointment provided might not exist", None), 400)
     else:
         return (generate_error_response("Error deleting appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)

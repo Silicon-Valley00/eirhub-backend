@@ -1,6 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float,Time
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from Patient.PatientModel import Patient
 
 from base import Base
