@@ -32,7 +32,8 @@ def getPatients():
                 "id_guardian": patient.id_guardian,
                 "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+                "id_message": patient.id_message
             },
             "status": True
             
@@ -71,7 +72,8 @@ def getPatientById(id):
                 "id_guardian": patient.id_guardian,
                 "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+                "id_message": patient.id_message
             },
             "status": True
             
@@ -159,7 +161,8 @@ def createPatient():
                         'phone_number':patientInfo.phone_number,
                         'id_number':patientInfo.id_number,
                         'gender':patientInfo.gender,
-                        'person_image':patientInfo.person_image
+                        'person_image':patientInfo.person_image,
+                        "id_message": patientInfo.id_message
 
                     },
                     'status':True
@@ -210,7 +213,8 @@ def patientLogin():
                         'gender':patientInfo.gender,
                         'id_guardian': patientInfo.id_guardian,
                         'id_doctor': patientInfo.id_doctor,
-                        'person_image':patientInfo.person_image
+                        'person_image':patientInfo.person_image,
+                        "id_message": patientInfo.id_message
 
                     },
                     'status':True
@@ -294,7 +298,8 @@ def deletePatientById(id):
                 "id_guardian": patient.id_guardian,
                 "id_doctor": patient.id_doctor,
                 "house_address": patient.house_address,
-                "nationality": patient.nationality
+                "nationality": patient.nationality,
+                "id_message": patient.id_message
             },
             "status": True
             
@@ -351,7 +356,8 @@ def updatePatientDetailsById(id):
                 "nationality": patient.nationality,
                 "phone_number":patient.phone_number,
                 "gender":patient.gender,
-                "date_of_birth":patient.date_of_birth
+                "date_of_birth":patient.date_of_birth,
+                "id_message": patient.id_message
 
             },
             "status": True
@@ -391,7 +397,8 @@ def getDoctorByPatientId():
                 'doctor_specialties': doctor.doctor_specialties,
                 'license_number': doctor.license_number,
                 'gender':doctor.gender,
-                'hospital_code':doctor.hospital_code
+                'hospital_code':doctor.hospital_code,
+                'id_message': doctor.id_message
                 
 
              },
