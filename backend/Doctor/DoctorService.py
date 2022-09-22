@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
 from Hospital.HospitalModel import Hospital
-from backend.Patient.PatientService import patientLogin
+from Patient.PatientService import patientLogin
 
 doctor_route = Blueprint("doctor_route",__name__)
 CORS(doctor_route)
