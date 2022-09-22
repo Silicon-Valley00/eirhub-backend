@@ -12,14 +12,14 @@ CORS(reports_route)
 def getReports():
     from app import session
     try:
-        reports = session.query(Report.id_report,Report.report_type,Report.description,Report.id_patient,Report.created_at,Doctor.first_name,Doctor.last_name).join(Doctor).filter(Report.id_doctor == Doctor.id_doctor).all()
-        print(reports[0])
+        reports = session.query(Report.id_report,Report.report_url,Report.report_type,Report.description,Report.id_patient,Report.created_at,Doctor.first_name,Doctor.last_name).join(Doctor).filter(Report.id_doctor == Doctor.id_doctor).all()
         Json_reports = [{
             "status": True,
             "msg": {
 
                 "id_report": report.id_report,
                 "report_type": report.report_type,
+                "report_url" : report.report_url,
                 "description": report.description,
                 "id_patient": report.id_patient,
                 "upload_date": report.created_at,
@@ -55,6 +55,7 @@ def getReportByPatientId(id_patient):
                 "id_patient": report.id_patient,
                 "id_report": report.id_report,
                 "report_type": report.report_type,
+                "report_url" : report.report_url,
                 "description": report.description,
                 "upload_date": report.created_at,
                 "doctor_first_name": doctor.first_name,
@@ -82,12 +83,13 @@ def createReport():
     if content_type == 'application/json':#check if content is in json format
         req = request.json
         report_type = req['report_type']
+        report_url = req['report_url']
         description = req['description']
         id_patient = req['id_patient']
         upload_date = req['upload_date']
         id_doctor = req['id_doctor']
         
-        new_report = Report(report_type=report_type,description=description,id_patient=id_patient,id_doctor=id_doctor,created_at=upload_date)
+        new_report = Report(report_type=report_type,report_url=report_url,description=description,id_patient=id_patient,id_doctor=id_doctor,created_at=upload_date)
 
         try:
             #Checking if the patient Id actually exists
@@ -102,6 +104,7 @@ def createReport():
 
                     "id_report": new_report.id_report,
                     "report_type": new_report.report_type,
+                    "report_url" : new_report.report_url,
                     "description": new_report.description,
                     "id_patient": new_report.id_patient,
                     "id_doctor": new_report.id_doctor,
@@ -150,6 +153,7 @@ def deleteReportById(id):
             "msg": {
                 "id_report": report.id_report,
                 "report_type": report.report_type,
+                "report_url" : report.report_url,
                 "description": report.description,
                 'upload_date': report.created_at
             },
@@ -178,6 +182,7 @@ def updateReportDetailsById(id):
         #update details with new parameters
         # report.id_report = req["id_report"]
         report.report_type = req["report_type"]
+        report.report_url = req["report_url"]
         report.description = req["description"]
         report.id_patient = req["id_patient"]
         report.id_doctor = req["id_doctor"]
