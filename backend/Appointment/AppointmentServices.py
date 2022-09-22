@@ -6,8 +6,7 @@ from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
-import Patient.PatientService
-from Doctor.DoctorService import getDoctorById
+
 
 appointment_route = Blueprint("appointment_route", __name__)
 CORS(appointment_route) 
@@ -174,7 +173,7 @@ def deleteAppointmentById():
 
 
 # Fetch Doctors based on patient_id
-@appointment_route.route("/appointmentcomet/<patientId>", methods = ["GET"])
+@appointment_route.route("/appointmentcometp/<patientId>", methods = ["GET"])
 def fetchDoctorsByPatientId(patientId):
     from app import session
     try:
@@ -205,9 +204,7 @@ def fetchDoctorsByPatientId(patientId):
             'status': True,
             'msg': returnInfo
         }),200
-
     except Exception as e:
-
         return ({
                  'status': False,
                  'msg':{
@@ -215,4 +212,52 @@ def fetchDoctorsByPatientId(patientId):
                         "message":"Could not get appointments"
                         }
                 }),400
-    return
+
+# Fetch patents based on doctor_id
+@appointment_route.route("/appointmentcometd/<doctorId>", methods = ["GET"])
+def fetchDoctorsByDoctorId(doctorId):
+    from app import session
+    try:
+        appointments = session.query(Appointment).filter(Appointment.id_doctor == doctorId).filter(Appointment.appointment_status == 'Accepted' ).all()
+        returnInfo = []
+        for appointment in appointments:
+            patient = session.query(Patient).get(appointment.id_patient)
+            returnInfo.append((
+               {
+                "id_patient": patient.id_patient,
+                "first_name": patient.first_name,
+                "middle_name": patient.middle_name,
+                "last_name": patient.last_name,
+                "user_email": patient.user_email,
+                "person_image": patient.person_image,
+                "date_of_birth":patient.date_of_birth,
+                "phone_number":patient.phone_number,
+                "gender":patient.gender,
+                "id_number": patient.id_number,
+                "id_guardian": patient.id_guardian,
+                "id_doctor": patient.id_doctor,
+                "house_address": patient.house_address,
+                "nationality": patient.nationality,
+                "id_message": patient.id_message
+               } 
+            ))
+            # patient = session.query(Patient).get(appointment.id_patient)
+            # returnInfo.append((
+            #     {
+            #         'id_patient': appointment.id_patient,
+            #         'id_doctor': appointment.id_doctor,
+            #         "nationality": patient.nationality,
+            #     }
+            # ))
+        return ({
+            'status': True,
+            'msg': returnInfo
+        }),200
+    except Exception as e:
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Could not get appointments"
+                        }
+                }),400
