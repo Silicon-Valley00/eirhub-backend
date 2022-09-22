@@ -11,7 +11,7 @@ from base import Base
 class Report(Base):
     __tablename__ = 'Report'
     id_report = Column('id_report', Integer, primary_key=True,autoincrement=True)
-    report_url = Column('report_url',String(100))
+    report_url = Column('report_url',String(255))
     report_type = Column('report_type',String(45))
     description = Column('description',Text)
     id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='SET NULL',onupdate='SET NULL'))
