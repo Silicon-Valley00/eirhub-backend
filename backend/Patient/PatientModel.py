@@ -29,6 +29,7 @@ class Patient(Base):
     id_number = Column("id_number",String(45),unique = True)
     nationality = Column("nationality",String(50))
     gender = Column("gender",String(45))
+    id_message = Column('id_message',String(125),unique = True, nullable = False)
 
     # relationships
     health_details = relationship("HealthDetails", uselist=False,back_populates="patient")

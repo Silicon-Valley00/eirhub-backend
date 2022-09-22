@@ -20,6 +20,7 @@ class Doctor(Base):
     gender = Column('gender',String(45),nullable  = False)
     hospital_code = Column('hospital_code',String(45),unique = True,nullable  = False)
     hospital_name = Column('hospital_name',String(200),unique = True,nullable  = False)
+    id_message = Column('id_message',String(125),unique = True, nullable = False)
 
     # relationships
     appointments = relationship("Appointment", backref="doctor")
