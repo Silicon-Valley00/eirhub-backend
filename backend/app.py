@@ -3,8 +3,7 @@ from flask import Flask,jsonify,request
 from flask_cors import CORS
 
 
-from sqlalchemy import create_engine,Table,MetaData,Column,Integer,String,exc
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine,MetaData
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 from Patient.PatientService import patients_route
@@ -14,8 +13,6 @@ from Prescription.PrescriptionService import prescription_route
 from HealthDetails.HealthDetailsService import health_details_route
 from Hospital.HospitalService import hospital_route
 from Appointment.AppointmentServices import appointment_route
-# from Report.ReportService import reports_route
-
 from Report.ReportService import reports_route
 
 app = Flask(__name__)
@@ -38,9 +35,8 @@ app.register_blueprint(reports_route)
 app.register_blueprint(health_details_route)
 app.register_blueprint(hospital_route)
 app.register_blueprint(appointment_route)
-# app.register_blueprint(reports_route)
 
-# Database Connection not needed right now. Commented out for now
+# Database Connection
 try:
     engine.connect()
     Base.metadata.create_all(engine)

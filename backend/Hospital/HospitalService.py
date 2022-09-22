@@ -1,4 +1,3 @@
-from unicodedata import name
 from flask import Blueprint,request
 from Hospital.HospitalModel import Hospital
 from flask_cors import CORS
@@ -7,9 +6,7 @@ from flask_cors import CORS
 hospital_route = Blueprint("hospital_route",__name__)
 
 
-#Hospital Creation
 CORS(hospital_route)
-# Will move signup into a service function later. Currently cleaning
 #Hospital Sign Up
 @hospital_route.route("/hospital",methods = ['POST'])
 def createHospital():
@@ -37,7 +34,7 @@ def createHospital():
                 session.add(newHospital)
                 session.commit()
             except Exception as e:
-                session.rollback()  #Testing
+                session.rollback()  
                 return  ( {
                 'msg': {
                     "message": "Connection Error: Unable to register hospital",
@@ -100,7 +97,7 @@ def deleteHospital(id):
         }),200
         
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()  
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to delete hospital",
@@ -147,7 +144,7 @@ def updateHospitalById(id):
             'msg': hospital_data
         }),200
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()  
         return ( {
                 'msg': {
                     "message": "Connection error: Unable to update hospital by id",
@@ -194,7 +191,7 @@ def getHospitals():
 @hospital_route.route('/hospital/<id>',methods = ['GET'])
 def getHositalById(id):
     from app import session
-    try:#query for the data and display it if it exists
+    try:
         hospital =  session.query(Hospital).get(id)
         return ({
             'msg': {
@@ -208,7 +205,7 @@ def getHositalById(id):
             },
             "status": True
             }),200
-    except Exception as e:#display error code if data doesn't exist
+    except Exception as e:
         return( {
                 'msg': {
                     "message": "Connection error: Unable to get hospital by id",

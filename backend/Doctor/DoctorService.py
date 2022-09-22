@@ -65,7 +65,7 @@ def createDoctor():
                 session.add(newDoctor)
                 session.commit()
             except Exception as e:
-                session.rollback()  #Testing
+                session.rollback() 
                 return ({
                         'status': False,
                         'msg':{
@@ -185,7 +185,7 @@ def doctorLogin():
                     
             
             except Exception as e:
-                session.rollback()  #Testing
+                session.rollback()
                 return  ({
                         'status': False,
                         'msg':{
@@ -306,7 +306,7 @@ def updateDoctorById(doctorId):
         ),200
 
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return ({
                  'status': False,
                  'msg':{

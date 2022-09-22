@@ -1,5 +1,5 @@
 import json
-from flask import request,jsonify,Blueprint
+from flask import request,Blueprint
 from Patient.PatientModel import Patient
 from HealthDetails.HealthDetailsModel import HealthDetails
 from flask_cors import CORS
@@ -56,7 +56,7 @@ def createHealthDetails(patientId):
                 session.commit()
                
             except Exception as e:
-                session.rollback()  #Testing
+                session.rollback()
                 return ({
                  'status': False,
                  'msg':{
@@ -182,7 +182,7 @@ def updateHealthDetailsById(patientId):
             }
         }),200
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return  ({
                  'status': False,
                  'msg':{
@@ -255,5 +255,5 @@ def deleteHealthDetails(id):
             }
         }),200
     except Exception as e:
-        session.rollback()  #Testing
+        session.rollback()
         return("Error: Could not delete health details:%s",e),400
