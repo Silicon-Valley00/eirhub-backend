@@ -181,10 +181,26 @@ def fetchDoctorsByPatientId(patientId):
         appointments = session.query(Appointment).filter(Appointment.id_patient == patientId).filter(Appointment.appointment_status == 'Accepted' ).all()
         returnInfo = []
         for appointment in appointments:
-            returnInfo.append(
-               
-                    getDoctorById(appointment.id_doctor)  
-            )
+            doctor = session.query(Doctor).get(int(appointment.id_doctor))
+            returnInfo.append((
+               {
+                'id_doctor': doctor.id_doctor,
+                'first_name': doctor.first_name,
+                'middle_name': doctor.middle_name,
+                'last_name': doctor.last_name,
+                'user_email': doctor.user_email,
+                'person_image': doctor.person_image,
+                'date_of_birth': doctor.date_of_birth,
+                'house_address': doctor.house_address,
+                'doctor_ratings':doctor.doctor_ratings,
+                'doctor_specialties': doctor.doctor_specialties,
+                'license_number': doctor.license_number,
+                'gender':doctor.gender,
+                'hospital_code':doctor.hospital_code,
+                'hospital_name': doctor.hospital_name,
+                'id_message':doctor.id_message
+               } 
+            ))
         return ({
             'status': True,
             'msg': returnInfo
