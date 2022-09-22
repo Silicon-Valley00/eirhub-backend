@@ -359,7 +359,7 @@ def getpatientsByDoctorId():
     try:
         #filtering patients based on doctor IDs
         id_doctor = int(request.args.get("id_doctor"))
-        patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == id_doctor, (Appointment.appointment_status != 'Declined')).all()
+        patients = session.query(Patient).join(Appointment,Doctor).filter(Doctor.id_doctor == id_doctor).filter(Appointment.appointment_status != 'Declined').filter(Appointment.appointment_status != 'Elapsed').all()
         returnInfo =  {
             'status': True,
             'msg': [{
