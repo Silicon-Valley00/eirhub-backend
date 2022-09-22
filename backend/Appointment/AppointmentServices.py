@@ -52,7 +52,7 @@ def getAppointments():
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
                 appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(Appointment.appointment_status == "Accepted").all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(Appointment.appointment_status != "Accepted").all()
+                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(Appointment.appointment_status != "Accepted").filter(Appointment.appointment_status != "Elapsed").all()
             else:
                 appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).all()
             respones_message = generate_response_message(appointments, "patient")
