@@ -6,6 +6,8 @@ from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
+import Patient.PatientService
+from Doctor.DoctorService import getDoctorById
 
 appointment_route = Blueprint("appointment_route", __name__)
 CORS(appointment_route) 
@@ -148,8 +150,9 @@ def updateAppointmentById():
         return (generate_error_response("Error updating appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)
         
 
+
 # Deleting appointment by its ID
-@appointment_route.route("/appointments/", methods=["DELETE"])
+@appointment_route.route("/appointment/", methods=["DELETE"])
 def deleteAppointmentById():
     from app import session
     if request.args.get("id_appointment"):
@@ -168,3 +171,32 @@ def deleteAppointmentById():
             return (generate_error_response("Error deleting appointment", "id_appointment provided might not exist", None), 400)
     else:
         return (generate_error_response("Error deleting appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)
+
+
+# Fetch Doctors based on patient_id
+@appointment_route.route("/appointmentcomet/<patientId>", methods = ["GET"])
+def fetchDoctorsByPatientId(patientId):
+    from app import session
+    try:
+        appointments = session.query(Appointment).filter(Appointment.id_patient == patientId).filter(Appointment.appointment_status == 'Accepted' ).all()
+        returnInfo = []
+        for appointment in appointments:
+            returnInfo.append(
+               
+                    getDoctorById(appointment.id_doctor)  
+            )
+        return ({
+            'status': True,
+            'msg': returnInfo
+        }),200
+
+    except Exception as e:
+
+        return ({
+                 'status': False,
+                 'msg':{
+                        "dev_message" : (f"{e}"),
+                        "message":"Could not get appointments"
+                        }
+                }),400
+    return
