@@ -9,12 +9,12 @@ class Appointment(Base):
     id_appointment = Column(Integer, primary_key=True, unique=True, autoincrement=True, nullable=False)
 
     # defining attributes for appointment details
-    appointment_date = Column("appointment_date", Date, nullable=True)
-    appointment_start_time = Column("appointment_start_time", Time, nullable=True)
-    appointment_end_time = Column("appointment_end_time", Time, nullable=True)
-    appointment_reason = Column("appointment_reason", String(300))
-    appointment_status = Column("appointment_status", String(10))
-    appointment_location = Column("appointment_location", String(100), nullable=True)
+    appointment_date = Column("appointment_date", Date, nullable=False)
+    appointment_start_time = Column("appointment_start_time", Time, nullable=False)
+    appointment_end_time = Column("appointment_end_time", Time, nullable=False)
+    appointment_reason = Column("appointment_reason", String(300),nullable=False)
+    appointment_status = Column("appointment_status", String(10),nullable=False)
+    appointment_location = Column("appointment_location", String(100), nullable=False)
 
     # defining relationships for appointment
     id_patient = Column(Integer, ForeignKey(Patient.id_patient,ondelete= 'CASCADE'))

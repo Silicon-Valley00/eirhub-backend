@@ -5,9 +5,9 @@ from base import Base
 class GuardianPerson(Base):
     __tablename__ = 'GuardianPerson'
     id_guardian = Column("id_guardian",Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
-    first_name = Column("first_name",String(60))
+    first_name = Column("first_name",String(60),nullable=False)
     middle_name = Column("middle_name",String(60))
-    last_name = Column("last_name",String(60))
+    last_name = Column("last_name",String(60),nullable=False)
     user_email = Column("user_email",String(100), nullable=False,unique = True)
     date_of_birth = Column("date_of_birth",Date)
     house_address = Column("house_address",String(45))

@@ -6,10 +6,10 @@ from base import Base
 
 class Report(Base):
     __tablename__ = 'Report'
-    id_report = Column('id_report', Integer, primary_key=True,autoincrement=True)
-    report_url = Column('report_url',String(255))
-    report_type = Column('report_type',String(45))
-    description = Column('description',Text)
+    id_report = Column('id_report', Integer, primary_key=True,autoincrement=True,nullable = False)
+    report_url = Column('report_url',String(255),nullable = False)
+    report_type = Column('report_type',String(45),nullable = False)
+    description = Column('description',Text,nullable = False)
     id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='SET NULL',onupdate='SET NULL'))
     created_at = Column('created_at',DateTime, nullable=True)
     id_doctor = Column('id_doctor',Integer,ForeignKey(Doctor.id_doctor, ondelete='RESTRICT',onupdate='RESTRICT'))
