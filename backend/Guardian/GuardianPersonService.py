@@ -12,7 +12,7 @@ def createGuardian():
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         req = request.json
-        user_email = req["user_email"]
+        user_email = req["user_email"].lower()
         id_number = req["id_number"]
         isGuardian = session.query(GuardianPerson).filter(GuardianPerson.user_email == user_email, GuardianPerson.id_number == id_number).first()
         if(isGuardian):
@@ -27,7 +27,7 @@ def createGuardian():
         first_name = req["first_name"]
         middle_name = req["middle_name"]
         last_name = req["last_name"]
-        user_email = req["user_email"]
+        user_email = req["user_email"].lower()
         date_of_birth = req["date_of_birth"]
         house_address = req["house_address"]
         phone_number = req["phone_number"]
@@ -145,7 +145,7 @@ def updateGuardianById(guardianId):
                  GuardianPerson.first_name:req["first_name"],
                  GuardianPerson.middle_name:req["middle_name"],
                  GuardianPerson.last_name:req["last_name"],
-                 GuardianPerson.user_email:req["user_email"],
+                 GuardianPerson.user_email:req["user_email"].lower(),
                  GuardianPerson.date_of_birth:req["date_of_birth"],
                  GuardianPerson.phone_number:req["phone_number"],
                  GuardianPerson.id_number:req["id_number"],

@@ -189,7 +189,7 @@ def getHospitals():
 
 #get the hospital based on id
 @hospital_route.route('/hospital/<id>',methods = ['GET'])
-def getHositalById(id):
+def getHospitalById(id):
     from app import session
     try:
         hospital =  session.query(Hospital).get(id)

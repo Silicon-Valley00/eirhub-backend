@@ -170,11 +170,12 @@ def deleteAppointmentById():
         return (generate_error_response("Error deleting appointment", "Expected query paramter 'id_appointment' does not exist.", None), 400)
 
 
-# Fetch Doctors based on patient_id
-@appointment_route.route("/appointmentcometp/<patientId>", methods = ["GET"])
-def fetchDoctorsByPatientId(patientId):
+# Fetch patient's doctors based on patient_id
+@appointment_route.route("/appointments/", methods = ["GET"])
+def fetchAppointmentByPatientId(patientId):
     from app import session
     try:
+        patientId = int(request.args.get("id_patient"))
         appointments = session.query(Appointment).filter(Appointment.id_patient == patientId).filter(Appointment.appointment_status == 'Accepted' ).all()
         returnInfo = []
         for appointment in appointments:
@@ -211,11 +212,12 @@ def fetchDoctorsByPatientId(patientId):
                         }
                 }),400
 
-# Fetch patents based on doctor_id
-@appointment_route.route("/appointmentcometd/<doctorId>", methods = ["GET"])
-def fetchDoctorsByDoctorId(doctorId):
+# Fetch doctor's patients based on doctor_id
+@appointment_route.route("/appointments/", methods = ["GET"])
+def fetchAppointmentByDoctorId(doctorId):
     from app import session
     try:
+        doctorId = int(request.args.get("id_doctor"))
         appointments = session.query(Appointment).filter(Appointment.id_doctor == doctorId).filter(Appointment.appointment_status == 'Accepted' ).all()
         returnInfo = []
         for appointment in appointments:
