@@ -4,6 +4,7 @@ from Appointment.AppointmentModel import Appointment
 from Appointment.AppointmentUtils import generate_response_message, generate_error_response
 from Doctor.DoctorModel import Doctor
 from Patient.PatientModel import Patient
+import datetime as dt
 
 
 appointment_route = Blueprint("appointment_route", __name__)
@@ -33,10 +34,13 @@ def getAppointments():
             # filtering appointments based on status
             if request.args.get("status") and (request.args.get("status").capitalize() in ["Accepted", "Declined", "Pending"]):
                 appointments = session.query(Appointment).filter(
-                    Appointment.id_doctor == id_doctor).filter(Appointment.appointment_status == status).all()
+                    Appointment.id_doctor == id_doctor,
+                    Appointment.appointment_status == status.capitalize()
+                ).all()
             else:
                 appointments = session.query(Appointment).filter(
-                    Appointment.id_doctor == id_doctor).all()
+                    Appointment.id_doctor == id_doctor
+                ).all()
 
             respones_message = generate_response_message(
                 appointments, "doctor")
@@ -52,11 +56,15 @@ def getAppointments():
         try:
             # filtering appointments based on patient IDs
             if request.args.get("accepted") and (request.args.get("accepted") == "true"):
-                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(
-                    Appointment.appointment_status == "Accepted").all()
+                appointments = session.query(Appointment).filter(
+                    Appointment.id_patient == id_patient,
+                    Appointment.appointment_status == "Accepted"
+                ).all()
             elif request.args.get("accepted") and (request.args.get("accepted") == "false"):
-                appointments = session.query(Appointment).filter(Appointment.id_patient == id_patient).filter(
-                    Appointment.appointment_status != "Accepted").filter(Appointment.appointment_status != "Elapsed").all()
+                appointments = session.query(Appointment).filter(
+                    Appointment.id_patient == id_patient,
+                    Appointment.appointment_status != "Accepted"
+                ).all()
             else:
                 appointments = session.query(Appointment).filter(
                     Appointment.id_patient == id_patient).all()
