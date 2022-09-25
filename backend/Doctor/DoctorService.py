@@ -417,44 +417,6 @@ def getStatsByDoctorId():
                         }
                 }),400
 
-# @doctor_route.route("/doctors/patients/",methods = ['GET'])
-# def getNumberOfPatientAssignedToDoctor():
-#     from app import session
-#     try:
-#         id_doctor = int(request.args.get("id_doctor"))
-       
-#         return ({
-#             'number_of_patients':number_of_patients
-#         })
-#     except Exception as e:
-#         return ({
-#                 'status': False,
-#                 'msg':{
-#                         "dev_message" : (f"{e}"),
-#                         "message":"Connection Error: Number of Patient not found for Doctor"
-#                         }
-#                 }),400
-
-
-# @doctor_route.route("/doctors/reports/",methods = ['GET'])
-# def getNumberOfDoctorsReports():
-#     from app import session
-#     try:
-#         id_doctor = int(request.args.get("id_doctor"))
-       
-#         return ({
-#             'number_of_reports': number_of_reports
-#         })
-#     except Exception as e:
-#         return ({
-#                 'status': False,
-#                 'msg':{
-#                         "dev_message" : (f"{e}"),
-#                         "message":"Connection Error: Number of Reports not found for Doctor"
-#                         }
-#                 }),400
-        
-
 
 @doctor_route.route("/doctor/dashboard/",methods = ['GET'])
 def getStatsAndPendingAppointments():
