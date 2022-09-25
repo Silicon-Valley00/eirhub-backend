@@ -183,7 +183,7 @@ def deleteAppointmentById():
 
 
 # Fetch patient's doctors based on patient_id
-@appointment_route.route("/appointmentspatient/", methods=["GET"])
+@appointment_route.route("/appointmentspatients/", methods=["GET"])
 def fetchAppointmentByPatientId():
     from app import session
     try:
