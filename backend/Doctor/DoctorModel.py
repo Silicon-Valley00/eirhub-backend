@@ -18,9 +18,9 @@ class Doctor(Base):
     doctor_ratings = Column('doctor_ratings',Integer,nullable  = True)
     doctor_specialties = Column('doctor_specialties',String(200),nullable  = True)
     gender = Column('gender',String(45),nullable  = True)
-    hospital_code = Column('hospital_code',String(45),unique = True,nullable  = False)
-    hospital_name = Column('hospital_name',String(200),unique = True,nullable  = True)
-    id_message = Column('id_message',String(125),unique = True, nullable = False)
+    hospital_code = Column('hospital_code',String(45),unique = False,nullable  = False)
+    hospital_name = Column('hospital_name',String(200),unique = False,nullable  = True)
+    id_message = Column('id_message',String(125),unique = True, nullable = True)
 
     # relationships
     appointments = relationship("Appointment", backref="doctor")
