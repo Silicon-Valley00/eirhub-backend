@@ -9,7 +9,7 @@ class HealthDetails(Base):
     id_healthDetails = Column(
         Integer, primary_key=True, unique=True, nullable=False, autoincrement=True)
     id_patient = Column(Integer, ForeignKey(
-        Patient.id_patient, ondelete=CASCADE), nullable=False, unique=True)
+        Patient.id_patient, ondelete='CASCADE'), nullable=False, unique=True)
     last_visit = Column("last_visit", Date, nullable=False)
     blood_group = Column("blood_group", String(7), nullable=False)
     temperature = Column('temperature', Float)
