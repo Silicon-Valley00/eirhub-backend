@@ -100,7 +100,7 @@ def createPatient():
         #Check for right body parameter type
         if (content_type == 'application/json'):
             req = request.json
-            user_email = req["user_email"]
+            user_email = req["user_email"].lower()
             user_password = req["user_password"]
             isPatient = session.query(Patient).filter(Patient.user_email == user_email).first()
 
@@ -115,7 +115,7 @@ def createPatient():
                 }),400
             first_name = req["first_name"]
             last_name = req["last_name"]
-            user_email = req["user_email"]
+            user_email = req["user_email"].lower()
             date_of_birth =req["date_of_birth"]
             user_password = req["user_password"]
             person_image = f"https://avatars.dicebear.com/api/bottts/${randint(1,200)}.png"
@@ -186,7 +186,7 @@ def patientLogin():
     content_type = request.headers.get('Content-Type')
     if(content_type == 'application/json'):
         req = request.json
-        user_email = req["user_email"]
+        user_email = req["user_email"].lower()
         user_password = req["user_password"]
 
     #Check Email to make sure the patient is already registered
@@ -328,7 +328,7 @@ def updatePatientDetailsById(id):
         patient.first_name = req["first_name"]
         patient.middle_name = req["middle_name"]
         patient.last_name = req["last_name"]
-        patient.user_email = req["user_email"]
+        patient.user_email = req["user_email"].lower()
         patient.person_image = req["person_image"]
         patient.date_of_birth =req["date_of_birth"]
         patient.house_address = req["house_address"]

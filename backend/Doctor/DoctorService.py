@@ -44,7 +44,7 @@ def createDoctor():
             first_name = req["first_name"]
             # middle_name = req["middle_name"]
             last_name = req["last_name"]
-            user_email = req["user_email"]
+            user_email = req["user_email"].lower()
             user_password = req["user_password"]
             person_image = f"https://avatars.dicebear.com/api/bottts/${randint(1,100)}.png"
 
@@ -117,7 +117,7 @@ def doctorLogin():
         content_type = request.headers.get('Content-Type')
         if (content_type == 'application/json'):
             req = request.json
-            user_email = req["user_email"]
+            user_email = req["user_email"].lower()
             user_password = req["user_password"]
             try:
                 id_doctor = session.query(Doctor.id_doctor).filter(Doctor.user_email == user_email).first()
@@ -267,7 +267,8 @@ def updateDoctorById(doctorId):
         doctor.middle_name = docReq["middle_name"]
         doctor.last_name = docReq["last_name"]
         doctor.person_image = docReq["person_image"]
-        doctor.user_email = docReq["user_email"]
+        doctor.user_email = docReq["user_email"].lower()
+
         doctor.date_of_birth = docReq["date_of_birth"]
         doctor.house_address = docReq["house_address"]
         doctor.license_number = docReq["license_number"]
