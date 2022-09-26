@@ -120,6 +120,7 @@ def createDoctor():
                     'hospital_name': returnDoctor.hospital_name,
                     'id_message': returnDoctor.id_message
 
+
                 },
                 'status': True
             }), 200  # StatusCode
