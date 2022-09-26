@@ -26,6 +26,22 @@ def createDoctor():
         if (content_type == 'application/json'):
             req = request.json
             hospital_code = req["hospital_code"]
+            try: 
+                hospitalExists = session.query(Hospital).filter(Hospital.hospital_code == hospital_code).first()
+                if(not hospitalExists):
+                    return ({
+                        'status': False,
+                        'msg':"Hospital Code Incorrect. Call to register your Hospital"
+                    }),200
+            except Exception as e:
+                session.rollback() 
+                return ({
+                        'status': False,
+                        'msg':{
+                            "dev_message" :(f"{e}"),
+                            "message":"Connection Error: Doctor could not be registered" 
+                            }
+                }),400
             # license_number = req["license_number"]
             user_email = req["user_email"]
             try:
