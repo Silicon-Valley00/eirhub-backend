@@ -10,9 +10,9 @@ class Report(Base):
     report_url = Column('report_url',String(255),nullable = False)
     report_type = Column('report_type',String(45),nullable = False)
     description = Column('description',Text,nullable = False)
-    id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient, ondelete='SET NULL',onupdate='SET NULL'))
+    id_patient = Column('id_patient',Integer,ForeignKey(Patient.id_patient))
     created_at = Column('created_at',DateTime, nullable=True)
-    id_doctor = Column('id_doctor',Integer,ForeignKey(Doctor.id_doctor, ondelete='RESTRICT',onupdate='RESTRICT'))
+    id_doctor = Column('id_doctor',Integer,ForeignKey(Doctor.id_doctor))
     
     def __init__(self,report_type,description,id_patient,id_doctor,report_url,created_at):
         self.report_type = report_type
