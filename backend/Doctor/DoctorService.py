@@ -424,11 +424,11 @@ def getStatsByDoctorId():
 
         all_appointments = session.query(Appointment).filter(
             Appointment.id_doctor == id_doctor,
-            Appointment.appointment_status != "Declined"
+            Appointment.appointment_status == "Accepted"
         ).all()
 
-        appointments = [appointment for appointment in all_appointments if not (appointment.appointment_status.lower() == "accepted" and (
-            dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now()))]
+        appointments = [appointment for appointment in all_appointments if not (
+            dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now())]
 
         number_of_appointments = len(appointments)
 
