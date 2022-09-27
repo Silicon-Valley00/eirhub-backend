@@ -6,11 +6,6 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
     '''
     Utility for generating the right `JSON` reponse when the list of appointments are provided as argument
     '''
-
-    for appointment in appointments:
-        if appointment.appointment_status.lower() == "Accepted" and (dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now()):
-            appointments.remove(appointment)
-
     response_message = {
         "status": True,
         "msg": [{
@@ -35,7 +30,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
                 "last_name": appointment.patient.last_name,
                 "person_image": appointment.patient.person_image
             }
-        } for appointment in appointments]
+        } for appointment in appointments if not (appointment.appointment_status.lower() == "accepted" and (dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now()))]
     }
 
     if patient_doctor == "doctor":
