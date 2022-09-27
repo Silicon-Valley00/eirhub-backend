@@ -164,7 +164,11 @@ def createPatient():
                         'id_number': patientInfo.id_number,
                         'gender': patientInfo.gender,
                         'person_image': patientInfo.person_image,
-                        "id_message": patientInfo.id_message
+                        "id_message": patientInfo.id_message,
+                        "id_guardian": patientInfo.id_guardian,
+                        "house_address": patientInfo.house_address,
+                        "id_number": patientInfo.id_number,
+                        "nationality": patientInfo.nationality
 
                     },
                     'status': True
