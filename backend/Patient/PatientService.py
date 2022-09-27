@@ -339,7 +339,7 @@ def updatePatientDetailsById(id):
         patient.id_number = req["id_number"]
         patient.nationality = req["nationality"]
         patient.gender = req["gender"]
-        patient.id_doctor = req["id_doctor"]
+        # patient.id_doctor = req["id_doctor"]
         patient.id_guardian = req["id_guardian"]
 
         session.commit()
