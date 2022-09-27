@@ -422,14 +422,13 @@ def getStatsByDoctorId():
         number_of_reports = session.query(Report, Doctor, Patient).join(Patient, Report.id_patient == Patient.id_patient).join(
             Doctor, Patient.id_doctor == Doctor.id_doctor).filter(Doctor.id_doctor == id_doctor).count()
 
-        appointments = session.query(Appointment).filter(
+        all_appointments = session.query(Appointment).filter(
             Appointment.id_doctor == id_doctor,
-            Appointment.appointment_status == "Accepted"
+            Appointment.appointment_status != "Declined"
         ).all()
 
-        for appointment in appointments:
-            if dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now():
-                appointments.remove(appointment)
+        appointments = [appointment for appointment in all_appointments if not (appointment.appointment_status.lower() == "accepted" and (
+            dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now()))]
 
         number_of_appointments = len(appointments)
 
