@@ -8,7 +8,7 @@ def generate_response_message(appointments: list, patient_doctor="doctor"):
     '''
 
     for appointment in appointments:
-        if dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now():
+        if appointment.appointment_status.lower() == "Accepted" and (dt.datetime.combine(appointment.appointment_date, appointment.appointment_start_time) < dt.datetime.now()):
             appointments.remove(appointment)
 
     response_message = {
