@@ -199,27 +199,30 @@ def fetchAppointmentByPatientId():
         appointments = session.query(Appointment).filter(Appointment.id_patient == patientId).filter(
             Appointment.appointment_status == 'Accepted').all()
         returnInfo = []
+        already_taken_doctor_ids = []
         for appointment in appointments:
-            doctor = session.query(Doctor).get(int(appointment.id_doctor))
-            returnInfo.append((
-                {
-                    'id_doctor': doctor.id_doctor,
-                    'first_name': doctor.first_name,
-                    'middle_name': doctor.middle_name,
-                    'last_name': doctor.last_name,
-                    'user_email': doctor.user_email,
-                    'person_image': doctor.person_image,
-                    'date_of_birth': doctor.date_of_birth,
-                    'house_address': doctor.house_address,
-                    'doctor_ratings': doctor.doctor_ratings,
-                    'doctor_specialties': doctor.doctor_specialties,
-                    'license_number': doctor.license_number,
-                    'gender': doctor.gender,
-                    'hospital_code': doctor.hospital_code,
-                    'hospital_name': doctor.hospital_name,
-                    'id_message': doctor.id_message
-                }
-            ))
+            if appointment.id_doctor not in already_taken_doctor_ids:
+                doctor = session.query(Doctor).get(int(appointment.id_doctor))
+                returnInfo.append((
+                    {
+                        'id_doctor': doctor.id_doctor,
+                        'first_name': doctor.first_name,
+                        'middle_name': doctor.middle_name,
+                        'last_name': doctor.last_name,
+                        'user_email': doctor.user_email,
+                        'person_image': doctor.person_image,
+                        'date_of_birth': doctor.date_of_birth,
+                        'house_address': doctor.house_address,
+                        'doctor_ratings': doctor.doctor_ratings,
+                        'doctor_specialties': doctor.doctor_specialties,
+                        'license_number': doctor.license_number,
+                        'gender': doctor.gender,
+                        'hospital_code': doctor.hospital_code,
+                        'hospital_name': doctor.hospital_name,
+                        'id_message': doctor.id_message
+                    }
+                ))
+                already_taken_doctor_ids.append(appointment.id_doctor)
         return ({
             'status': True,
             'msg': returnInfo
@@ -244,27 +247,30 @@ def fetchAppointmentByDoctorId():
         appointments = session.query(Appointment).filter(Appointment.id_doctor == doctorId).filter(
             Appointment.appointment_status == 'Accepted').all()
         returnInfo = []
+        already_taken_patient_ids = []
         for appointment in appointments:
-            patient = session.query(Patient).get(appointment.id_patient)
-            returnInfo.append((
-                {
-                    "id_patient": patient.id_patient,
-                    "first_name": patient.first_name,
-                    "middle_name": patient.middle_name,
-                    "last_name": patient.last_name,
-                    "user_email": patient.user_email,
-                    "person_image": patient.person_image,
-                    "date_of_birth": patient.date_of_birth,
-                    "phone_number": patient.phone_number,
-                    "gender": patient.gender,
-                    "id_number": patient.id_number,
-                    "id_guardian": patient.id_guardian,
-                    "id_doctor": patient.id_doctor,
-                    "house_address": patient.house_address,
-                    "nationality": patient.nationality,
-                    "id_message": patient.id_message
-                }
-            ))
+            if appointment.id_patient not in already_taken_patient_ids:
+                patient = session.query(Patient).get(appointment.id_patient)
+                returnInfo.append((
+                    {
+                        "id_patient": patient.id_patient,
+                        "first_name": patient.first_name,
+                        "middle_name": patient.middle_name,
+                        "last_name": patient.last_name,
+                        "user_email": patient.user_email,
+                        "person_image": patient.person_image,
+                        "date_of_birth": patient.date_of_birth,
+                        "phone_number": patient.phone_number,
+                        "gender": patient.gender,
+                        "id_number": patient.id_number,
+                        "id_guardian": patient.id_guardian,
+                        "id_doctor": patient.id_doctor,
+                        "house_address": patient.house_address,
+                        "nationality": patient.nationality,
+                        "id_message": patient.id_message
+                    }
+                ))
+                already_taken_patient_ids.append(appointment.id_patient)
             # patient = session.query(Patient).get(appointment.id_patient)
             # returnInfo.append((
             #     {
